@@ -15,13 +15,11 @@ export const metadata={
 export default function Home() {
   return (
     <div>
-       <Header/>
        <HeroSection/>
        <ProductCategories/>
        <FeaturedProducts/>
        <InspirationSection/>
        <FurniroFurniture/>
-       <Footer/>
     </div>
   );
 }

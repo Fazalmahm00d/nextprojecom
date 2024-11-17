@@ -15,12 +15,10 @@ export const metadata={
 const Shop=()=>{
     return(
         <div>
-            <Header/>
             <ImgSection name="Shop"/>
             <Filter/>
             <ProductGrid/>
             <Banner/>
-            <Footer/>
         </div>
     )
 }

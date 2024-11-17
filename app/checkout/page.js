@@ -7,11 +7,11 @@ import ImgSection from "../components/reused-components/ImgSection";
 function CheckOut(){
     return(
         <div>
-            <Header/>
+           
             <ImgSection name="CheckOut"/>
             <Billing/>
             <Banner/>
-            <Footer/>
+            
         </div>
     )
 }

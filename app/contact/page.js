@@ -7,11 +7,9 @@ import ImgSection from "../components/reused-components/ImgSection";
 function Contact(){
     return(
         <div>
-            <Header/>
             <ImgSection name="Contact"/>
             <ContactForm/>
             <Banner/>
-            <Footer/>
         </div>
     )
 

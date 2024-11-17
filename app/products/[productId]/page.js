@@ -130,7 +130,7 @@ function Dynamic({productId}){
     console.log(filtereddata);
     return(
         <div>
-            <Header/>
+            
             <div className="bg-[#F9F1E7] h-[14vh] flex items-center gap-6 px-20 text-xl">
                 <div className="flex gap-8 items-center">
                     <Link href="/"><p className="text-[#9F9F9F]">Home</p></Link>
@@ -247,7 +247,7 @@ function Dynamic({productId}){
                 </div>
             </div> 
             <RelatedProducts/>
-            <Footer/> 
+            
         </div>
     )
 }
