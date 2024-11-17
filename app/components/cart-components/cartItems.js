@@ -43,7 +43,7 @@ function CartItems(){
     return(
         <div className="p-20 flex gap-8">
             <div className="w-2/3">
-                <div className="bg-[#F9F1E7] flex justify-around items-center h-[10vh]">
+                <div className="bg-[#F9F1E7] grid grid-cols-4 items-center pl-6 justify-around h-[10vh] text-l font-bold">
                     <div>Product</div>
                     <div>Price</div>
                     <div>Quantity</div>
@@ -52,8 +52,8 @@ function CartItems(){
                 <div className="h-[60vh]">
                     {
                         cartItems.map((items)=>{
-                            return <div className="flex justify-between text-base mt-3">
-                                        <div className="flex">
+                            return <div className="grid grid-cols-4 items-center pl-6  text-base mt-3">
+                                        <div className="flex gap-4 items-center">
                                         <img src={items.img} className="h-16 w-16 rounded-lg"></img>
                                         <h3 className="font-bold text-xl">{items.name}</h3> 
                                         </div>

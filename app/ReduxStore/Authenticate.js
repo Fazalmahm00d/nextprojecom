@@ -1,12 +1,13 @@
 "use client"
 
 import { createSlice } from "@reduxjs/toolkit";
-
+const isEmail=localStorage.getItem('email');
+const isAuthenticate=localStorage.getItem('token')
 const authSlice=createSlice({
     name:"Authenticate",
     initialState:{
-        isEmail:localStorage.getItem('email'),
-        isAuthenticate:localStorage.getItem('token')
+        isEmail,
+        isAuthenticate
     },
     reducers:{
         logIn(state){
