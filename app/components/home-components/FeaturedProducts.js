@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import SvgComponent from "./Svgcomponent";
 import Button from "../reused-components/Button";
+import { useNavigate } from "react-router-dom";
+
 function FeaturedProducts(){
     const dispatch=useDispatch();
-    const navigate=useNavigate();
     const isEmail=useSelector((state)=>state.authReducer.isEmail)
     const products=[
         {   
@@ -68,7 +69,7 @@ function FeaturedProducts(){
         },
     ]
     function navigateHandler(){
-        navigate('/shop')
+        
     }
     const [featuredproducts,setFeaturedProducts]=useState(products)
     async function getCartData() {

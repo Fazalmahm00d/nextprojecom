@@ -9,9 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 function Header(){
+
     const dispatch=useDispatch();
     const cartItems=useSelector((state)=>state.dataReducer.cartItems);
-    const isEmail=useSelector((state)=>state.authReducer.isEmail)
+    const isEmail=useSelector((state)=>state.authReducer.isEmail);
+    
     console.log(cartItems,"cart items")
     const[cartDisplay,setCartDisplay]=useState(false)
     const showCart=()=>{
@@ -49,7 +51,7 @@ function Header(){
         <div className="relative w-full">
             {
                 cartDisplay ? <div className="absolute h-[100vh] w-full  z-20 inset-0 bg-black bg-opacity-20 ">
-                                <div className="absolute z-40 bg-white w-1/3  h-full top-0 right-0  px-10 py-6">
+                                <div className="absolute z-50 bg-white w-1/3  h-[100vh] top-0 right-0  px-10 py-6">
                                     <div className="relative flex  justify-between items-center mb-6">
                                         <h1 className="text-2xl font-bold">Shopping Cart</h1>
                                         <button onClick={closeCart}>
@@ -66,7 +68,7 @@ function Header(){
                                                             <img src={items.img} className="h-16 w-16 rounded-lg"></img>
                                                             <div className="flex flex-col items-end gap-2">
                                                             <h3 className="font-bold text-xl">{items.name}</h3> 
-                                                            <p className="text-[#B88E2F]">${items.price}</p>
+                                                            <p className="text-[#B88E2F] tracking-widest">${items.price}</p>
                                                             </div>
                                                 </div>
                                             })

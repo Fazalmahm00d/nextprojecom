@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Button from "../reused-components/Button"
 
 function InspirationSection(){
     return(
@@ -8,7 +9,8 @@ function InspirationSection(){
                 inspiration</div>
                 <p className="text-[#616161] text-xl pr-10">Our designer already made a lot of beautiful prototype of rooms that inspire you</p>
                 <div className="mt-6">
-                    <button className="bg-[#B88E2F] text-white px-12 py-4 font-bold text-xl">Explore More</button>
+                    <Button text="Buy Now" bgColor='bg-[#B88E2F]' style="
+                     hover:bg-transparent hover:text-[#B88E2F] capitalize text-white"/> 
                 </div>
             </div>
             <div className="w-[60%] flex gap-8">

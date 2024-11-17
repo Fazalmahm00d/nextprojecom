@@ -11,7 +11,7 @@ import SvgComponent from "../home-components/Svgcomponent";
 function ProductGrid(){
     const dispatch=useDispatch();
     const isEmail=useSelector((state)=>state.authReducer.isEmail)
-    const [gridProducts,setGridProducts]=useState([
+    const products=[
         {
             id:1,
             img:"/assets/Images (3).png",
@@ -124,7 +124,8 @@ function ProductGrid(){
             desc:"Minimalist brown sofa",
             price:250000
         },
-    ])
+    ]
+    const [gridProducts,setGridProducts]=useState(products)
     async function getCartData() {
         try {
             const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
