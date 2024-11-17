@@ -8,11 +8,9 @@ function Cart(){
 
     return(
         <div>
-            <Header/>
             <ImgSection name="Cart"/>
             <CartItems/>
             <Banner/>
-            <Footer/>
         </div>
     )
 }

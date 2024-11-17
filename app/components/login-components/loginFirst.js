@@ -3,10 +3,13 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { authAction } from '@/app/ReduxStore/Authenticate';
 
 
 
 function LoginFirst(){
+    const dispatch=useDispatch();
     const[isLogin,setIsLogin]=useState(false);
     const[isRemember,setIsRemember]=useState(false);
     const signUpURL="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM";
@@ -18,9 +21,9 @@ function LoginFirst(){
         console.log(res)
         console.log(res.data.idToken);
         
-        // dispatch(authAction.changeTokenValue(res.data.idToken))
+        dispatch(authAction.changeTokenValue(res.data.idToken))
         const newEmail = data.email.replace(/[@.]/g, "");
-        // dispatch(authAction.changeEmailValue(newEmail))
+        dispatch(authAction.changeEmailValue(newEmail))
         if(isRemember){
         localStorage.setItem('token',res.data.idToken)
         localStorage.setItem('email',newEmail);

@@ -40,7 +40,39 @@ function RelatedProducts(){
             price:70000
         },
         
-    ])
+    ]);
+    async function getCartData() {
+        try {
+            const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+            const data=response.data
+            console.log(data);
+            const arr=[]
+            for(let key in data){
+                arr.push({ id:key ,...data[key]});
+            }
+            console.log(arr)
+            dispatch(dataAction.setCartArr(arr));
+        }
+        catch (error) {
+            console.log(error)
+        }
+      }
+    async function sendToFb(img,name,desc,price){
+        const newCartItem={
+            img,
+            name,
+            desc,
+            price
+        }
+        try{
+            const response= await axios.post(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
+            getCartData();
+        }
+        catch(error)
+        {
+            console.error("err:",error)
+        }
+    } 
     return(
         <div className="py-10 px-20 flex flex-col items-center">\
             <h1 className="text-center text-3xl font-bold">Related Products</h1>
@@ -66,7 +98,11 @@ function RelatedProducts(){
                                     </div> 
                                     <div className="bg-opacity-0 absolute z-30 top-0 left-0 hidden group-hover:flex justify-center items-center bg-black group-hover:inset-0 group-hover:bg-opacity-60 ">
                                         <div className="absolute flex flex-col justify-center items-center">
-                                        <button className="bg-white text-[#B88E2F] font-bold text-l px-10 py-2 tracking-wide">Add to cart</button>
+                                        <button onClick={(e)=>{
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            sendToFb(items.img,items.name,items.desc,items.price)
+                                        }} className="bg-white text-[#B88E2F] font-bold text-l px-10 py-2 tracking-wide">Add to cart</button>
                                         <div className="flex gap-3 w-full mt-4 justify-between items-center text-white font-bold text-base">
                                             <div className="flex justify-between items-center gap-1">
                                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

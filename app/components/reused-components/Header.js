@@ -1,16 +1,50 @@
 "use client"
 
+import { dataAction } from "@/app/ReduxStore/dataCart";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+
 function Header(){
+    const dispatch=useDispatch();
+    const cartItems=useSelector((state)=>state.dataReducer.cartItems);
+    const isEmail=useSelector((state)=>state.authReducer.isEmail)
+    console.log(cartItems,"cart items")
     const[cartDisplay,setCartDisplay]=useState(false)
     const showCart=()=>{
         setCartDisplay(true);
+        getCartData();
     }
     const closeCart=()=>{
         setCartDisplay(false);
     }
+    async function getCartData() {
+        try {
+            const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+            const data=response.data
+            console.log(data);
+            const arr=[]
+            for(let key in data){
+                arr.push({ id:key ,...data[key]});
+            }
+            console.log(arr,"data arrray")
+            dispatch(dataAction.setCartArr(arr));
+        }
+        catch (error) {
+            console.log(error)
+        }
+      }
+    const [expenses,setExpenses]=useState()
+    async function updateTotal(){
+        const totalExpenses= await cartItems.reduce(
+                (sum,ele) => Number(sum)+Number(ele.price)
+                ,0);
+        setExpenses(totalExpenses)
+    }
+    updateTotal();
     return(
         <div className="relative w-full">
             {
@@ -26,12 +60,23 @@ function Header(){
                                         </button>
                                     </div>
                                     <div className="h-[60vh]">
+                                        {
+                                            cartItems.map((items)=>{
+                                                return <div className="flex justify-between text-base mt-3">
+                                                            <img src={items.img} className="h-16 w-16 rounded-lg"></img>
+                                                            <div className="flex flex-col items-end gap-2">
+                                                            <h3 className="font-bold text-xl">{items.name}</h3> 
+                                                            <p className="text-[#B88E2F]">${items.price}</p>
+                                                            </div>
+                                                </div>
+                                            })
+                                        }
 
                                     </div>
                                     <div className=" w-full mb-6 ">
                                         <div className="flex justify-between mb-6">
                                             <p className="text-2xl">Subtotal</p>
-                                            <p className="text-2xl text-[#B88E2F]">Rs.0</p>
+                                            <p className="text-2xl text-[#B88E2F]">Rs.{expenses}</p>
                                         </div>
                                         <hr/>
                                         <div className="flex gap-2 px-4 py-10 w-full">
