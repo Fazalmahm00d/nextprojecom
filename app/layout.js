@@ -3,6 +3,8 @@ import "./globals.css";
 import Header from "./components/reused-components/Header";
 import Footer from "./components/reused-components/Footer";
 import ReduxProvider from "./components/redux-components/reduxProvider";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,6 +29,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
+        <ToastContainer position="top-right" autoClose={1500}/>
         <Header/>
         {children}
         <Footer/>

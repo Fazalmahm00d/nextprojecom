@@ -5,10 +5,11 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import SvgComponent from "./Svgcomponent";
 import Button from "../reused-components/Button";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 function FeaturedProducts(){
     const dispatch=useDispatch();
+    const router =useRouter();
     const isEmail=useSelector((state)=>state.authReducer.isEmail)
     const products=[
         {   
@@ -65,11 +66,11 @@ function FeaturedProducts(){
             img:"/assets/image 8 (1).png",
             name:"Binuyo",
             desc:"Minimalist brown sofa",
-            price:250000
+            price:250000,
         },
     ]
     function navigateHandler(){
-        
+        router.push('/shop')
     }
     const [featuredproducts,setFeaturedProducts]=useState(products)
     async function getCartData() {

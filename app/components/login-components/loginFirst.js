@@ -5,22 +5,24 @@ import Image from 'next/image';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { authAction } from '@/app/ReduxStore/Authenticate';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 
 
 function LoginFirst(){
     const dispatch=useDispatch();
+    const router=useRouter();
     const[isLogin,setIsLogin]=useState(false);
     const[isRemember,setIsRemember]=useState(false);
     const signUpURL="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM";
     const logInURL="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM"
 
     async function authFirebase(data){
-        const URL=isLogin ? logInURL : signUpURL
+        try{
+            const URL=isLogin ? logInURL : signUpURL
         const res=await axios.post(URL,data);
         console.log(res)
-        console.log(res.data.idToken);
-        
         dispatch(authAction.changeTokenValue(res.data.idToken))
         const newEmail = data.email.replace(/[@.]/g, "");
         dispatch(authAction.changeEmailValue(newEmail))
@@ -28,7 +30,12 @@ function LoginFirst(){
         localStorage.setItem('token',res.data.idToken)
         localStorage.setItem('email',newEmail);
         }
-        
+        toast.success("Logged In Successfully")
+        router.push('/')
+        }
+        catch(error){
+            toast.error(error.response.data.error.message)
+        }
     }
     const handleSubmit=(e)=>{
         e.preventDefault();

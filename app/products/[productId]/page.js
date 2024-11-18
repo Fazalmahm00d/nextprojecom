@@ -204,7 +204,7 @@ function Dynamic({productId}){
                         <button className="font-bold bg-[#F9F1E7] text-sm h-8 w-8 rounded-sm p-2 hover:bg-[#B88E2F] hover:text-white">L</button>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 h-[3rem] mt-4">
+                    <div className="flex items-center gap-2 h-[3rem] mt-4 w-full">
                         <div className="flex items-center text-xl h-full gap-2 border-2 border-[#9F9F9F] px-4 rounded-xl">
                             <button className=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
@@ -214,10 +214,10 @@ function Dynamic({productId}){
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                             </svg></button>
                         </div>
-                        <button className="h-full w-1/3 border-2 text-xl border-solid border-black rounded-xl px-4 ">
+                        <button className="h-full w-1/3 border-2 text-xl border-solid border-black rounded-xl px-2 break-keep ">
                             Add To Cart
                         </button>
-                        <button className="flex w-1/3 items-center gap-2 h-full w-full border-2 text-xl border-solid border-black rounded-xl px-8">
+                        <button className="flex w-1/3 items-center gap-2 h-full border-2 text-xl border-solid border-black rounded-xl px-8">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                             </svg>

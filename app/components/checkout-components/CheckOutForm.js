@@ -1,4 +1,35 @@
+"use client"
+
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+
 function CheckOutForm(){
+    const isEmail=useSelector((state)=>state.authReducer.isEmail);
+    const [expenses,setExpenses]=useState();
+    async function getCartData() {
+        try {
+            const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+            const data=response.data
+            console.log(data);
+            const arr=[]
+            for(let key in data){
+                arr.push({ id:key ,...data[key]});
+            }
+            console.log(arr,"data array")
+            const totalExpenses= await arr.reduce(
+                (sum,ele) => Number(sum)+Number(ele.price)
+                ,0);
+                setExpenses(totalExpenses)
+        }
+        catch (error) {
+            console.log(error)
+        }
+      }
+    getCartData();
+    
+    
     return(
         <form class="flex" action="">
         <div class="px-20">
@@ -52,7 +83,7 @@ function CheckOutForm(){
                 </div>
                 <div class="flex flex-col gap-4">
                     <label class="font-medium" for="email">Email address</label>
-                    <input class="border focus:outline-none rounded-lg p-4 border-[#9F9F9F]" id="email" type="text" />
+                    <input class="border focus:outline-none rounded-lg p-4 border-[#9F9F9F]" placeholder={isEmail} value={isEmail} id="email" type="text" />
                 </div>
                 <div class="flex flex-col gap-4 mt-6">
                     <input placeholder="Additional information" class="border focus:outline-none rounded-lg p-4 border-[#9F9F9F]" id="additional" type="text" />
@@ -68,11 +99,11 @@ function CheckOutForm(){
                 <div class="max-h-[40vh] overflow-y-auto flex flex-col gap-6"></div>
                 <div class="flex justify-between">
                     <p>Subtotal</p>
-                    <p class="font-light">Rs. 0</p>
+                    <p class="font-light">Rs.{expenses}</p>
                 </div>
                 <div class="flex justify-between">
                     <p>Total</p>
-                    <p class="font-bold text-2xl text-[#B88E2F]">Rs. 0</p>
+                    <p class="font-bold text-2xl text-[#B88E2F]">Rs. {expenses}</p>
                 </div>
             </div>
             <div class="text-[#9F9F9F] py-4">

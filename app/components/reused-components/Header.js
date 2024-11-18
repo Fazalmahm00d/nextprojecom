@@ -1,24 +1,32 @@
 "use client"
 
+import { authAction } from "@/app/ReduxStore/Authenticate";
 import { dataAction } from "@/app/ReduxStore/dataCart";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 
 
 function Header(){
-
+    const router=useRouter();
     const dispatch=useDispatch();
     const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
-    
+    const [expenses,setExpenses]=useState()
     console.log(cartItems,"cart items")
     const[cartDisplay,setCartDisplay]=useState(false)
     const showCart=()=>{
-        setCartDisplay(true);
-        getCartData();
+        if(isEmail){
+            setCartDisplay(true);
+            getCartData();
+        }else{
+            router.push('/login')
+        }
     }
     const closeCart=()=>{
         setCartDisplay(false);
@@ -39,7 +47,7 @@ function Header(){
             console.log(error)
         }
       }
-    const [expenses,setExpenses]=useState()
+    
     async function updateTotal(){
         const totalExpenses= await cartItems.reduce(
                 (sum,ele) => Number(sum)+Number(ele.price)
@@ -47,6 +55,20 @@ function Header(){
         setExpenses(totalExpenses)
     }
     updateTotal();
+
+    const logOutHandler=()=>{
+        localStorage.clear();
+        dispatch(authAction.changeEmailValue(null));
+        dispatch(authAction.changeTokenValue(null));
+        toast.success("Logged Out Successfully");
+    }
+    
+    useEffect(()=>{
+        if(localStorage.getItem('email')){
+            dispatch(authAction.changeEmailValue(localStorage.getItem('email')));
+            dispatch(authAction.changeTokenValue(localStorage.getItem('token')))
+        }
+    })
     return(
         <div className="relative w-full">
             {
@@ -98,6 +120,7 @@ function Header(){
                 <h1 className="font-bold text-4xl">Furniro</h1>
             </div>
             </Link>
+        
             <div>
                 <ul className="flex justify-between items-center gap-16 font-bold tracking-wide">
                     <li><Link href="/">Home</Link></li>
@@ -107,10 +130,12 @@ function Header(){
                 </ul>
             </div>
             <div className="flex justify-between items-center gap-10">
-            <Link href="/login"><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
-            <path d="M21.3335 10.0001V4.16675H23.6668V11.1667H21.3335M21.3335 15.8334H23.6668V13.5001H21.3335M9.66683 11.1667C12.7818 11.1667 19.0002 12.7301 19.0002 15.8334V19.3334H0.333496V15.8334C0.333496 12.7301 6.55183 11.1667 9.66683 11.1667ZM9.66683 0.666748C10.9045 0.666748 12.0915 1.15841 12.9667 2.03358C13.8418 2.90875 14.3335 4.09574 14.3335 5.33341C14.3335 6.57109 13.8418 7.75808 12.9667 8.63325C12.0915 9.50842 10.9045 10.0001 9.66683 10.0001C8.42915 10.0001 7.24217 9.50842 6.367 8.63325C5.49183 7.75808 5.00016 6.57109 5.00016 5.33341C5.00016 4.09574 5.49183 2.90875 6.367 2.03358C7.24217 1.15841 8.42915 0.666748 9.66683 0.666748ZM9.66683 13.3834C6.20183 13.3834 2.55016 15.0867 2.55016 15.8334V17.1167H16.7835V15.8334C16.7835 15.0867 13.1318 13.3834 9.66683 13.3834ZM9.66683 2.88341C9.01705 2.88341 8.39388 3.14154 7.93442 3.601C7.47495 4.06047 7.21683 4.68363 7.21683 5.33341C7.21683 5.98319 7.47495 6.60636 7.93442 7.06583C8.39388 7.52529 9.01705 7.78341 9.66683 7.78341C10.3166 7.78341 10.9398 7.52529 11.3992 7.06583C11.8587 6.60636 12.1168 5.98319 12.1168 5.33341C12.1168 4.68363 11.8587 4.06047 11.3992 3.601C10.9398 3.14154 10.3166 2.88341 9.66683 2.88341Z" fill="black"/>
-            </svg></button>
-            </Link>
+            {
+                isEmail ? <button onClick={logOutHandler} className="border-2 border-solid border-black px-4 rounded-xl">Log Out</button>:<Link href="/login"><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
+                <path d="M21.3335 10.0001V4.16675H23.6668V11.1667H21.3335M21.3335 15.8334H23.6668V13.5001H21.3335M9.66683 11.1667C12.7818 11.1667 19.0002 12.7301 19.0002 15.8334V19.3334H0.333496V15.8334C0.333496 12.7301 6.55183 11.1667 9.66683 11.1667ZM9.66683 0.666748C10.9045 0.666748 12.0915 1.15841 12.9667 2.03358C13.8418 2.90875 14.3335 4.09574 14.3335 5.33341C14.3335 6.57109 13.8418 7.75808 12.9667 8.63325C12.0915 9.50842 10.9045 10.0001 9.66683 10.0001C8.42915 10.0001 7.24217 9.50842 6.367 8.63325C5.49183 7.75808 5.00016 6.57109 5.00016 5.33341C5.00016 4.09574 5.49183 2.90875 6.367 2.03358C7.24217 1.15841 8.42915 0.666748 9.66683 0.666748ZM9.66683 13.3834C6.20183 13.3834 2.55016 15.0867 2.55016 15.8334V17.1167H16.7835V15.8334C16.7835 15.0867 13.1318 13.3834 9.66683 13.3834ZM9.66683 2.88341C9.01705 2.88341 8.39388 3.14154 7.93442 3.601C7.47495 4.06047 7.21683 4.68363 7.21683 5.33341C7.21683 5.98319 7.47495 6.60636 7.93442 7.06583C8.39388 7.52529 9.01705 7.78341 9.66683 7.78341C10.3166 7.78341 10.9398 7.52529 11.3992 7.06583C11.8587 6.60636 12.1168 5.98319 12.1168 5.33341C12.1168 4.68363 11.8587 4.06047 11.3992 3.601C10.9398 3.14154 10.3166 2.88341 9.66683 2.88341Z" fill="black"/>
+                </svg></button>
+                </Link>
+            }
             <button><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
             <path d="M24.5002 24.4999L19.2665 19.2569M22.1668 12.2499C22.1668 14.88 21.122 17.4023 19.2623 19.2621C17.4026 21.1218 14.8802 22.1666 12.2502 22.1666C9.6201 22.1666 7.09776 21.1218 5.23802 19.2621C3.37828 17.4023 2.3335 14.88 2.3335 12.2499C2.3335 9.61985 3.37828 7.09751 5.23802 5.23778C7.09776 3.37804 9.6201 2.33325 12.2502 2.33325C14.8802 2.33325 17.4026 3.37804 19.2623 5.23778C21.122 7.09751 22.1668 9.61985 22.1668 12.2499V12.2499Z" stroke="black" stroke-width="2" stroke-linecap="round"/>
             </svg></button>
