@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SvgComponent from "./Svgcomponent";
 import Button from "../reused-components/Button";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 function FeaturedProducts(){
     const dispatch=useDispatch();
@@ -98,6 +99,7 @@ function FeaturedProducts(){
         }
         try{
             const response= await axios.post(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
+            toast.success("Product added to cart")
             getCartData();
         }
         catch(error)
@@ -127,7 +129,7 @@ function FeaturedProducts(){
                                         <button onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            sendToFb(items.img,items.name,items.desc,items.price)
+                                            isEmail ? sendToFb(items.img,items.name,items.desc,items.price):toast.error("Log In to access cart")
                                         }} className="bg-white text-[#B88E2F] font-bold text-l px-10 py-2 tracking-wide">Add to cart</button>
                                         <div className="flex gap-3 w-full mt-4 justify-between items-center text-white font-bold text-base">
                                             

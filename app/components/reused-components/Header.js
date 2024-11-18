@@ -25,6 +25,7 @@ function Header(){
             setCartDisplay(true);
             getCartData();
         }else{
+            toast.warning("Log In to access Cart")
             router.push('/login')
         }
     }
@@ -72,7 +73,7 @@ function Header(){
     return(
         <div className="relative w-full">
             {
-                cartDisplay ? <div className="absolute h-[100vh] w-full  z-20 inset-0 bg-black bg-opacity-20 ">
+                cartDisplay ? <div className="absolute h-[100vh] w-[100vw] border-red-800 border-2 z-20 overflow-hidden inset-0 bg-black bg-opacity-20  ">
                                 <div className="absolute z-50 bg-white w-1/3  h-[100vh] top-0 right-0  px-10 py-6">
                                     <div className="relative flex  justify-between items-center mb-6">
                                         <h1 className="text-2xl font-bold">Shopping Cart</h1>

@@ -3,15 +3,20 @@
 import Footer from "@/app/components/reused-components/Footer";
 import Header from "@/app/components/reused-components/Header";
 import RelatedProducts from "@/app/components/reused-components/RelatedProducts";
+import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 
 function Dynamic({productId}){
     const result=useParams();
+    const dispatch=useDispatch();
+    const isEmail=useSelector((state)=>state.authReducer.isEmail)
     console.log(result)
-    const [gridProducts,setGridProducts]=useState([
+    const products=[
         {
             id:'1',
             img:"/assets/Images (3).png",
@@ -124,8 +129,41 @@ function Dynamic({productId}){
             desc:"Minimalist brown sofa",
             price:250000
         },
-    ]);
-
+    ]
+    const [gridProducts,setGridProducts]=useState(products);
+    async function getCartData() {
+        try {
+            const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+            const data=response.data
+            console.log(data);
+            const arr=[]
+            for(let key in data){
+                arr.push({ id:key ,...data[key]});
+            }
+            console.log(arr)
+            dispatch(dataAction.setCartArr(arr));
+        }
+        catch (error) {
+            console.log(error)
+        }
+      }
+    async function sendToFb(img,name,desc,price){
+        const newCartItem={
+            img,
+            name,
+            desc,
+            price
+        }
+        try{
+            const response= await axios.post(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
+            toast.success("Product added to cart")
+            getCartData();
+        }
+        catch(error)
+        {
+            console.error("err:",error)
+        }
+    }   
     const filtereddata=gridProducts.find((item)=>(item.id===result.productId));
     console.log(filtereddata);
     return(
@@ -214,7 +252,11 @@ function Dynamic({productId}){
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                             </svg></button>
                         </div>
-                        <button className="h-full w-1/3 border-2 text-xl border-solid border-black rounded-xl px-2 break-keep ">
+                        <button onClick={(e)=>{
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            isEmail ? sendToFb(filtereddata.img,filtereddata.name,filtereddata.desc,filtereddata.price):toast.error("Log In to access cart")
+                                        }} className="h-full w-1/3 border-2 text-xl border-solid border-black rounded-xl px-2 break-keep ">
                             Add To Cart
                         </button>
                         <button className="flex w-1/3 items-center gap-2 h-full border-2 text-xl border-solid border-black rounded-xl px-8">

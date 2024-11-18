@@ -49,6 +49,9 @@ function LoginFirst(){
 
         authFirebase(data);
     }
+    const forgotHandler=()=>{
+        router.push('/forgot')
+    }
     function switchToLogIn(){
         setIsLogin(true);
     }
@@ -83,7 +86,7 @@ function LoginFirst(){
                         <input  type="checkbox" checked={isRemember} onChange={(e) => setIsRemember(e.target.checked)} name="remember"/>
                         <p className="ml-2 text-sm text-[#B88E2F]">Remember Me</p>
                         </div>
-                        <a className="text-sm text-[#B88E2F] font-bold">Forgot Password?</a>
+                        <div onClick={forgotHandler} className="text-sm text-[#B88E2F] font-bold">Forgot Password?</div>
                     </div>
                     <div className='flex justify-end'>
                     <button type="submit" className="mt-8 py-2 rounded-2xl bg-[#B88E2F] w-[50%] text-white font-bold text-l">{isLogin ? "Log In":"Register"}</button>

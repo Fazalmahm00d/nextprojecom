@@ -5,8 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import SvgComponent from "../home-components/Svgcomponent";
 import Button from "./Button";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 function RelatedProducts(){
+    const isEmail=useSelector((state)=>state.authReducer.isEmail)
     const [relatedProducts,setRelatedProducts]=useState([
         
         {
@@ -68,6 +71,7 @@ function RelatedProducts(){
         }
         try{
             const response= await axios.post(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
+            toast.success("Product added to cart")
             getCartData();
         }
         catch(error)
@@ -103,7 +107,7 @@ function RelatedProducts(){
                                         <button onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            sendToFb(items.img,items.name,items.desc,items.price)
+                                            isEmail ? sendToFb(items.img,items.name,items.desc,items.price):toast.error("Log In to access cart")
                                         }} className="bg-white text-[#B88E2F] font-bold text-l px-10 py-2 tracking-wide">Add to cart</button>
                                         <div className="flex gap-3 w-full mt-4 justify-between items-center text-white font-bold text-base">
                                             <SvgComponent name="Share" svg={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
