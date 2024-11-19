@@ -15,12 +15,16 @@ function LoginFirst(){
     const router=useRouter();
     const[isLogin,setIsLogin]=useState(false);
     const[isRemember,setIsRemember]=useState(false);
+    const [isSendingReq,setIsSendingReq]=useState(false);
+    const[isValidMail,setIsValidMail]=useState(true);
+    const[IsValidPsswd,setIsValidPsswd]=useState(true);
     const signUpURL="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM";
     const logInURL="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM"
 
     async function authFirebase(data){
+        setIsSendingReq(true);
         try{
-            const URL=isLogin ? logInURL : signUpURL
+        const URL=isLogin ? logInURL : signUpURL
         const res=await axios.post(URL,data);
         console.log(res)
         dispatch(authAction.changeTokenValue(res.data.idToken))
@@ -36,18 +40,43 @@ function LoginFirst(){
         catch(error){
             toast.error(error.response.data.error.message)
         }
+        finally{
+            setIsSendingReq(false);
+        }
     }
+
     const handleSubmit=(e)=>{
         e.preventDefault();
         const email=e.target.email.value;
         const password=e.target.password.value;
+        const patt = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const pr=patt.test(email);
+        const pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+        const pr2=pattern.match(password);
+        console.log(pr2,"psswd value")
+        console.log("pr value",pr)
+        if(pr){
+            setIsValidMail(true);
+            console.log("email set to true")
+        }else{
+            setIsValidMail(false);
+            console.log("email set to false")
+        }
+        if(pr2){
+            setIsValidPsswd(true);
+            console.log("password set to true")
+        }else{
+            setIsValidPsswd(false);
+            console.log("password set to false")
+        }
         const data={
             email,
             password,
             returnSecureToken:true
         }
-
-        authFirebase(data);
+        if(isValidMail && IsValidPsswd){
+            authFirebase(data);
+        }
     }
     const forgotHandler=()=>{
         router.push('/forgot')
@@ -78,9 +107,13 @@ function LoginFirst(){
                     
                     <form onSubmit={handleSubmit}  className="flex flex-col gap-3 w-full ">
                         <label className='mt-4 text-[#B88E2F] font-bold' htmlFor="email">Email</label>
-                        <input className="text-md px-8 py-3 rounded-3xl " id="email" name="email" type="email" placeholder="Enter your Email Address"/>
+                        {!isValidMail ? 
+                        <div><input  className="text-md px-8 py-3 rounded-3xl border-2 border-red-700 " id="email" name="email" type="text" placeholder="Enter your Email Address"/><p className='text-red-700'>Please enter a valid email address</p></div> : <input className="text-md px-8 py-3 rounded-3xl " id="email" name="email" type="text" placeholder="Enter your Email Address"/>}
                         <label className='mt-4 text-[#B88E2F] font-bold' htmlFor="password">Password</label>
-                        <input className="text-md px-8 py-3 rounded-3xl" id="password" name="password" type="password" placeholder="Enter your Password"/>
+                        {
+                        !IsValidPsswd?<div><input className="text-md px-8 py-3 rounded-3xl" id="password" name="password" type="password" placeholder="Enter your Password"/><p className='text-red-700'>Password  Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p></div>
+                        :<input className="text-md px-8 py-3 rounded-3xl" id="password" name="password" type="password" placeholder="Enter your Password"/>
+                        }
                         <div className="flex justify-between items-center">
                         <div className='flex items-center'>
                         <input  type="checkbox" checked={isRemember} onChange={(e) => setIsRemember(e.target.checked)} name="remember"/>
@@ -89,7 +122,11 @@ function LoginFirst(){
                         <div onClick={forgotHandler} className="text-sm text-[#B88E2F] font-bold">Forgot Password?</div>
                     </div>
                     <div className='flex justify-end'>
-                    <button type="submit" className="mt-8 py-2 rounded-2xl bg-[#B88E2F] w-[50%] text-white font-bold text-l">{isLogin ? "Log In":"Register"}</button>
+                        {
+                            !isSendingReq ? <button type="submit" className="mt-8 py-2 rounded-2xl bg-[#B88E2F] w-[50%] text-white font-bold text-l">{isLogin ? "Log In":"Register"}</button>
+                            :
+                            <button type="submit" className="mt-8 py-2 rounded-2xl bg-[#B88E2F] w-[50%] text-white font-bold text-l cursor-not-allowed">Sending...</button> 
+                        }
                     </div>
                 </form>
                 </div>
