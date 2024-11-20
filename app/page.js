@@ -1,8 +1,5 @@
-import HeroSection from "./components/home-components/HeroSection";
-import ProductCategories from "./components/home-components/ProductCategories";
-import FeaturedProducts from "./components/home-components/FeaturedProducts";
-import InspirationSection from "./components/home-components/InspirationSection";
-import FurniroFurniture from "./components/home-components/FurniroFurniture";
+
+import LandingPage from "./components/home-components/LandingPage";
 
 
 export const metadata={
@@ -13,11 +10,7 @@ export const metadata={
 export default function Home() {
   return (
     <div>
-       <HeroSection/>
-       <ProductCategories/>
-       <FeaturedProducts/>
-       <InspirationSection/>
-       <FurniroFurniture/>
+       <LandingPage/>
     </div>
   );
 }

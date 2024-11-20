@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function CheckOutForm(){
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
+    const [isLoading,setIsLoading]=useState(true);
     const [expenses,setExpenses]=useState();
     async function getCartData() {
         try {
@@ -25,6 +26,9 @@ function CheckOutForm(){
         }
         catch (error) {
             console.log(error)
+        }
+        finally{
+            setIsLoading(false)
         }
       }
     getCartData();
@@ -97,26 +101,40 @@ function CheckOutForm(){
                     <p>Subtotal</p>
                 </div>
                 <div class="max-h-[40vh] overflow-y-auto flex flex-col gap-6"></div>
+                
+                {
+                    isLoading ?
+                <div>
+                    <div class="flex justify-between">
+                    <p>Subtotal</p>
+                    <p class="font-light bg-gray-200 h-4 w-16 rounded-xl"></p>
+                </div>
                 <div class="flex justify-between">
+                    <p>Total</p>
+                    <p class="font-bold text-2xl text-[#B88E2F] bg-gray-200 h-8 w-32 rounded-xl"></p>
+                </div></div>
+                : <div>
+                    <div class="flex justify-between">
                     <p>Subtotal</p>
                     <p class="font-light">Rs.{expenses}</p>
                 </div>
                 <div class="flex justify-between">
                     <p>Total</p>
                     <p class="font-bold text-2xl text-[#B88E2F]">Rs. {expenses}</p>
-                </div>
+                </div> </div>
+                }
             </div>
             <div class="text-[#9F9F9F] py-4">
                 <div class="group mb-3">
                     <label class="inline-flex cursor-pointer items-center gap-3 mb-3 duration-300 " for="bank">
-                        <input class="peer sr-only" type="radio" name="payment" id="bank"/>
-                        <span class="w-3 h-3 border border-[#9F9F9F] rounded-full peer-checked:bg-black peer-checked:border-black"></span>Direct Bank Transfer</label>
+                        <input class="peer " type="radio" name="payment" id="bank"/>
+                        <span class="w-3 h-3 border border-[#9F9F9F] rounded-full "></span>Direct Bank Transfer</label>
                         <p class="hidden">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
                 </div>
                 <div class="group">
                     <label class="inline-flex cursor-pointer items-center gap-3 mb-3 duration-300 " for="cash">
-                        <input class="peer sr-only" type="radio" name="payment" id="cash"/>
-                        <span class="w-3 h-3 border border-[#9F9F9F] rounded-full peer-checked:bg-black peer-checked:border-black"></span>Cash On Delivery</label>
+                        <input class="peer " type="radio" name="payment" id="cash"/>
+                        <span class="w-3 h-3 border border-[#9F9F9F] rounded-full "></span>Cash On Delivery</label>
                         <p class="hidden">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
                 </div>
             </div>

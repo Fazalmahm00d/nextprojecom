@@ -1,7 +1,4 @@
-import Banner from "../components/reused-components/Banner";
-import ImgSection from "../components/reused-components/ImgSection";
-import Filter from "../components/shop-components/Filter";
-import ProductGrid from "../components/shop-components/ProductGrid";
+import ShopMain from "../components/shop-components/ShopMain";
 
 
 export const metadata={
@@ -13,10 +10,7 @@ export const metadata={
 const Shop=()=>{
     return(
         <div>
-            <ImgSection name="Shop"/>
-            <Filter/>
-            <ProductGrid/>
-            <Banner/>
+            <ShopMain/>
         </div>
     )
 }

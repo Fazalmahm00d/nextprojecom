@@ -21,6 +21,7 @@ function Header(){
     console.log(cartItems,"cart items")
     const[cartDisplay,setCartDisplay]=useState(false);
     const[burgerDisplay,setBurgerDisplay]=useState(false);
+    const[isLoading,setIsLoading]=useState(true)
     const showBurger=()=>{
         setBurgerDisplay(true);
     }
@@ -53,6 +54,9 @@ function Header(){
         }
         catch (error) {
             console.log(error)
+        }
+        finally{
+            setIsLoading(false)
         }
       }
     
@@ -122,8 +126,21 @@ function Header(){
                                         </button>
                                     </div>
                                     <div className="h-[60vh]">
-                                        {
-                                            cartItems.map((items)=>{
+                                    { 
+                                    isLoading ? 
+                                        [1,2,3].map((item)=>{
+                                                return <div key={item} className="flex justify-between text-base mt-3">
+                                                            
+                                                         <div  className="h-16 w-16 rounded-lg bg-gray-200"></div>
+                                                            <div className="flex flex-col items-end gap-2">
+                                                            <div className="text-[#B88E2F] w-16 h-4 bg-gray-200"></div>
+                                                            <div className="font-bold text-xl w-10 h-4  bg-gray-200"></div> 
+                                                            </div>
+                                                        </div>
+                                                })
+                                    
+                                       : 
+                                        cartItems.map((items)=>{
                                                 return <div className="flex justify-between text-base mt-3">
                                                             <img src={items.img} className="h-16 w-16 rounded-lg"></img>
                                                             <div className="flex flex-col items-end gap-2">
@@ -132,8 +149,8 @@ function Header(){
                                                             </div>
                                                 </div>
                                             })
-                                        }
-
+                                        
+                                    }
                                     </div>
                                     <div className=" w-full mb-6 ">
                                         <div className="flex justify-between mb-6">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SvgComponent from "../home-components/Svgcomponent";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 function RelatedProducts(){
     const isEmail=useSelector((state)=>state.authReducer.isEmail)
+    const [isLoading,setIsLoading]=useState(true);
     const [relatedProducts,setRelatedProducts]=useState([
         
         {
@@ -61,6 +62,9 @@ function RelatedProducts(){
         catch (error) {
             console.log(error)
         }
+        finally{
+            setIsLoading(false);
+        }
       }
     async function sendToFb(img,name,desc,price){
         const newCartItem={
@@ -77,23 +81,27 @@ function RelatedProducts(){
         catch(error)
         {
             console.error("err:",error)
-        }
+        }  
     } 
+    useEffect(()=>{
+        getCartData();
+    },[])
     return(
         <div className="py-10 px-20 flex flex-col items-center">\
             <h1 className="text-center text-3xl font-bold">Related Products</h1>
             <div className="grid grid-cols-4 gap-10 w-full mt-6">
                 {   
-                    
+                    isLoading ?   
+                    [1,2,3,4].map((item)=>{
+                        return <div key={item} className="h-[28rem] bg-gray-200">
+
+                        </div>
+                    }) 
+                    :
                     relatedProducts.map((items)=>{
                         const productId=items.id;
-                        const data={
-                            name:items.name,
-                            desc:items.desc,
-                            img:items.img,
-                        }
                         return  <Link href={`${productId}`}>
-                                           <div className="group relative cursor-pointer h-[28rem]">
+                                <div className="group relative cursor-pointer h-[28rem]">
                                     <div className="h-[70%]">
                                         <img className="w-full h-full" src={items.img}></img>
                                     </div> 

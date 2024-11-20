@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 function FeaturedProducts(){
     const dispatch=useDispatch();
     const router =useRouter();
+    const[isLoading,setIsLoading]=useState();
     const isEmail=useSelector((state)=>state.authReducer.isEmail)
     const products=[
         {   
@@ -89,6 +90,9 @@ function FeaturedProducts(){
         catch (error) {
             console.log(error)
         }
+        finally{
+            setIsLoading(false);
+        }
       }
     async function sendToFb(img,name,desc,price){
         const newCartItem={
@@ -107,12 +111,22 @@ function FeaturedProducts(){
             console.error("err:",error)
         }
     } 
+    useEffect(()=>{
+        getCartData();
+    })
     
     return(
         <div className="lg:py-10 lg:px-20 py-5 px-10 flex flex-col items-center">
             <h1 className="lg:text-3xl font-bold text-xl">Our Products</h1>
             <div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-3 gap-20 sm:gap-10 w-full lg:mt-6 sm:mt-3">
                 {
+                    isLoading ?
+                    [1,2,3,4,5,6,7].map((item)=>{
+                        return <div key={item} className="h-[28rem] bg-gray-200">
+
+                        </div>
+                    })
+                    :
                     featuredproducts.map((items)=>{
                         const productId=items.id;
                         return <Link href={`products/${productId}`}><div className="group relative cursor-pointer lg:h-[28rem] sm:h-[18rem]">

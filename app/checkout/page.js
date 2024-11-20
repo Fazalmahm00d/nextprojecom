@@ -1,13 +1,23 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import Billing from "../components/checkout-components/Billing";
 import Banner from "../components/reused-components/Banner";
-import Footer from "../components/reused-components/Footer";
-import Header from "../components/reused-components/Header";
-import ImgSection from "../components/reused-components/ImgSection";
+import ImgSectionLoading from "../fallbackloading/ImgSectionLoading";
+
+
 
 function CheckOut(){
+    const ImgSection = dynamic(
+        () => import("../components/reused-components/ImgSection"),
+        {
+          loading: () => <ImgSectionLoading/>,
+          ssr: false,
+        }
+      );
     return(
         <div>
-           
+
             <ImgSection name="CheckOut"/>
             <Billing/>
             <Banner/>
@@ -17,3 +27,8 @@ function CheckOut(){
 }
 
 export default CheckOut;
+
+
+
+
+

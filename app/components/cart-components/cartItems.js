@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 function CartItems(){
     const dispatch=useDispatch();
     const cartItems=useSelector((state)=>state.dataReducer.cartItems);
-    const isEmail=useSelector((state)=>state.authReducer.isEmail)
+    const isEmail=useSelector((state)=>state.authReducer.isEmail);
+    const[isLoading,setIsLoading]=useState(true);
     console.log(cartItems,"cart items");
     async function getCartData() {
         try {
@@ -26,6 +27,9 @@ function CartItems(){
         catch (error) {
             console.log(error)
         }
+        finally{
+            setIsLoading(false)
+        }
       }
     const [expenses,setExpenses]=useState()
     async function updateTotal(){
@@ -38,7 +42,7 @@ function CartItems(){
     useEffect(
         ()=>{
             getCartData()    
-            },[]
+            },[cartItems]
     )   
     return(
         <div className="p-20 flex gap-8">
@@ -50,8 +54,21 @@ function CartItems(){
                     <div>Subtotal</div>
                 </div>
                 <div className="h-[60vh]">
-                    {
-                        cartItems.map((items)=>{
+                    {   
+                     isLoading?   [1,2,3].map((item)=>{
+                            return <div key={item} className="grid grid-cols-4 items-center pl-6  text-base mt-3">
+                                        <div className="flex gap-4 items-center">
+                                            <div  className="h-16 w-16 rounded-lg bg-gray-200"></div>
+                                            <h3 className="font-bold text-xl w-16 bg-gray-200"></h3> 
+                                        </div>
+                                        <div className="text-[#B88E2F] w-10 h-4 bg-gray-200"></div>
+                                        <div className="font-bold text-xl h-16 w-6 bg-gray-200"></div> 
+                                        <div className="text-[#B88E2F]  w-10 h-4 bg-gray-200"></div>
+                                    </div>
+                            })
+                    
+                    :
+                     cartItems.map((items)=>{
                             return <div className="grid grid-cols-4 items-center pl-6  text-base mt-3">
                                         <div className="flex gap-4 items-center">
                                         <img src={items.img} className="h-16 w-16 rounded-lg"></img>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 
 function ProductGrid(){
     const dispatch=useDispatch();
+    const[isLoading,setIsLoading]=useState(true);
     const isEmail=useSelector((state)=>state.authReducer.isEmail)
     const products=[
         {
@@ -142,6 +143,9 @@ function ProductGrid(){
         catch (error) {
             console.log(error)
         }
+        finally{
+            setIsLoading(false);
+        }
       }
     async function sendToFb(img,name,desc,price){
         const newCartItem={
@@ -159,12 +163,21 @@ function ProductGrid(){
         {
             console.error("err:",error)
         }
-    }   
+    }
+    useEffect(()=>{
+        getCartData();
+    },[])   
     return(
         <div className="py-10 px-20 flex flex-col items-center">
             <div className="grid grid-cols-4 gap-10 w-full mt-6">
-                {   
-                    
+                {  
+                    isLoading ?
+                    [1,2,3,4].map((item)=>{
+                        return <div key={item} className="h-[28rem] bg-gray-200">
+
+                        </div>
+                    }) 
+                    :
                     gridProducts.map((items)=>{
                         const productId=items.id;
                         const data={
