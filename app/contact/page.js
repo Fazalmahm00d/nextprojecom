@@ -1,8 +1,9 @@
 "use client"
 import dynamic from "next/dynamic";
-import Banner from "../components/reused-components/Banner";
+
 import ImgSectionLoading from "../fallbackloading/ImgSectionLoading";
 import ContactFormLoading from "../fallbackloading/ContactFormLoading";
+import BannerLoading from "../fallbackloading/BannerLoading";
 
 function Contact(){
     const ImgSection = dynamic(
@@ -17,6 +18,13 @@ function Contact(){
           loading: () => <ContactFormLoading/>,
           ssr: false,
         })
+    const Banner=dynamic(
+        ()=>import("../components/reused-components/Banner"),
+        {
+            loading: () => <BannerLoading/>,
+            ssr:false,
+        } 
+    )
     return(
         <div>
             <ImgSection name="Contact"/>

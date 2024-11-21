@@ -82,7 +82,7 @@ function Header(){
         }
     })
     return(
-        <div className="relative w-full">
+        <div className="relative w-full bg-white">
             {
                 burgerDisplay?<div className="absolute top-16 h-screen w-screen bg-white no-doc-scroll z-20">
                     <div className="flex flex-col items-center justify-center gap-16 mt-10 font-bold">
@@ -141,7 +141,7 @@ function Header(){
                                     
                                        : 
                                         cartItems.map((items)=>{
-                                                return <div className="flex justify-between text-base mt-3">
+                                                return <div key={items.id} className="flex justify-between text-base mt-3">
                                                             <img src={items.img} className="h-16 w-16 rounded-lg"></img>
                                                             <div className="flex flex-col items-end gap-2">
                                                             <h3 className="font-bold text-xl">{items.name}</h3> 
@@ -175,7 +175,7 @@ function Header(){
             </Link>
         
             <div>
-                <ul className="hidden sm:flex justify-between items-center lg:gap-16 sm:gap-2 sm:text-sm font-bold tracking-wide">
+                <ul className="hidden sm:flex justify-between items-center lg:text-base lg:gap-16 sm:gap-2 sm:text-sm font-bold tracking-wide">
                     <li><Link href="/">Home</Link></li>
                     <li><Link href="/shop">Shop</Link></li>
                     <li>About</li>

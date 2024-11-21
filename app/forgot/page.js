@@ -17,7 +17,7 @@ function ForgotPassword(){
                 Enter your email address.Password reset link will be sent to your email.
             </div>
             <form onSubmit={handleSubmit} className="h-[3rem] flex gap-10 ">
-                <input className="px-2 h-full border-solid border-black border-2 rounded-xl" name="email" type="email" placeholder="Enter your email"/>
+                <input className="px-2 focus:outline-none h-full border-solid border-black border-2 rounded-xl" name="email" type="email" placeholder="Enter your email"/>
                 <button className="h-full bg-blue-700 px-8 py-2 text-white rounded-lg " type="submit">Submit</button>
             </form>
         </div>

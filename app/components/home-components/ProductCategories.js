@@ -6,16 +6,23 @@ function ProductCategories(){
                 <h3 className="lg:text-xl text-sm mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
             </div>
             <div className="grid grid-cols-1 px-4 gap-10 sm:flex lg:gap-10 lg:mt-10 sm:gap-5 mt-5">
-                <div className="text-center">
-                    <img className="h-full" src="/assets/Mask Group (5).png"></img>
+                <div className="text-center ">
+                    <div className="overflow-hidden rounded-xl">
+                        <img className="h-full hover:scale-[1.2] duration-300" src="/assets/Mask Group (5).png"></img>
+                    </div>
                     <div className="lg:mt-4 sm:mt-2 font-bold lg:text-xl sm:text-sm">Dining</div>
                 </div>
                 <div className="text-center ">
-                    <img className="h-full" src="/assets/Image-living room.png"></img>
+                    <div className="overflow-hidden rounded-xl">
+                    <img className="h-full hover:scale-[1.2] duration-300" src="/assets/Image-living room.png"></img>
+                    </div>
                     <div className="lg:mt-4 sm:mt-2 font-bold lg:text-xl sm:text-sm">Living</div>
                 </div>
+
                 <div className="text-center ">
-                    <img className="h-full" src="/assets/Mask Group (6).png"></img>
+                    <div className="overflow-hidden rounded-xl">
+                    <img className="h-full hover:scale-[1.2] duration-300" src="/assets/Mask Group (6).png"></img>
+                    </div>
                     <div className="lg:mt-4 sm:mt-2 font-bold lg:text-xl sm:text-sm">Bedroom</div>
                 </div>
             </div>

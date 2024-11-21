@@ -6,7 +6,7 @@ import RelatedProducts from "@/app/components/reused-components/RelatedProducts"
 import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -14,7 +14,8 @@ import { toast } from "react-toastify";
 function Dynamic({productId}){
     const result=useParams();
     const dispatch=useDispatch();
-    const isEmail=useSelector((state)=>state.authReducer.isEmail)
+    const isEmail=useSelector((state)=>state.authReducer.isEmail);
+    const[isImage,setIsImage]=useState();
     console.log(result)
     const products=[
         {
@@ -69,6 +70,9 @@ function Dynamic({productId}){
         {
             id:'8',
             img:"/assets/image 8 (1).png",
+            img2:"/assets/pexels-karolina-grabowska-5942482.jpg",
+            img3:"/assets/pexels-karolina-grabowska-5942509.jpg",
+            img4:"/assets/2149178885.jpg",
             name:"Binuyo",
             desc:"Minimalist brown sofa",
             price:250000
@@ -130,6 +134,9 @@ function Dynamic({productId}){
             price:250000
         },
     ]
+    function changeImageHandler(img){
+        setIsImage(img);
+    }
     const [gridProducts,setGridProducts]=useState(products);
     async function getCartData() {
         try {
@@ -166,6 +173,9 @@ function Dynamic({productId}){
     }   
     const filtereddata=gridProducts.find((item)=>(item.id===result.productId));
     console.log(filtereddata);
+    useEffect(()=>{
+        changeImageHandler(filtereddata.img);
+    },[])
     return(
         <div>
             
@@ -189,13 +199,30 @@ function Dynamic({productId}){
             <div className="flex items-start justify-center px-20 py-10">
                 <div className="w-1/2 flex  gap-16 ">
                 <div className=" flex flex-col gap-5">
-                    <img className="rounded-lg" src={filtereddata.img} width={80} height={80}></img>
-                    <img className="rounded-lg" src={filtereddata.img} width={80} height={80}></img>
-                    <img className="rounded-lg" src={filtereddata.img} width={80} height={80}></img>
-                    <img className="rounded-lg" src={filtereddata.img} width={80} height={80}></img>
+                    <img onClick={(e)=>{
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            changeImageHandler(filtereddata.img)
+                                        }} className="rounded-lg h-20 w-20" src={filtereddata.img} width={80} height={80}></img>
+                    <img  className="rounded-lg h-20 w-20" onClick={(e)=>{
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            changeImageHandler(filtereddata.img2)
+                                        }}  src={filtereddata.img2} width={80} height={80}></img>
+                    <img  className="rounded-lg h-20 w-20" onClick={(e)=>{
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            changeImageHandler(filtereddata.img3)
+                                        }} src={filtereddata.img3} width={80} height={80}></img>
+                    <img  className="rounded-lg h-20 w-20" onClick={(e)=>{
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            changeImageHandler(filtereddata.img4)
+                                        }} src={filtereddata.img4} width={80} height={80}></img>
                 </div>
                 <div className=" ">
-                    <img className="h-[28rem] w-full rounded-xl" src={filtereddata.img}></img>
+                    <img className="h-[28rem] w-full rounded-xl" src={isImage}></img>
+                    
                 </div>
                 </div>
                 <div className="w-1/2 px-20 py-2 flex flex-col gap-2 items-start justify-start ">
@@ -259,12 +286,7 @@ function Dynamic({productId}){
                                         }} className="h-full w-1/3 border-2 text-xl border-solid border-black rounded-xl px-2 break-keep ">
                             Add To Cart
                         </button>
-                        <button className="flex w-1/3 items-center gap-2 h-full border-2 text-xl border-solid border-black rounded-xl px-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
-                            </svg>
-                            Compare
-                        </button>
+                        
                     </div>
                     
                     <div className="flex flex-col gap-5 mt-3 w-full">

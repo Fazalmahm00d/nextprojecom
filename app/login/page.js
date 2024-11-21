@@ -1,4 +1,4 @@
-import FirstLogin from "../components/login-components/loginFirst";
+import LoginPage from "../components/login-components/loginPage";
 
 
 export const metadata={
@@ -10,8 +10,7 @@ export const metadata={
 const Login=()=>{
     return(
         <div>
-            <FirstLogin/>
-        
+            <LoginPage/>
         </div>
     )
 }

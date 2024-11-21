@@ -51,8 +51,8 @@ function LoginFirst(){
         const password=e.target.password.value;
         const patt = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const pr=patt.test(email);
-        const pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-        const pr2=pattern.match(password);
+        const pattern=/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
+        const pr2=pattern.test(password);
         console.log(pr2,"psswd value")
         console.log("pr value",pr)
         if(pr){

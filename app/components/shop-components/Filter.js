@@ -22,8 +22,8 @@ function Filter(){
                 </div>
             </div>
             <div className="flex gap-6">
-                <div className="flex items-center gap-2"><p>Show</p> <input className="h-10 w-10 text-center bg-white font-light" placeholder="16"/></div>
-                <div className="flex items-center gap-2"><p>Sort By</p> <input className="h-10 w-28 px-2 bg-white font-light" placeholder="Default"/></div>
+                <div className="flex items-center gap-2"><p>Show</p> <input className="focus:outline-none h-10 w-10 text-center bg-white font-light" placeholder="16"/></div>
+                <div className="flex items-center gap-2"><p>Sort By</p> <input className="focus:outline-none h-10 w-28 px-2 bg-white font-light" placeholder="Default"/></div>
             </div>
         </div>
     )

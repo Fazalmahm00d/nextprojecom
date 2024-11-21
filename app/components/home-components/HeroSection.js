@@ -1,6 +1,12 @@
+"use client"
+import { useRouter } from "next/navigation";
 import Button from "../reused-components/Button";
 
 function HeroSection(){
+    const router =useRouter();
+    function navigateHandler(){
+        router.push('/shop')
+    }
     return(
         <div className="relative">
             <img className="object-cover h-[90vh] w-full  lg:h-[100vh] sm:h-[75vh]" src="/assets/scandinavian-interior-mockup-wall-decal-background 1.png"></img>
@@ -9,7 +15,7 @@ function HeroSection(){
                     <p className="font-semibold text-base letter tracking-[3px] pb-2 pt-6">New Arrival</p>
                     <h1 className="font-bold lg:text-5xl text-2xl sm:text-3xl text-[#B88E2F] lg:pb-4 pb-2">Discover Our <br/> New Collection</h1>
                     <p className="lg:text-lg sm:text-md font-medium sm:pb-6 lg:pb-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <Button text="Buy Now" bgColor='bg-[#B88E2F]' style="
+                    <Button onClick={navigateHandler} text="Buy Now" bgColor='bg-[#B88E2F]' style="
                      hover:bg-transparent hover:text-[#B88E2F] uppercase text-white"/> 
                 </div>
             </div>

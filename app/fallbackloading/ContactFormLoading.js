@@ -14,13 +14,13 @@ function ContactFormLoading(){
                 <div className="w-1/2">
                     <form className="flex flex-col gap-8 text-[#9F9F9F]">
                         <label className=" bg-gray-200 w-32 h-8"></label>
-                        <input  placeholder="Abc" className="w-full p-4 bg-gray-200  h-8 rounded-xl border-gray-500 border-2"/>
+                        <input   className="focus:outline-none w-full p-4 bg-gray-200  h-8 rounded-xl "/>
                         <label className="bg-gray-200 w-32 h-8"></label>
-                        <input placeholder="Abc@def.com" className="w-full p-4 bg-gray-200  h-8 rounded-xl border-gray-500 border-2"/>
+                        <input  className="focus:outline-none w-full p-4 bg-gray-200  h-8 rounded-xl "/>
                         <label className="bg-gray-200 w-32 h-8"></label>
-                        <input placeholder="This is an optional" className="w-full bg-gray-200 w-32 h-8 p-4 rounded-xl border-gray-500 border-2"/>
+                        <input  className="focus:outline-none w-full bg-gray-200 w-32 h-8 p-4 rounded-xl "/>
                         <label className="bg-gray-200 w-32 h-8"></label>
-                        <textarea placeholder="Hi! i’d like to ask about" className="w-full h-[8rem] bg-gray-200  p-4 rounded-xl border-gray-500 border-2"/>
+                        <textarea  className="focus:outline-none w-full h-[8rem] bg-gray-200  p-4 rounded-xl "/>
                         <div className="w-full"><button className="w-1/2 bg-[#B88E2F] text-white px-16 py-4" type="submit">Submit</button></div>
                     </form>
                 </div>
