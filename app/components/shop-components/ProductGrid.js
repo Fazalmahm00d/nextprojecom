@@ -185,7 +185,7 @@ function ProductGrid(){
                             desc:items.desc,
                             img:items.img,
                         }
-                        return  <Link href={`products/${productId}`}>
+                        return  <Link key={items.id} href={`products/${productId}`}>
                                     <div key={items.id} className="group relative cursor-pointer h-[28rem]">
                                     <div className="h-[70%]">
                                         <img className="w-full h-full" src={items.img}></img>

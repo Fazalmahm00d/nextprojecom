@@ -29,14 +29,14 @@ function ContactForm(){
                 <div className="w-1/2">
                     <form className="flex flex-col gap-8 text-[#9F9F9F]">
                         <label className="font-bold text-black">Your name</label>
-                        <input  placeholder="Abc" className="w-full p-4 focus:outline-none rounded-xl border-gray-500 border-2"/>
+                        <input  placeholder="Abc" className="w-full p-4 focus:outline-none rounded-xl border-[#9F9F9F] border-[1px]"/>
                         <label className="font-bold text-black">Email address</label>
-                        <input placeholder="Abc@def.com" className=" focus:outline-none w-full p-4 rounded-xl border-gray-500 border-2"/>
+                        <input placeholder="Abc@def.com" className=" focus:outline-none w-full p-4 rounded-xl border-[#9F9F9F] border-[1px]"/>
                         <label className="font-bold text-black">Subject</label>
-                        <input placeholder="This is an optional" className="focus:outline-none w-full p-4 rounded-xl border-gray-500 border-2"/>
+                        <input placeholder="This is an optional" className="focus:outline-none w-full p-4 rounded-xl border-[#9F9F9F] border-[1px]"/>
                         <label className="font-bold text-black">Message</label>
-                        <textarea placeholder="Hi! i’d like to ask about" className="w-full h-[8rem] p-4 rounded-xl border-gray-500 border-2"/>
-                        <div className="w-full"><button className="w-1/2 bg-[#B88E2F] text-white px-16 py-4" type="submit">Submit</button></div>
+                        <textarea placeholder="Hi! i’d like to ask about" className="w-full h-[8rem] p-4 rounded-xl border-[#9F9F9F] border-[1px]"/>
+                        <div className="w-full"><button className="w-1/2 bg-[#B88E2F] text-white px-16 py-4 border-[1px] border-[#B88E2F] rounded" type="submit">Submit</button></div>
                     </form>
                 </div>
             </div>

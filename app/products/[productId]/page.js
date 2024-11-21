@@ -7,6 +7,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import ReactImageMagnify from "react-image-magnify";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -16,6 +17,7 @@ function Dynamic({productId}){
     const dispatch=useDispatch();
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
     const[isImage,setIsImage]=useState();
+    const [isCount,setIsCount]=useState(1);
     console.log(result)
     const products=[
         {
@@ -134,8 +136,15 @@ function Dynamic({productId}){
             price:250000
         },
     ]
+    const decreaseCount = () =>{
+        if(isCount>1){setIsCount((prevCount) => prevCount - 1);}
+    }
+     const increaseCount = () =>{
+        setIsCount((afterCount)=>afterCount+1);
+    }
     function changeImageHandler(img){
         setIsImage(img);
+        console.log(isImage);
     }
     const [gridProducts,setGridProducts]=useState(products);
     async function getCartData() {
@@ -175,7 +184,9 @@ function Dynamic({productId}){
     console.log(filtereddata);
     useEffect(()=>{
         changeImageHandler(filtereddata.img);
+        
     },[])
+
     return(
         <div>
             
@@ -198,7 +209,7 @@ function Dynamic({productId}){
             </div>
             <div className="flex items-start justify-center px-20 py-10">
                 <div className="w-1/2 flex  gap-16 ">
-                <div className=" flex flex-col gap-5">
+                <div className=" flex flex-col gap-5 w-1/4">
                     <img onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
@@ -220,9 +231,28 @@ function Dynamic({productId}){
                                             changeImageHandler(filtereddata.img4)
                                         }} src={filtereddata.img4} width={80} height={80}></img>
                 </div>
-                <div className=" ">
-                    <img className="h-[28rem] w-full rounded-xl" src={isImage}></img>
-                    
+                <div className="w-3/4 ">
+                    {/* <img className="h-[28rem] w-full rounded-xl" src={isImage}></img> */}
+                    <ReactImageMagnify 
+                                        {...{
+                                            smallImage:{
+                                                alt:"filtereddataname",
+                                                isFluidWidth:true,
+                                                src:isImage,
+                                                className:"h-[10rem] w-full  rounded-xl",
+                                            }
+                                        ,
+                                        largeImage: {
+                                            src:isImage,
+                                            width:800,
+                                            height:1200,
+                                        },  
+                                            style:"rounded-xl overflow-hidden",
+                                            hoverDelayInMs:2,
+                                            isActivatedOnTouch:true,
+                                            enlargedImageContainerClassName:"relative top-0 right-0 rounded-xl ",
+
+                        }}/>
                 </div>
                 </div>
                 <div className="w-1/2 px-20 py-2 flex flex-col gap-2 items-start justify-start ">
@@ -271,11 +301,11 @@ function Dynamic({productId}){
                     </div>
                     <div className="flex items-center gap-2 h-[3rem] mt-4 w-full">
                         <div className="flex items-center text-xl h-full gap-2 border-2 border-[#9F9F9F] px-4 rounded-xl">
-                            <button className=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                            <button onClick={decreaseCount} className={`${isCount<2 ? "cursor-not-allowed":""}`}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
                             </svg></button>
-                            1
-                            <button className=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                            {isCount}
+                            <button onClick={increaseCount} className=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                             </svg></button>
                         </div>

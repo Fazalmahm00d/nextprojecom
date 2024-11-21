@@ -60,14 +60,14 @@ function LoginFirst(){
             console.log("email set to true")
         }else{
             setIsValidMail(false);
-            console.log("email set to false")
+            console.log("email set to false",isValidMail)
         }
-        if(pr2){
+        if(pr2===true){
             setIsValidPsswd(true);
             console.log("password set to true")
-        }else{
+        }else if(pr2===false){
             setIsValidPsswd(false);
-            console.log("password set to false")
+            console.log("password set to false",IsValidPsswd)
         }
         const data={
             email,
@@ -108,10 +108,10 @@ function LoginFirst(){
                     <form onSubmit={handleSubmit}  className="flex flex-col gap-3 w-full ">
                         <label className='mt-4 text-[#B88E2F] font-bold' htmlFor="email">Email</label>
                         {!isValidMail ? 
-                        <div><input  className="text-md px-8 py-3 rounded-3xl border-2 border-red-700 " id="email" name="email" type="text" placeholder="Enter your Email Address"/><p className='text-red-700'>Please enter a valid email address</p></div> : <input className="text-md px-8 py-3 rounded-3xl " id="email" name="email" type="text" placeholder="Enter your Email Address"/>}
+                        <div><input  className="focus:outline-none text-md px-8 py-3 rounded-3xl border-2 border-red-700 " id="email" name="email" type="text" placeholder="Enter your Email Address"/><p className='text-red-700'>Please enter a valid email address</p></div> : <input className="focus:outline-none text-md px-8 py-3 rounded-3xl " id="email" name="email" type="text" placeholder="Enter your Email Address"/>}
                         <label className='mt-4 text-[#B88E2F] font-bold' htmlFor="password">Password</label>
                         {
-                        !IsValidPsswd?<div><input className="text-md px-8 py-3 rounded-3xl" id="password" name="password" type="password" placeholder="Enter your Password"/><p className='text-red-700'>Password  Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p></div>
+                        !IsValidPsswd?<div><input className="focus:outline-none text-md px-8 py-3 rounded-3xl" id="password" name="password" type="password" placeholder="Enter your Password"/><p className='text-red-700'>Password  Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p></div>
                         :<input className="text-md px-8 py-3 rounded-3xl" id="password" name="password" type="password" placeholder="Enter your Password"/>
                         }
                         <div className="flex justify-between items-center">
