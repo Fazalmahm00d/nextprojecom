@@ -49,45 +49,46 @@ function RelatedProducts(){
         },
         
     ]);
-    async function getCartData() {
-        try {
-            const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
-            const data=response.data
-            console.log(data);
-            const arr=[]
-            for(let key in data){
-                arr.push({ id:key ,...data[key]});
-            }
-            console.log(arr)
-            dispatch(dataAction.setCartArr(arr));
-        }
-        catch (error) {
-            console.log(error)
-        }
-        finally{
-            setIsLoading(false);
-        }
-      }
+    // async function getCartData() {
+    //     try {
+    //         const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+    //         const data=response.data
+    //         console.log(data);
+    //         const arr=[]
+    //         for(let key in data){
+    //             arr.push({ id:key ,...data[key]});
+    //         }
+    //         console.log(arr)
+    //         dispatch(dataAction.setCartArr(arr));
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    //     finally{
+    //         setIsLoading(false);
+    //     }
+    //   }
     async function sendToFb(img,name,desc,price){
         const newCartItem={
-            img,
-            name,
-            desc,
-            price
+            img:img,
+            name:name,
+            desc:desc,
+            price:price,
+            quantity:1,
         }
         try{
             const response= await axios.post(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
             toast.success("Product added to cart")
-            getCartData();
+            // getCartData();
         }
         catch(error)
         {
             console.error("err:",error)
         }  
     } 
-    useEffect(()=>{
-        getCartData();
-    },[])
+    // useEffect(()=>{
+    //     getCartData();
+    // },[])
     return(
         <div className="py-10 px-20 flex flex-col items-center">\
             <h1 className="text-center text-3xl font-bold">Related Products</h1>
@@ -102,7 +103,7 @@ function RelatedProducts(){
                     :
                     relatedProducts.map((items)=>{
                         const productId=items.id;
-                        return  <Link href={`${productId}`}>
+                        return  <Link key={items.id} href={`${productId}`}>
                                 <div key={items.id} className="group relative cursor-pointer h-[28rem]">
                                     <div className="h-[70%]">
                                         <img className="w-full h-full" src={items.img}></img>
@@ -138,7 +139,7 @@ function RelatedProducts(){
                     })
                 }
             </div>
-            <div className="mt-10"><Button text="Show More" bgColor='bg-white' style="
+            <div className="mt-10"><Button text="Show More" className="bg-white
                      hover:bg-[#B88E2F] hover:text-white capitalize text-[#B88E2F]"/></div>
             
         </div>

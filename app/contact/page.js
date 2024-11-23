@@ -1,38 +1,16 @@
-"use client"
-import dynamic from "next/dynamic";
+import ContactMain from "../components/contact-components/ContactMain"
 
-import ImgSectionLoading from "../fallbackloading/ImgSectionLoading";
-import ContactFormLoading from "../fallbackloading/ContactFormLoading";
-import BannerLoading from "../fallbackloading/BannerLoading";
+export const metadata={
+    title:"Contact Page",
+    description:"contact page",
+}
 
-function Contact(){
-    const ImgSection = dynamic(
-        () => import("../components/reused-components/ImgSection"),
-        {
-          loading: () => <ImgSectionLoading/>,
-          ssr: false,
-        })
-    const ContactForm=dynamic(
-        () => import("../components/contact-components/ContactForm"),
-        {
-          loading: () => <ContactFormLoading/>,
-          ssr: false,
-        })
-    const Banner=dynamic(
-        ()=>import("../components/reused-components/Banner"),
-        {
-            loading: () => <BannerLoading/>,
-            ssr:false,
-        } 
-    )
+const Contact=()=>{
     return(
         <div>
-            <ImgSection name="Contact"/>
-            <ContactForm/>
-            <Banner/>
+            <ContactMain/>
         </div>
     )
-
 }
 
 export default Contact;

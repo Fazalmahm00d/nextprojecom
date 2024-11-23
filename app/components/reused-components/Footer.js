@@ -32,7 +32,7 @@ function Footer(){
             <div className="sm:w-2/6 lg:text-base">
                 <h3 className="text-[#9F9F9F]  sm:mt-1  text-sm lg:text-base">Newsletter</h3>
                 <div className="lg:mt-10 sm:mt-6 text-sm sm:flex">
-                <input className="w-full border-b-[1px] pb-2 text-sm outline-none  " placeholder="Enter Your Email Address"></input>
+                <input className="w-full border-b-[1px] pb-2 text-sm outline-none" placeholder="Enter Your Email Address"></input>
                 <button className="border-b-[1px] pb-2 uppercase font-bold text-sm  ">Subscribe</button>
                 </div>
             </div>

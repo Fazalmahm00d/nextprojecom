@@ -44,13 +44,16 @@ function LoginFirst(){
             setIsSendingReq(false);
         }
     }
-
+    const checkEmail=(email)=>{
+        const emailpatt = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailpatt.test(email)
+    }
     const handleSubmit=(e)=>{
         e.preventDefault();
         const email=e.target.email.value;
         const password=e.target.password.value;
-        const patt = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const pr=patt.test(email);
+        const pr=checkEmail(email);
+        
         const pattern=/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
         const pr2=pattern.test(password);
         console.log(pr2,"psswd value")
@@ -63,7 +66,6 @@ function LoginFirst(){
             console.log("email set to false",isValidMail)
         }
         if(pr2===true){
-            setIsValidPsswd(true);
             console.log("password set to true")
         }else if(pr2===false){
             setIsValidPsswd(false);
@@ -74,7 +76,9 @@ function LoginFirst(){
             password,
             returnSecureToken:true
         }
-        if(isValidMail && IsValidPsswd){
+        console.log(isValidMail,"email valid or not");
+        console.log(IsValidPsswd,"passwd valid or not")
+        if(pr && pr2){
             authFirebase(data);
         }
     }
