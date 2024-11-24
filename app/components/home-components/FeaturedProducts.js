@@ -79,7 +79,7 @@ function FeaturedProducts(){
     const [featuredproducts,setFeaturedProducts]=useState(products)
     // async function getCartData() {
     //     try {
-    //         const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+    //         const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
     //         const data=response.data
     //         console.log(data);
     //         const arr=[]
@@ -98,7 +98,7 @@ function FeaturedProducts(){
     //   }
     //   async function getWishData() {
     //     try {
-    //         const response2 = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/wishlist.json`)
+    //         const response2 = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/wishlist.json`)
     //         const data2=response2.data
     //         console.log(data2);
     //         const arr2=[]
@@ -124,7 +124,7 @@ function FeaturedProducts(){
             quantity:1,
         }
         try{
-            const response= await axios.post(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
+            const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`,newCartItem);
             toast.success("Product added to cart")
         }
         catch(error)
@@ -140,7 +140,7 @@ function FeaturedProducts(){
             price
         }
         try{
-            const response= await axios.post(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/wishlist.json`,newWishItem);
+            const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/wishlist.json`,newWishItem);
             toast.success("Product added to wishlist")
         }
         catch(error)
@@ -190,7 +190,7 @@ function FeaturedProducts(){
                                             </svg>}/>
                                         
                                             <SvgComponent sendToFbWish={sendToFbWish} items={items} isEmail={isEmail} name="Like" svg={<svg width="14" height="14" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7.99949 13.0361C-5.33358 5.66667 3.99975 -2.33333 7.99949 2.72538C11.9998 -2.33333 21.3331 5.66667 7.99949 13.0361Z" stroke="white" stroke-width="1.8"/>
+                                                <path d="M7.99949 13.0361C-5.33358 5.66667 3.99975 -2.33333 7.99949 2.72538C11.9998 -2.33333 21.3331 5.66667 7.99949 13.0361Z" stroke="white" strokeWidth="1.8"/>
                                                 </svg>}/>
     
                                         </div>

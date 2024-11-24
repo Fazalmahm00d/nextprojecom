@@ -12,8 +12,8 @@ import axios from "axios";
 
 function RelatedProducts(){
     const isEmail=useSelector((state)=>state.authReducer.isEmail)
-    const [isLoading,setIsLoading]=useState(true);
-    const [relatedProducts,setRelatedProducts]=useState([
+    const [isLoading,setIsLoading]=useState(false);
+    const products=[
         
         {
             id:5,
@@ -48,10 +48,11 @@ function RelatedProducts(){
             price:70000
         },
         
-    ]);
+    ]
+    const [relatedProducts,setRelatedProducts]=useState(products);
     // async function getCartData() {
     //     try {
-    //         const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+    //         const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
     //         const data=response.data
     //         console.log(data);
     //         const arr=[]
@@ -77,7 +78,7 @@ function RelatedProducts(){
             quantity:1,
         }
         try{
-            const response= await axios.post(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
+            const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
             toast.success("Product added to cart")
             // getCartData();
         }
@@ -126,7 +127,7 @@ function RelatedProducts(){
                                             </svg>}/>
                                             
                                             <SvgComponent name="Like" svg={<svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7.99949 13.0361C-5.33358 5.66667 3.99975 -2.33333 7.99949 2.72538C11.9998 -2.33333 21.3331 5.66667 7.99949 13.0361Z" stroke="white" stroke-width="1.8"/>
+                                                <path d="M7.99949 13.0361C-5.33358 5.66667 3.99975 -2.33333 7.99949 2.72538C11.9998 -2.33333 21.3331 5.66667 7.99949 13.0361Z" stroke="white" strokeWidth="1.8"/>
                                                 </svg>}/>
                                     
                                         </div>

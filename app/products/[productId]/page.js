@@ -1,8 +1,8 @@
 "use client"
 
-import Footer from "@/app/components/reused-components/Footer";
-import Header from "@/app/components/reused-components/Header";
+
 import RelatedProducts from "@/app/components/reused-components/RelatedProducts";
+import { dataAction } from "@/app/ReduxStore/dataCart";
 import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -150,7 +150,7 @@ function Dynamic({productId}){
     const [gridProducts,setGridProducts]=useState(products);
     async function getCartData() {
         try {
-            const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+            const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
             const data=response.data
             console.log(data);
             const arr=[]
@@ -173,9 +173,18 @@ function Dynamic({productId}){
             quantity
         }
         try{
-
-            const response= await axios.post(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
+            getCartData();
+            const similar=cartItems.find((item)=>item.name===name);
+            console.log(similar,"similar")
+            if(similar){
+                const response=await axios.patch(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart/${similar.id}.json`,{quantity:similar.quantity+quantity});
+                console.log(response);
+                toast.success("Quantity of the product is increased")
+            }else{
+            const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
             toast.success("Product added to cart")
+        }
+            
             getCartData();
         }
         catch(error)
@@ -188,7 +197,7 @@ function Dynamic({productId}){
     useEffect(()=>{
         changeImageHandler(filtereddata.img);
         getCartData();
-    },[cartItems])
+    },[])
 
     return(
         <div>
@@ -250,7 +259,7 @@ function Dynamic({productId}){
                                             width:800,
                                             height:1200,
                                         },  
-                                            style:"rounded-xl overflow-hidden",
+                                            // style:"rounded-xl overflow-hidden",
                                             hoverDelayInMs:2,
                                             isActivatedOnTouch:true,
                                             enlargedImageContainerClassName:"relative top-0 right-0 rounded-xl ",
@@ -304,12 +313,12 @@ function Dynamic({productId}){
                     </div>
                     <div className="flex items-center gap-2 h-[3rem] mt-4 w-full">
                         <div className="flex items-center text-xl h-full gap-2 border-2 border-[#9F9F9F] px-4 rounded-xl">
-                            <button onClick={decreaseCount} className={`${isCount<2 ? "cursor-not-allowed":""}`}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                            <button onClick={decreaseCount} className={`${isCount<2 ? "cursor-not-allowed":""}`}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-dash-lg" viewBox="0 0 16 16">
+                            <path fillRule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
                             </svg></button>
                             {isCount}
-                            <button onClick={increaseCount} className=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                            <button onClick={increaseCount} className=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
+                            <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                             </svg></button>
                         </div>
                         <button onClick={(e)=>{
@@ -328,13 +337,13 @@ function Dynamic({productId}){
                         <p>Category : Sofa</p>
                         <p>Tags  : Sofa,Chair,Home,Shop</p>
                         <div className="flex items-center gap-6">Share  :   <div className="flex gap-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-facebook" viewBox="0 0 16 16">
                             <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
                             </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-linkedin" viewBox="0 0 16 16">
                             <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
                             </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-twitter" viewBox="0 0 16 16">
                             <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15"/>
                             </svg>
                         </div>

@@ -14,7 +14,7 @@ function CartItems(){
     console.log(cartItems,"cart items");
     async function getCartData() {
         try {
-            const response = await axios.get(`https://fir-db-7355f-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+            const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
             const data=response.data
             console.log(data);
             const arr=[]
