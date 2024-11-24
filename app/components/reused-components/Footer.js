@@ -21,7 +21,7 @@ function Footer(){
                     <li><Link href="/contact">Contact</Link></li>
                 </ul>
             </div>
-            <div className="sm:w-1/6 lg:text-base">
+            <div className="hidden sm:block sm:w-1/6 lg:text-base">
                 <h3 className="text-[#9F9F9F] sm:mt-1">Help</h3>
                 <ul className="lg:mt-10 sm:mt-6  font-bold flex flex-col lg:gap-10 sm:gap-5">
                     <li>Payment Options</li>
@@ -29,10 +29,10 @@ function Footer(){
                     <li>Privacy Policies</li>
                 </ul>
             </div>
-            <div className="sm:w-2/6 lg:text-base">
+            <div className="hidden sm:block sm:w-2/6 lg:text-base">
                 <h3 className="text-[#9F9F9F]  sm:mt-1  text-sm lg:text-base">Newsletter</h3>
-                <div className="lg:mt-10 sm:mt-6 text-sm sm:flex">
-                <input className="w-full border-b-[1px] pb-2 text-sm outline-none" placeholder="Enter Your Email Address"></input>
+                <div className="lg:mt-10 sm:mt-6 text-sm sm:flex sm-flex-col lg:flex-row sm:gap-2">
+                <input className="w-[10rem] border-b-[1px] pb-2 text-sm outline-none placeholder:w-full" placeholder="Enter Your Email Address"></input>
                 <button className="border-b-[1px] pb-2 uppercase font-bold text-sm  ">Subscribe</button>
                 </div>
             </div>

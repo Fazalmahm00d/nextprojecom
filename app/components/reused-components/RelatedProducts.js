@@ -6,13 +6,16 @@ import Link from "next/link";
 import SvgComponent from "../home-components/Svgcomponent";
 import Button from "./Button";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { dataAction } from "@/app/ReduxStore/dataCart";
 
 
 function RelatedProducts(){
-    const isEmail=useSelector((state)=>state.authReducer.isEmail)
+    const isEmail=useSelector((state)=>state.authReducer.isEmail);
+    const dispatch=useDispatch();
     const [isLoading,setIsLoading]=useState(false);
+    const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const products=[
         
         {
@@ -69,6 +72,22 @@ function RelatedProducts(){
     //         setIsLoading(false);
     //     }
     //   }
+    async function getCartData() {
+        try {
+            const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+            const data=response.data
+            console.log(data);
+            const arr=[]
+            for(let key in data){
+                arr.push({ id:key ,...data[key]});
+            }
+            console.log(arr)
+            dispatch(dataAction.setCartArr(arr));
+        }
+        catch (error) {
+            console.log(error)
+        }
+      }
     async function sendToFb(img,name,desc,price){
         const newCartItem={
             img:img,
@@ -78,9 +97,19 @@ function RelatedProducts(){
             quantity:1,
         }
         try{
+            getCartData();
+            console.log(cartItems,"cart items before calling")
+            const similar=cartItems.find((item)=>item.name===name);
+            console.log(similar,"similar")
+            if(similar){
+                const response=await axios.patch(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart/${similar.id}.json`,{quantity:similar.quantity+1});
+                console.log(response);
+                toast.success("Quantity of the product is increased")
+            }else{
             const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
             toast.success("Product added to cart")
-            // getCartData();
+        }
+            getCartData()    
         }
         catch(error)
         {

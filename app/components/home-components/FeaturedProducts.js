@@ -14,6 +14,7 @@ function FeaturedProducts(){
     const dispatch=useDispatch();
     const router =useRouter();
     const[isLoading,setIsLoading]=useState();
+    const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const isEmail=useSelector((state)=>state.authReducer.isEmail)
     const products=[
         {   
@@ -115,6 +116,22 @@ function FeaturedProducts(){
     //         setIsLoading(false);
     //     }
     //   }
+    async function getCartData() {
+        try {
+            const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+            const data=response.data
+            console.log(data);
+            const arr=[]
+            for(let key in data){
+                arr.push({ id:key ,...data[key]});
+            }
+            console.log(arr)
+            dispatch(dataAction.setCartArr(arr));
+        }
+        catch (error) {
+            console.log(error)
+        }
+      }
     async function sendToFb(img,name,desc,price){
         const newCartItem={
             img:img,
@@ -124,8 +141,19 @@ function FeaturedProducts(){
             quantity:1,
         }
         try{
-            const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`,newCartItem);
+            getCartData();
+            console.log(cartItems,"cart items before calling")
+            const similar=cartItems.find((item)=>item.name===name);
+            console.log(similar,"similar")
+            if(similar){
+                const response=await axios.patch(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart/${similar.id}.json`,{quantity:similar.quantity+1});
+                console.log(response);
+                toast.success("Quantity of the product is increased")
+            }else{
+            const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
             toast.success("Product added to cart")
+        }
+            getCartData()    
         }
         catch(error)
         {
