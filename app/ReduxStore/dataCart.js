@@ -6,6 +6,8 @@ const dataSlice=createSlice({
     initialState:{
         cartItems:[],
         wishItems:[],
+        shopProducts:[],
+        filteredData:[],
     },
     reducers:{
         setCartArr(state,actions){
@@ -13,7 +15,14 @@ const dataSlice=createSlice({
         },
         setWishArr(state,actions){
             state.wishItems=actions.payload;
+        },
+        setShopArr(state,actions){
+            state.shopProducts=actions.payload;
+        },
+        setFilteredData(state,actions){
+            state.filteredData=actions.payload;
         }
+
     }
 
 })

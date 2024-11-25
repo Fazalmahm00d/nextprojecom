@@ -12,121 +12,139 @@ import { toast } from "react-toastify";
 function ProductGrid(){
     const dispatch=useDispatch();
     const[isLoading,setIsLoading]=useState(true);
-    const isEmail=useSelector((state)=>state.authReducer.isEmail)
+    const isEmail=useSelector((state)=>state.authReducer.isEmail);
+    const filteredData=useSelector((state)=>state.dataReducer.filteredData);
     const products=[
         {
             id:1,
             img:"/assets/Images (3).png",
             name:"Syltherine",
-            desc:"Stylish cafe chair",
-            price:25000
+            desc:"Stylish cafe table",
+            price:25000,
+            category:"Tables"
         },
         {   
             id:2,
             img:"/assets/Images.png",
             name:"Leviosa",
             desc:"Stylish cafe chair",
-            price:35000
+            price:35000,
+            category:"Chairs"
         },
         {
             id:3,
             img:"/assets/image 3.png",
             name:"Loloto",
             desc:"Luxury Sofa Set",
-            price:25000
+            price:25000,
+            category:"Sofas"
         },
         {
             id:4,
             img:"/assets/image 4.png",
             name:"Respira",
             desc:"Outdoor bar table and stool",
-            price:70000
+            price:70000,
+            category:"Tables"
         },
         {
             id:5,
             img:"/assets/Images (1).png",
             name:"Grifo",
             desc:"Night lamp",
-            price:15000
+            price:15000,
+            category:"Lamps"
         },
         {
             id:6,
             img:"/assets/image 6 (1).png",
             name:"Muggo",
             desc:"Small Mug",
-            price:1500
+            price:1500,
+            category:"Tables"
         },
         {
             id:7,
             img:"/assets/Images (2).png",
             name:"Pingky",
             desc:"Cute sofa set",
-            price:70000
+            price:70000,
+            category:"Sofas"
         },
         {
             id:8,
             img:"/assets/image 8 (1).png",
             name:"Binuyo",
             desc:"Minimalist brown sofa",
-            price:250000
+            price:250000,
+            category:"Sofas"
         },
         {
             id:9,
             img:"/assets/Images (3).png",
             name:"Syltherine 2",
-            desc:"Stylish cafe chair",
-            price:25000
+            desc:"Stylish cafe table",
+            price:25000,
+            category:"Tables"
         },
         {
             id:10,
             img:"/assets/Images.png",
             name:"Leviosa 2",
             desc:"Stylish cafe chair",
-            price:35000
+            price:35000,
+            category:"Chairs"
         },
         {   
             id:11,
             img:"/assets/image 3.png",
             name:"Loloto 2",
             desc:"Luxury Sofa Set",
-            price:25000
+            price:25000,
+            category:"Sofas"
         },
         {
             id:12,
             img:"/assets/image 4.png",
             name:"Respira 2",
             desc:"Outdoor bar table and stool",
-            price:70000
+            price:70000,
+            category:"Tables"
         },
         {
             id:13,
             img:"/assets/Images (1).png",
             name:"Grifo 2",
             desc:"Night lamp",
-            price:15000
+            price:15000,
+            category:"Lamps"
         },
         {
             id:14,
             img:"/assets/image 6 (1).png",
             name:"Muggo 2",
             desc:"Small Mug",
-            price:1500
+            price:1500,
+            category:"Tables"
         },
         {
             id:15,
             img:"/assets/Images (2).png",
             name:"Pingky 2",
             desc:"Cute sofa set",
-            price:70000
+            price:70000,
+            category:"Sofas"
         },
         {
             id:16,
             img:"/assets/image 8 (1).png",
             name:"Binuyo 2",
             desc:"Minimalist brown sofa",
-            price:250000
+            price:250000,
+            category:"Sofas"
         },
     ]
+    
     const [gridProducts,setGridProducts]=useState(products)
     async function getCartData() {
         try {
@@ -139,6 +157,7 @@ function ProductGrid(){
             }
             console.log(arr)
             dispatch(dataAction.setCartArr(arr));
+            
         }
         catch (error) {
             console.log(error)
@@ -165,6 +184,7 @@ function ProductGrid(){
         }
     }
     useEffect(()=>{
+        dispatch(dataAction.setShopArr(products))
         getCartData();
     },[])   
     return(
@@ -178,13 +198,9 @@ function ProductGrid(){
                         </div>
                     }) 
                     :
-                    gridProducts.map((items)=>{
+                    filteredData.length > 0 ?
+                    filteredData.map((items)=>{
                         const productId=items.id;
-                        const data={
-                            name:items.name,
-                            desc:items.desc,
-                            img:items.img,
-                        }
                         return  <Link key={items.id} href={`products/${productId}`}>
                                     <div key={items.id} className="group relative cursor-pointer lg:h-[28rem] h-[18rem]">
                                     <div className="h-[70%]">
@@ -217,7 +233,7 @@ function ProductGrid(){
 
                                 </div>
                                 </Link>     
-                    })
+                    }):<p>No matching product has been found</p>
                 }
             </div>
             <div className="mt-16 flex gap-6">
