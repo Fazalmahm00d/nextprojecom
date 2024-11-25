@@ -181,8 +181,8 @@ function Filter(){
             }
         },[debouncedQuery])
     return(
-        <div className="bg-[#F9F1E7] flex flex-col gap-5 sm:gap-0 sm:flex-row justify-between items-center px-10 py-4 lg:px-20 lg:py-8 text-sm lg:text-base">
-            <div className="flex  items-center lg:gap-4 gap-2">
+        <div className="bg-[#F9F1E7] flex flex-col gap-5 sm:gap-0 sm:flex-row justify-end items-center px-10 py-4 lg:px-20 lg:py-8 text-sm lg:text-base">
+            {/* <div className="flex  items-center lg:gap-4 gap-2">
                 <div className="flex gap-2 items-center">
                 <SvgComponent svg={<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.0237 7.14292H8.92846M6.5475 7.14292H2.97607M22.0237 19.0477H8.92846M6.5475 19.0477H2.97607M16.0713 13.0953H2.97607M22.0237 13.0953H18.4523M7.73798 4.76196C8.05371 4.76196 8.35652 4.88739 8.57977 5.11065C8.80303 5.3339 8.92846 5.63671 8.92846 5.95244V8.33339C8.92846 8.64913 8.80303 8.95193 8.57977 9.17518C8.35652 9.39844 8.05371 9.52387 7.73798 9.52387C7.42225 9.52387 7.11944 9.39844 6.89619 9.17518C6.67293 8.95193 6.5475 8.64913 6.5475 8.33339V5.95244C6.5475 5.63671 6.67293 5.3339 6.89619 5.11065C7.11944 4.88739 7.42225 4.76196 7.73798 4.76196V4.76196ZM7.73798 16.6667C8.05371 16.6667 8.35652 16.7921 8.57977 17.0154C8.80303 17.2387 8.92846 17.5415 8.92846 17.8572V20.2382C8.92846 20.5539 8.80303 20.8567 8.57977 21.0799C8.35652 21.3032 8.05371 21.4286 7.73798 21.4286C7.42225 21.4286 7.11944 21.3032 6.89619 21.0799C6.67293 20.8567 6.5475 20.5539 6.5475 20.2382V17.8572C6.5475 17.5415 6.67293 17.2387 6.89619 17.0154C7.11944 16.7921 7.42225 16.6667 7.73798 16.6667ZM17.2618 10.7143C17.5775 10.7143 17.8803 10.8398 18.1036 11.063C18.3268 11.2863 18.4523 11.5891 18.4523 11.9048V14.2858C18.4523 14.6015 18.3268 14.9043 18.1036 15.1276C17.8803 15.3508 17.5775 15.4762 17.2618 15.4762C16.9461 15.4762 16.6433 15.3508 16.42 15.1276C16.1967 14.9043 16.0713 14.6015 16.0713 14.2858V11.9048C16.0713 11.5891 16.1967 11.2863 16.42 11.063C16.6433 10.8398 16.9461 10.7143 17.2618 10.7143V10.7143Z" stroke="black" strokeLinecap="round" strokeLinejoin="round"/>
@@ -199,18 +199,18 @@ function Filter(){
                 <div className="sm:border-l-[2px]  lg:border-l-[2px] border-black lg:pl-8 pl-4">
                     Showing 1–16 of 32 results
                 </div>
-            </div>
+            </div> */}
             {
-                isSearch ? <div className="flex"><input onChange={(e)=>handler(e)} className="border-2 border-solid" type="text" /><button onClick={closeSearch}><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                isSearch ? <div className="flex h-8 gap-3"><input onChange={(e)=>handler(e)} placeholder="Search..." className="focus:outline-none border-2 border-solid border-black rounded-md px-2" type="text" /><button onClick={closeSearch}><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
                 <path d="M24.5002 24.4999L19.2665 19.2569M22.1668 12.2499C22.1668 14.88 21.122 17.4023 19.2623 19.2621C17.4026 21.1218 14.8802 22.1666 12.2502 22.1666C9.6201 22.1666 7.09776 21.1218 5.23802 19.2621C3.37828 17.4023 2.3335 14.88 2.3335 12.2499C2.3335 9.61985 3.37828 7.09751 5.23802 5.23778C7.09776 3.37804 9.6201 2.33325 12.2502 2.33325C14.8802 2.33325 17.4026 3.37804 19.2623 5.23778C21.122 7.09751 22.1668 9.61985 22.1668 12.2499V12.2499Z" stroke="black" strokeWidth="2" strokeLinecap="round"/>
-                </svg></button></div> : <button className="border-2 " onClick={showSearch}><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                </svg></button></div> : <button className=" " onClick={showSearch}><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
                 <path d="M24.5002 24.4999L19.2665 19.2569M22.1668 12.2499C22.1668 14.88 21.122 17.4023 19.2623 19.2621C17.4026 21.1218 14.8802 22.1666 12.2502 22.1666C9.6201 22.1666 7.09776 21.1218 5.23802 19.2621C3.37828 17.4023 2.3335 14.88 2.3335 12.2499C2.3335 9.61985 3.37828 7.09751 5.23802 5.23778C7.09776 3.37804 9.6201 2.33325 12.2502 2.33325C14.8802 2.33325 17.4026 3.37804 19.2623 5.23778C21.122 7.09751 22.1668 9.61985 22.1668 12.2499V12.2499Z" stroke="black" strokeWidth="2" strokeLinecap="round"/>
                 </svg></button>
             }
-            <div className="flex w-full sm:w-fit justify-between sm:justify-none gap-6 ">
+            {/* <div className="flex w-full sm:w-fit justify-between sm:justify-none gap-6 ">
                 <div className="flex items-center gap-2"><p>Show</p> <input className="focus:outline-none w-6 h-6 lg:h-10 lg:w-10 text-center bg-white font-light" placeholder="16"/></div>
                 <div className="flex items-center gap-2"><p>Sort By</p> <input className="focus:outline-none h-6 w-14 px-1 lg:h-10 lg:w-28 lg:px-2 bg-white font-light" placeholder="Default"/></div>
-            </div>
+            </div> */}
         </div>
     )
 }
