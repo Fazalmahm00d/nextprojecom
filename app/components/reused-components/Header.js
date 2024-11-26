@@ -19,7 +19,7 @@ function Header(){
     const wishItems=useSelector((state)=>state.dataReducer.wishItems)
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
     // const shopProducts=useSelector((state)=>state.dataReducer.shopProducts)
-    const [expenses,setExpenses]=useState()
+    const [totalExpenses, setTotalExpenses] = useState(0);
     console.log(cartItems,"cart items")
     const[cartDisplay,setCartDisplay]=useState(false);
     const[wishDisplay,setWishDisplay]=useState(false);
@@ -114,13 +114,13 @@ function Header(){
         }
       }
     
-    async function updateTotal(){
-        const totalExpenses = await cartItems.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0
-        );
-        setExpenses(totalExpenses)
-    }
+    // async function updateTotal(){
+    //     const totalExpenses = await cartItems.reduce(
+    //         (sum, item) => sum + item.price * item.quantity,
+    //         0
+    //     );
+    //     setExpenses(totalExpenses)
+    // }
     
     function delayedUpdateTotal() {
         setTimeout(async () => {
@@ -173,8 +173,12 @@ function Header(){
         }
         getCartData();
         getWishData();
-        delayedUpdateTotal();
+        // delayedUpdateTotal();
     },[])
+    useEffect(() => {
+        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        setTotalExpenses(total);
+    }, [cartItems]);
     return(
         <div className="relative w-full bg-white">
             {
@@ -261,7 +265,7 @@ function Header(){
                                     <div className=" w-full mb-6 ">
                                         <div className="flex justify-between mb-6">
                                             <p className="text-2xl">Subtotal</p>
-                                            <p className="text-2xl text-[#B88E2F]">Rs.{expenses}</p>
+                                            <p className="text-2xl text-[#B88E2F]">Rs.{totalExpenses}</p>
                                         </div>
                                         <hr/>
                                         <div className="flex gap-2  flex-wrap mt-5">

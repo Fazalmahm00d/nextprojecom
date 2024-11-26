@@ -11,6 +11,7 @@ function CartItems(){
     const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
     const[isLoading,setIsLoading]=useState(true);
+    const [totalExpenses, setTotalExpenses] = useState(0);
     console.log(cartItems,"cart items");
     async function getCartData() {
         try {
@@ -21,7 +22,7 @@ function CartItems(){
             for(let key in data){
                 arr.push({ id:key ,...data[key]});
             }
-            console.log(arr,"data arrray")
+            console.log(arr,"data array")
             dispatch(dataAction.setCartArr(arr));
         }
         catch (error) {
@@ -31,19 +32,23 @@ function CartItems(){
             setIsLoading(false)
         }
       }
-    const [expenses,setExpenses]=useState()
-    async function updateTotal(){
-        const totalExpenses= await cartItems.reduce(
-                (sum,ele) => Number(sum)+Number(ele.price)
-                ,0);
-        setExpenses(totalExpenses)
-    }
-    updateTotal();
+    // const [expenses,setExpenses]=useState()
+    // async function updateTotal(){
+    //     const totalExpenses= await cartItems.reduce(
+    //             (sum,ele) => Number(sum)+Number(ele.price)
+    //             ,0);
+    //     setExpenses(totalExpenses)
+    // }
+    // updateTotal();
     useEffect(
         ()=>{
             getCartData()    
             },[cartItems]
-    )   
+    )
+    useEffect(() => {
+        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        setTotalExpenses(total);
+    }, [cartItems]);
     return(
         <div className="p-20 flex gap-8">
             <div className="w-2/3">
@@ -75,8 +80,8 @@ function CartItems(){
                                         <h3 className="font-bold text-xl">{items.name}</h3> 
                                         </div>
                                         <p className="text-[#B88E2F]">${items.price}</p>
-                                        <h3 className="font-bold text-xl">0</h3> 
-                                        <p className="text-[#B88E2F]">${items.price}</p>
+                                        <h3 className="font-bold text-xl">{items.quantity}</h3> 
+                                        <p className="text-[#B88E2F]">${(items.price*items.quantity)}</p>
                                     </div>
                             })
                     }
@@ -88,11 +93,11 @@ function CartItems(){
                  <div className=" flex flex-col items-center justify-center h-full px-10">
                  <div className="flex justify-between w-full">
                     <p className="font-bold">SubTotals</p>
-                    <p className="text-xl text-[#9F9F9F]">Rs.{expenses}</p>
+                    <p className="text-xl text-[#9F9F9F]">Rs.{totalExpenses}</p>
                  </div>
                  <div className="flex justify-between w-full mt-6">
                     <p className="font-bold">Total</p>
-                    <p className="text-[#B88E2F] text-2xl">Rs.{expenses}</p>
+                    <p className="text-[#B88E2F] text-2xl">Rs.{totalExpenses}</p>
                  </div>
                  <div className="mt-6">
                     <Link href='/checkout'><button className="px-8 py-4 border-2 border-black border-solid rounded-xl">Check Out</button></Link>

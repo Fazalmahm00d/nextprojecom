@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 function CheckOutForm(){
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
     const [isLoading,setIsLoading]=useState(true);
-    const [expenses,setExpenses]=useState();
+    const cartItems=useSelector((state)=>state.dataReducer.cartItems);
+    const [totalExpenses, setTotalExpenses] = useState(0);
+
     async function getCartData() {
         try {
             const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
@@ -31,9 +33,13 @@ function CheckOutForm(){
             setIsLoading(false)
         }
       }
-    getCartData();
     
     
+    useEffect(() => {
+        getCartData();
+        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        setTotalExpenses(total);
+    }, [cartItems]);
     return(
         <form className="flex" action="">
         <div className="px-20">
@@ -116,11 +122,11 @@ function CheckOutForm(){
                 : <div>
                     <div className="flex justify-between">
                     <p>Subtotal</p>
-                    <p className="font-light">Rs.{expenses}</p>
+                    <p className="font-light">Rs.{totalExpenses}</p>
                 </div>
                 <div className="flex justify-between">
                     <p>Total</p>
-                    <p className="font-bold text-2xl text-[#B88E2F]">Rs. {expenses}</p>
+                    <p className="font-bold text-2xl text-[#B88E2F]">Rs. {totalExpenses}</p>
                 </div> </div>
                 }
             </div>
