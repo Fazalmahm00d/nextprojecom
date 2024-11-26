@@ -69,7 +69,7 @@ function CartItems(){
                     
                     :
                      cartItems.map((items)=>{
-                            return <div className="grid grid-cols-4 items-center pl-6  text-base mt-3">
+                            return <div key={items.id} className="grid grid-cols-4 items-center pl-6  text-base mt-3">
                                         <div className="flex gap-4 items-center">
                                         <img src={items.img} className="h-16 w-16 rounded-lg"></img>
                                         <h3 className="font-bold text-xl">{items.name}</h3> 
