@@ -13,7 +13,7 @@ function Story(){
             Our Story
             </h1>
             <p className="italic mt-3">
-            &#34; Founded in 2012, Furniro started as a small workshop with a big dream—bringing craftsmanship and creativity to every home. Over the years, we've grown into a trusted name, serving <span className="font-bold text-2xl"> thousands of happy customers</span>.&#34;
+            &#34; Founded in 2012, Furniro started as a small workshop with a big dream—bringing craftsmanship and creativity to every home. Over the years, we &#39; ve grown into a trusted name, serving <span className="font-bold text-2xl"> thousands of happy customers</span>.&#34;
             </p>
             <h1 className="text-black lg:text-2xl text-l font-bold mt-5">Core Values</h1>
             <p className="italic mt-3">
