@@ -178,12 +178,12 @@ function Header(){
     return(
         <div className="relative w-full bg-white">
             {
-                burgerDisplay?<div className="absolute top-16 h-screen w-screen bg-white no-doc-scroll z-20">
+                burgerDisplay?<div className="absolute top-16 h-screen w-screen bg-white no-doc-scroll z-30">
                     <div className="flex flex-col items-center justify-center gap-16 mt-10 font-bold">
-                    <Link href="/">Home</Link>
-                    <Link href="/shop">Shop</Link>
-                    <Link href="/about">About</Link>
-                    <Link href="/contact">Contact</Link>  
+                    <Link onClick={closeBurger} href="/">Home</Link>
+                    <Link onClick={closeBurger} href="/shop">Shop</Link>
+                    <Link onClick={closeBurger} href="/about">About</Link>
+                    <Link onClick={closeBurger} href="/contact">Contact</Link>  
                     </div>
                     <div className="flex justify-center items-center gap-3 mt-20 ">
             {
@@ -212,7 +212,7 @@ function Header(){
                 </div>:""
             }
             {
-                cartDisplay ? <div  className="absolute  w-full h-[100vh] z-20 inset-0 bg-black bg-opacity-20 no-doc-scroll ">
+                cartDisplay ? <div  className="absolute  w-full h-[100vh] z-40 inset-0 bg-black bg-opacity-20 no-doc-scroll ">
                                 <div onClick={closeCart} className="absolute z-50 w-full sm:w-2/3   h-screen"></div>
                                 <div className="absolute z-50 bg-white w-full sm:w-1/3  h-screen overflow-hidden top-0 right-0  px-10 py-6">
                                     <div className="flex  justify-between items-center mb-6">

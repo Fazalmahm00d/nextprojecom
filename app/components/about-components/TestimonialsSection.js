@@ -14,9 +14,9 @@ function TestimonialsSection(){
     
       ]
     return(
-        <div className='flex flex-col w-full justify-center  px-40 py-10 items-center'>
-        <h1 className="text-center text-3xl font-bold">Our Customers</h1>
-        <div className='grid grid-cols-3 gap-10 mt-10'>
+        <div className='flex flex-col w-full justify-center px-6 py-10 sm:px-20 sm:py-6 lg:px-30 lg:py-10 items-center'>
+        <h1 className="text-center text-xl lg:text-3xl font-bold">Our Customers</h1>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-10 lg:mt-10'>
         {
           testdata.map((items)=>{
             return <Testimonials data={items}/>

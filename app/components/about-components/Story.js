@@ -1,6 +1,6 @@
 function Story(){
     return(
-        <div className=" px-40 py-10  text-xl text-[#B88E2F] ">
+        <div className="px-6 py-10 sm:px-20 sm:py-6 lg:px-40 lg:py-10  text-xl text-[#B88E2F] ">
             <h1 className="text-black text-2xl font-bold">
                 About the Brand
             </h1>
