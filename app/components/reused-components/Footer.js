@@ -17,7 +17,7 @@ function Footer(){
                 <ul className=" lg:mt-10 sm:mt-6  font-bold flex flex-col lg:gap-10 sm:gap-5">
                     <li><Link href="/">Home</Link></li>
                     <li><Link href="/shop">Shop</Link></li>
-                    <li>About</li>
+                    <li><Link href="/about">About</Link>About</li>
                     <li><Link href="/contact">Contact</Link></li>
                 </ul>
             </div>

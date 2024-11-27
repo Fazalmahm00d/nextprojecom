@@ -49,7 +49,8 @@ function Header(){
             getCartData();
         }else{
             toast.warning("Log In to access Cart")
-            router.push('/login')
+            router.push('/login');
+            setBurgerDisplay(false)
         }
     }
     const closeCart=()=>{
@@ -61,7 +62,8 @@ function Header(){
             getWishData();
         }else{
             toast.warning("Log In to access Cart")
-            router.push('/login')
+            router.push('/login');
+            setBurgerDisplay(false)
         }
     }
     const closeWish=()=>{
@@ -122,12 +124,15 @@ function Header(){
     //     setExpenses(totalExpenses)
     // }
     
-    function delayedUpdateTotal() {
-        setTimeout(async () => {
-            await updateTotal();
-        }, 2000); // 2000 milliseconds = 2 seconds
+    // function delayedUpdateTotal() {
+    //     setTimeout(async () => {
+    //         await updateTotal();
+    //     }, 2000); // 2000 milliseconds = 2 seconds
+    // }
+    const closeOnTop=()=>{
+            closeCart();
+            closeBurger();
     }
-    
     const logOutHandler=()=>{
         localStorage.clear();
         dispatch(authAction.changeEmailValue(null));
@@ -270,8 +275,8 @@ function Header(){
                                         <hr/>
                                         <div className="flex gap-2  flex-wrap mt-5">
                                             {
-                                            isItems.length===0 ?<Link  href="/shop"><button onClick={closeCart} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>:<Link href="/cart"><button className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>}
-                                            <Link href="/checkout"><button onClick={closeCart}  className="px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl rounded-2xl">Checkout</button></Link>
+                                            isItems.length===0 ?<Link  href="/shop"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>:<Link href="/cart"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>}
+                                            <Link href="/checkout"><button onClick={closeOnTop}  className="px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl rounded-2xl">Checkout</button></Link>
                                         </div>
                                     </div>
                                 </div>

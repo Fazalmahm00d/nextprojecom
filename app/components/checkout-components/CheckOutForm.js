@@ -41,11 +41,11 @@ function CheckOutForm(){
         setTotalExpenses(total);
     }, [cartItems]);
     return(
-        <form className="flex" action="">
-        <div className="px-20">
+        <form className="flex flex-col w-full lg:flex-row" action="">
+        <div className="px-6 lg:px-20">
             <h3 className="font-semibold text-4xl mb-10">Billing details</h3>
             <div className="flex flex-col gap-6">
-                <div className="flex gap-8 flex-row justify-between">
+                <div className="flex gap-8 flex-col sm:flex-row justify-between">
                     <div className="flex flex-col gap-4">
                     <label className="font-medium" for="firstname">First Name</label>
                     <input className="border focus:outline-none rounded-lg p-4 border-[#9F9F9F]" id="firstname" type="text" />
