@@ -202,7 +202,7 @@ function Dynamic({productId}){
     return(
         <div>
             
-            <div className="bg-[#F9F1E7] h-[14vh] flex items-center gap-6 px-20 text-xl">
+            <div className="bg-[#F9F1E7] h-[10vh] sm:h-[14vh]  flex items-center lg:gap-6 gap-3 lg:px-20 px-10 lg:text-xl text-sm">
                 <div className="flex gap-8 items-center">
                     <Link href="/"><p className="text-[#9F9F9F]">Home</p></Link>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -219,25 +219,25 @@ function Dynamic({productId}){
                     {filtereddata.name}
                 </div>
             </div>
-            <div className="flex items-start justify-center px-20 py-10">
-                <div className="w-1/2 flex  gap-16 ">
+            <div className="flex flex-col lg:flex-row items-start justify-center lg:px-20 sm:px-10 py-10">
+                <div className="w-full lg:w-1/2 flex px-3 gap-2 lg:gap-16 ">
                 <div className=" flex flex-col gap-5 w-1/4">
                     <img onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
                                             changeImageHandler(filtereddata.img)
-                                        }} className="rounded-lg h-20 w-20" src={filtereddata.img} width={80} height={80}></img>
-                    <img  className="rounded-lg h-20 w-20" onClick={(e)=>{
+                                        }} className="rounded-lg h-14 w-14 sm:h-20 sm:w-20" src={filtereddata.img} width={80} height={80}></img>
+                    <img  className="rounded-lg h-14 w-14 sm:h-20 sm:w-20" onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
                                             changeImageHandler(filtereddata.img2)
                                         }}  src={filtereddata.img2} width={80} height={80}></img>
-                    <img  className="rounded-lg h-20 w-20" onClick={(e)=>{
+                    <img  className="rounded-lg h-14 w-14 sm:h-20 sm:w-20" onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
                                             changeImageHandler(filtereddata.img3)
                                         }} src={filtereddata.img3} width={80} height={80}></img>
-                    <img  className="rounded-lg h-20 w-20" onClick={(e)=>{
+                    <img  className="rounded-lg h-14 w-14 sm:h-20 sm:w-20" onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
                                             changeImageHandler(filtereddata.img4)
@@ -251,7 +251,7 @@ function Dynamic({productId}){
                                                 alt:"filtereddataname",
                                                 isFluidWidth:true,
                                                 src:isImage,
-                                                className:"h-[10rem] w-full  rounded-xl",
+                                                className:"h-[10rem] lg:h-[14rem] w-full  rounded-xl",
                                             }
                                         ,
                                         largeImage: {
@@ -262,15 +262,15 @@ function Dynamic({productId}){
                                             // style:"rounded-xl overflow-hidden",
                                             hoverDelayInMs:2,
                                             isActivatedOnTouch:true,
-                                            enlargedImageContainerClassName:"relative top-0 right-0 rounded-xl ",
+                                            enlargedImageContainerClassName:"sm:absolute lg:relative bottom-100 left-0 lg:top-0 lg:right-0 rounded-xl ",
 
                         }}/>
                 </div>
                 </div>
-                <div className="w-1/2 px-20 py-2 flex flex-col gap-2 items-start justify-start ">
-                    <h1 className="text-5xl">{filtereddata.name}</h1>
-                    <div className="text-3xl text-[#9F9F9F] ">Rs. {filtereddata.price}</div>
-                    <div className="text-xl tracking-wide mt-4">
+                <div className="lg:w-1/2 mt-10 lg:mt-0 px-10 lg:px-20 py-2 flex flex-col gap-2 items-start justify-start ">
+                    <h1 className="text-3xl lg:text-5xl">{filtereddata.name}</h1>
+                    <div className="text-xl lg:text-3xl text-[#9F9F9F] ">Rs. {filtereddata.price}</div>
+                    <div className="text-sm lg:text-xl tracking-wide mt-4">
                         {filtereddata.desc}
                     </div>
                     <div className="flex mt-2 gap-4">
@@ -294,7 +294,7 @@ function Dynamic({productId}){
                     </svg>
                     </div>
 
-                    <div className="text-l tracking wide border-l-[2px] border-black pl-4">
+                    <div className="text-base lg:text-l tracking wide border-l-[2px] border-black pl-4">
                         5 Customer Review
                     </div>
 
@@ -312,7 +312,7 @@ function Dynamic({productId}){
                         </div>
                     </div>
                     <div className="flex items-center gap-2 h-[3rem] mt-4 w-full">
-                        <div className="flex items-center text-xl h-full gap-2 border-2 border-[#9F9F9F] px-4 rounded-xl">
+                        <div className="flex items-center text-base sm:text-xl h-full gap-2 border-2 border-[#9F9F9F] px-4 rounded-xl">
                             <button onClick={decreaseCount} className={`${isCount<2 ? "cursor-not-allowed":""}`}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-dash-lg" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
                             </svg></button>
@@ -325,7 +325,7 @@ function Dynamic({productId}){
                                             e.preventDefault();
                                             e.stopPropagation();
                                             isEmail ? sendToFb(filtereddata.img,filtereddata.name,filtereddata.desc,filtereddata.price,isCount):toast.error("Log In to access cart")
-                                        }} className="h-full w-1/3 border-2 text-xl border-solid border-black rounded-xl px-2 break-keep ">
+                                        }} className="h-full w-full sm:w-1/3 border-2 text-base sm:text-xl border-solid border-black rounded-xl px-2 break-keep ">
                             Add To Cart
                         </button>
                         
