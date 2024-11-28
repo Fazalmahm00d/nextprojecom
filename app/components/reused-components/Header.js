@@ -26,6 +26,7 @@ function Header(){
     const[burgerDisplay,setBurgerDisplay]=useState(false);
     const[isLoading,setIsLoading]=useState(true);
     const[isItems,setIsItems]=useState([]);
+    const[isVisible,setIsVisible]=useState(false)
     const[isWishItems,setIsWishItems]=useState([]);
     // const [isSearch,setIsSearch]=useState(false);
     // const [query,setQuery]=useState('');
@@ -39,9 +40,16 @@ function Header(){
     // }
     const showBurger=()=>{
         setBurgerDisplay(true);
+        // setIsVisible(true);
+        setTimeout(()=>{
+         setIsVisible(true);   
+        },200)
     }
     const closeBurger=()=>{
-        setBurgerDisplay(false);
+        setIsVisible(false);
+        setTimeout(()=>{
+            setBurgerDisplay(false);  
+           },200)
     }
     const showCart=()=>{
         if(isEmail){
@@ -187,7 +195,8 @@ function Header(){
     return(
         <div className="relative w-full bg-white">
             {
-                burgerDisplay?<div className="absolute top-16 h-screen w-screen bg-white no-doc-scroll z-30">
+                burgerDisplay?
+                <div className={`absolute top-16  h-screen w-screen bg-white no-doc-scroll z-30 animate-fade-slide-in`}>
                     <div className="flex flex-col items-center justify-center gap-16 mt-10 font-bold">
                     <Link onClick={closeBurger} href="/">Home</Link>
                     <Link onClick={closeBurger} href="/shop">Shop</Link>
