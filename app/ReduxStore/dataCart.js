@@ -11,6 +11,7 @@ const dataSlice=createSlice({
     },
     reducers:{
         setCartArr(state,actions){
+            console.log(actions.payload,"actions payload")
             state.cartItems=actions.payload;
         },
         setWishArr(state,actions){

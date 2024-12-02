@@ -12,26 +12,26 @@ function CartItems(){
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
     const[isLoading,setIsLoading]=useState(true);
     const [totalExpenses, setTotalExpenses] = useState(0);
-    console.log(cartItems,"cart items");
-    async function getCartData() {
-        try {
-            const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
-            const data=response.data
-            console.log(data);
-            const arr=[]
-            for(let key in data){
-                arr.push({ id:key ,...data[key]});
-            }
-            console.log(arr,"data array")
-            dispatch(dataAction.setCartArr(arr));
-        }
-        catch (error) {
-            console.log(error)
-        }
-        finally{
-            setIsLoading(false)
-        }
-      }
+    // console.log(cartItems,"cart items");
+    // async function getCartData() {
+    //     try {
+    //         const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+    //         const data=response.data
+    //         // console.log(data);
+    //         const arr=[]
+    //         for(let key in data){
+    //             arr.push({ id:key ,...data[key]});
+    //         }
+        
+    //         dispatch(dataAction.setCartArr(arr));
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    //     finally{
+    //         setIsLoading(false)
+    //     }
+    //   }
     // const [expenses,setExpenses]=useState()
     // async function updateTotal(){
     //     const totalExpenses= await cartItems.reduce(
@@ -40,12 +40,30 @@ function CartItems(){
     //     setExpenses(totalExpenses)
     // }
     // updateTotal();
-    useEffect(
-        ()=>{
-            getCartData()    
-            },[cartItems]
-    )
+    // async function getCartsData(){
+    //     try{
+    //         // const response=await fetch(`http://localhost:8000/cart/${isEmail}`, {
+    //         //     method: 'GET',
+    //         //     headers: {
+    //         //         'content-type': 'application/json',
+    //         //     },
+    //         // });
+    //         // const res=await response.json();
+
+    //         const response=await axios.post(`http://localhost:8000/cart/${isEmail}`)
+    //         console.log(response.data.items,"setting cart items in cart page")
+    //         dispatch(dataAction.setCartArr(response.data.items));
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    //     finally{
+    //         // setIsLoading(false)
+    //     }
+    // }
+    
     useEffect(() => {
+        setIsLoading(false)
         const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
         setTotalExpenses(total);
     }, [cartItems]);
@@ -74,7 +92,7 @@ function CartItems(){
                     
                     :
                      cartItems.map((items)=>{
-                            return <div key={items.id} className="grid grid-cols-4 gap-10 items-center text-sm   lg:text-base mt-3">
+                            return <div key={items._id} className="grid grid-cols-4 gap-10 items-center text-sm   lg:text-base mt-3">
                                         <div className="flex gap-2 lg:gap-4 items-center">
                                         <img src={items.img} className="h-8 w-8 lg:h-16 lg:w-16 rounded-lg"></img>
                                         <h3 className="font-bold text-sm lg:text-xl">{items.name}</h3> 

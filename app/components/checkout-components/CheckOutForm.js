@@ -15,16 +15,16 @@ function CheckOutForm(){
         try {
             const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
             const data=response.data
-            console.log(data);
+           
             const arr=[]
             for(let key in data){
                 arr.push({ id:key ,...data[key]});
             }
-            console.log(arr,"data array")
-            const totalExpenses= await arr.reduce(
-                (sum,ele) => Number(sum)+Number(ele.price)
-                ,0);
-                setExpenses(totalExpenses)
+            
+            // const totalExpenses= await arr.reduce(
+            //     (sum,ele) => Number(sum)+Number(ele.price)
+            //     ,0);
+            //     setExpenses(totalExpenses)
         }
         catch (error) {
             console.log(error)
@@ -33,7 +33,7 @@ function CheckOutForm(){
             setIsLoading(false)
         }
       }
-    
+      
     
     useEffect(() => {
         getCartData();

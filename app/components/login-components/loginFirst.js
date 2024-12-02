@@ -20,27 +20,34 @@ function LoginFirst(){
     const[IsValidPsswd,setIsValidPsswd]=useState(true);
 
     const[isType,setIsType]=useState("password")
-    const signUpURL="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM";
-    const logInURL="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM"
-
+    // const signUpURL="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM";
+    // const logInURL="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM"
+    const signUpURL="http://localhost:8000/register";
+    const logInURL="http://localhost:8000/login"
     async function authFirebase(data){
         setIsSendingReq(true);
         try{
         const URL=isLogin ? logInURL : signUpURL
         const res=await axios.post(URL,data);
         console.log(res)
-        dispatch(authAction.changeTokenValue(res.data.idToken))
+        if(res.data.message==="email already exists"){
+            toast.error(res.data.message)
+        }else if(res.data.message==="Email or password is incorrect"){
+            toast.error(res.data.message)
+        }
+        dispatch(authAction.changeTokenValue(res.data.token))
         const newEmail = data.email.replace(/[@.]/g, "");
         dispatch(authAction.changeEmailValue(newEmail))
         if(isRemember){
-        localStorage.setItem('token',res.data.idToken)
+        localStorage.setItem('token',res.data.token)
         localStorage.setItem('email',newEmail);
         }
         toast.success("Logged In Successfully")
         router.push('/')
         }
         catch(error){
-            toast.error(error.response.data.error.message)
+            console.log(error)
+            toast.error(error.response.data.message);
         }
         finally{
             setIsSendingReq(false);
@@ -75,8 +82,8 @@ function LoginFirst(){
         }
         const data={
             email,
-            password,
-            returnSecureToken:true
+            password
+            // returnSecureToken:true
         }
         // console.log(isValidMail,"email valid or not");
         // console.log(IsValidPsswd,"passwd valid or not")

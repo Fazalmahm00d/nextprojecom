@@ -20,7 +20,7 @@ function Header(){
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
     // const shopProducts=useSelector((state)=>state.dataReducer.shopProducts)
     const [totalExpenses, setTotalExpenses] = useState(0);
-    console.log(cartItems,"cart items")
+    
     const[cartDisplay,setCartDisplay]=useState(false);
     const[wishDisplay,setWishDisplay]=useState(false);
     const[burgerDisplay,setBurgerDisplay]=useState(false);
@@ -54,7 +54,7 @@ function Header(){
     const showCart=()=>{
         if(isEmail){
             setCartDisplay(true);
-            getCartData();
+            getCartsData();
         }else{
             toast.warning("Log In to access Cart")
             router.push('/login');
@@ -67,7 +67,7 @@ function Header(){
     const showWish=()=>{
         if(isEmail){
             setWishDisplay(true);
-            getWishData();
+            getWishsData();
         }else{
             toast.warning("Log In to access Cart")
             router.push('/login');
@@ -77,24 +77,59 @@ function Header(){
     const closeWish=()=>{
         setWishDisplay(false);
     }
+    
     // const handler=(e)=>{
     //     const search=e.target.value;
     //     console.log(search,"search")
     //     setQuery(search);
     // }
-    async function getCartData() {
-        try {
-            const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
-            const result=response.data;
+    // async function getCartData() {
+    //     try {
+    //         const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
+    //         const result=response.data;
             
-            console.log(result,"result");
-            const arr=[]
-            for(let key in result){
-                arr.push({ id:key ,...result[key]});
+    //         console.log(result,"result");
+    //         const arr=[]
+    //         for(let key in result){
+    //             arr.push({ id:key ,...result[key]});
+    //         }
+    //         console.log(arr,"cart items data")
+    //         dispatch(dataAction.setCartArr(arr));
+    //         setIsItems(arr);
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    //     finally{
+    //         setIsLoading(false)
+    //     }
+    //   }
+      async function getCartsData(){
+        try{
+            console.log(isEmail,"email");
+            const response=await fetch(`http://localhost:8000/cart/${isEmail}`, {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json',
+                },
+            });
+            const res=await response.json()
+            
+            // console.log(arr,"items arr") 
+            console.log(res,"response")
+            console.log(res.items,"from header file")           
+            dispatch(dataAction.setCartArr(res.items));
+            console.log(cartItems,"cart items headers set");
+            if(res.message==="Cart not found"){
+                console.log("inside 404")
+                return
             }
-            console.log(arr,"cart items data")
-            dispatch(dataAction.setCartArr(arr));
-            setIsItems(arr);
+            setIsItems(res.items)
+
+            const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            setTotalExpenses(total);
+            console.log("use effect ",total)
+            
         }
         catch (error) {
             console.log(error)
@@ -102,27 +137,44 @@ function Header(){
         finally{
             setIsLoading(false)
         }
-      }
-      async function getWishData() {
-        try {
-            const response2 = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/wishlist.json`)
-            const data2=response2.data
-            console.log(data2);
-            const arr2=[]
-            for(let key in data2){
-                arr2.push({ id:key ,...data2[key]});
+    }
+    async function getWishsData() {
+        try{
+            const response=await axios.get(`http://localhost:8000/wishlist/${isEmail}`);
+            console.log(response,"wish response")
+            
+            dispatch(dataAction.setWishArr(response.data.items))
+            if(response.data.message==="WishList not found"){
+                console.log("inside 404")
+                return
             }
-            console.log(arr2,"wishlist data")
-            dispatch(dataAction.setWishArr(arr2));
-            setIsWishItems(arr2);
+            setIsWishItems(response.data.items)
         }
-        catch (error) {
+        catch(error){
             console.log(error)
         }
-        finally{
-            setIsLoading(false);
-        }
-      }
+    }
+      
+    //   async function getWishData() {
+    //     try {
+    //         const response2 = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/wishlist.json`)
+    //         const data2=response2.data
+            
+    //         const arr2=[]
+    //         for(let key in data2){
+    //             arr2.push({ id:key ,...data2[key]});
+    //         }
+            
+    //         dispatch(dataAction.setWishArr(arr2));
+    //         setIsWishItems(arr2);
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    //     finally{
+    //         setIsLoading(false);
+    //     }
+    //   }
     
     // async function updateTotal(){
     //     const totalExpenses = await cartItems.reduce(
@@ -148,17 +200,17 @@ function Header(){
         toast.success("Logged Out Successfully");
     }
     async function deleteItem(id){
-        const response=await axios.delete(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart/${id}.json`);
+        const response=await axios.delete(`http://localhost:8000/cart/delete/${isEmail}/items/${id}`);
         console.log(response);
         toast.success("Item removed from cart");
-        getCartData();
+        getCartsData();
     }
     
     async function deleteWishItem(id){
-        const response=await axios.delete(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/wishlist/${id}.json`);
+        const response=await axios.delete(`http://localhost:8000/wishlist/delete/${isEmail}/items/${id}`);
         console.log(response);
         toast.success("Item removed from wishlist");
-        getWishData();
+        getWishsData();
     }
     
     // useEffect(()=>{
@@ -182,16 +234,21 @@ function Header(){
     useEffect(()=>{
         if(localStorage.getItem('email')){
             dispatch(authAction.changeEmailValue(localStorage.getItem('email')));
-            dispatch(authAction.changeTokenValue(localStorage.getItem('token')))
+            dispatch(authAction.changeTokenValue(localStorage.getItem('token')));
+            
         }
-        getCartData();
-        getWishData();
+        
         // delayedUpdateTotal();
     },[])
     useEffect(() => {
-        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        setTotalExpenses(total);
-    }, [cartItems]);
+        if(isEmail){
+        getCartsData();
+        getWishsData();
+        console.log(cartItems,"use effect cart item")
+       
+        }
+        
+    }, [isEmail]);//later
     return(
         <div className="relative w-full bg-white">
             {
@@ -243,38 +300,58 @@ function Header(){
                                         </button>
                                     </div>
                                     <div className="h-[60vh]">
-                                    { 
-                                    isLoading ? 
-                                        [1,2,3].map((item)=>{
-                                                return <div key={item} className="flex justify-between text-base mt-3">
-                                                            
-                                                         <div  className="h-16 w-16 rounded-lg bg-gray-200"></div>
-                                                            <div className="flex flex-col items-end gap-2">
-                                                            <div className="text-[#B88E2F] w-16 h-4 bg-gray-200"></div>
-                                                            <div className="font-bold text-xl w-10 h-4  bg-gray-200"></div> 
-                                                            </div>
-                                                        </div>
-                                                })
-                                    
-                                       : 
-                                       isItems.length===0 ? <div className="text-xl font-bold text-center">You dont have any product in cart.Please continue shopping</div>:
-                                        cartItems.map((items)=>{
-                                                return <div key={items.id} className="flex justify-between items-center text-base mt-3">
-                                                            <img src={items.img} className="h-16 w-16 lg:h-24 lg:w-24 rounded-lg"></img>
-                                                            <div className="flex flex-col items-end gap-2">
-                                                            <h3 className="font-bold text-xl">{items.name}</h3>
-                                                            <p className="">{items.quantity}</p> 
-                                                            <p className="text-[#B88E2F] tracking-widest">${items.price}</p>
-                                                            </div>
-                                                            <button onClick={()=>deleteItem(items.id)}>
-                                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path fillRule="evenodd" clipRule="evenodd" d="M10 0C4.47727 0 0 4.47727 0 10C0 15.5227 4.47727 20 10 20C15.5227 20 20 15.5227 20 10C20 4.47727 15.5227 0 10 0ZM13.37 7.91545C13.5356 7.744 13.6272 7.51436 13.6252 7.276C13.6231 7.03764 13.5275 6.80963 13.3589 6.64107C13.1904 6.47252 12.9624 6.37691 12.724 6.37484C12.4856 6.37277 12.256 6.4644 12.0845 6.63L10 8.71455L7.91545 6.63C7.83159 6.54317 7.73128 6.47392 7.62037 6.42627C7.50946 6.37863 7.39016 6.35355 7.26946 6.3525C7.14875 6.35145 7.02904 6.37445 6.91731 6.42016C6.80559 6.46587 6.70409 6.53338 6.61873 6.61873C6.53338 6.70409 6.46587 6.80559 6.42016 6.91731C6.37445 7.02904 6.35145 7.14875 6.3525 7.26946C6.35355 7.39016 6.37863 7.50946 6.42627 7.62037C6.47392 7.73128 6.54317 7.83159 6.63 7.91545L8.71455 10L6.63 12.0845C6.54317 12.1684 6.47392 12.2687 6.42627 12.3796C6.37863 12.4905 6.35355 12.6098 6.3525 12.7305C6.35145 12.8513 6.37445 12.971 6.42016 13.0827C6.46587 13.1944 6.53338 13.2959 6.61873 13.3813C6.70409 13.4666 6.80559 13.5341 6.91731 13.5798C7.02904 13.6255 7.14875 13.6486 7.26946 13.6475C7.39016 13.6465 7.50946 13.6214 7.62037 13.5737C7.73128 13.5261 7.83159 13.4568 7.91545 13.37L10 11.2855L12.0845 13.37C12.256 13.5356 12.4856 13.6272 12.724 13.6252C12.9624 13.6231 13.1904 13.5275 13.3589 13.3589C13.5275 13.1904 13.6231 12.9624 13.6252 12.724C13.6272 12.4856 13.5356 12.256 13.37 12.0845L11.2855 10L13.37 7.91545Z" fill="#9F9F9F"/>
-                                                            </svg>
-                                                            </button>
-                                                </div>
-                                            })
-                                        
-                                    }
+                                    {isLoading ? (
+    [1, 2, 3].map((item) => (
+        <div key={item} className="flex justify-between text-base mt-3">
+            <div className="h-16 w-16 rounded-lg bg-gray-200"></div>
+            <div className="flex flex-col items-end gap-2">
+                <div className="text-[#B88E2F] w-16 h-4 bg-gray-200"></div>
+                <div className="font-bold text-xl w-10 h-4 bg-gray-200"></div>
+            </div>
+        </div>
+    ))
+) : isItems.length === 0 ? (
+    <div className="text-xl font-bold text-center">
+        You don’t have any products in the cart. Please continue shopping.
+    </div>
+) : (
+    cartItems.map((items) => (
+        <div
+            key={items._id}
+            className="flex justify-between items-center text-base mt-3"
+        >
+            <img
+                src={items.img}
+                alt={items.name}
+                className="h-16 w-16 lg:h-24 lg:w-24 rounded-lg"
+            />
+            <div className="flex flex-col items-end gap-2">
+                <h3 className="font-bold text-xl">{items.name}</h3>
+                <p>{items.quantity}</p>
+                <p className="text-[#B88E2F] tracking-widest">
+                    ${items.price}
+                </p>
+            </div>
+            <button onClick={() => deleteItem(items._id)}>
+                <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M10 0C4.47727 0 0 4.47727 0 10C0 15.5227 4.47727 20 10 20C15.5227 20 20 15.5227 20 10C20 4.47727 15.5227 0 10 0ZM13.37 7.91545C13.5356 7.744 13.6272 7.51436 13.6252 7.276C13.6231 7.03764 13.5275 6.80963 13.3589 6.64107C13.1904 6.47252 12.9624 6.37691 12.724 6.37484C12.4856 6.37277 12.256 6.4644 12.0845 6.63L10 8.71455L7.91545 6.63C7.83159 6.54317 7.73128 6.47392 7.62037 6.42627C7.50946 6.37863 7.39016 6.35355 7.26946 6.3525C7.14875 6.35145 7.02904 6.37445 6.91731 6.42016C6.80559 6.46587 6.70409 6.53338 6.61873 6.61873C6.53338 6.70409 6.46587 6.80559 6.42016 6.91731C6.37445 7.02904 6.35145 7.14875 6.3525 7.26946C6.35355 7.39016 6.37863 7.50946 6.42627 7.62037C6.47392 7.73128 6.54317 7.83159 6.63 7.91545L8.71455 10L6.63 12.0845C6.54317 12.1684 6.47392 12.2687 6.42627 12.3796C6.37863 12.4905 6.35355 12.6098 6.3525 12.7305C6.35145 12.8513 6.37445 12.971 6.42016 13.0827C6.46587 13.1944 6.53338 13.2959 6.61873 13.3813C6.70409 13.4666 6.80559 13.5341 6.91731 13.5798C7.02904 13.6255 7.14875 13.6486 7.26946 13.6475C7.39016 13.6465 7.50946 13.6214 7.62037 13.5737C7.73128 13.5261 7.83159 13.4568 7.91545 13.37L10 11.2855L12.0845 13.37C12.256 13.5356 12.4856 13.6272 12.724 13.6252C12.9624 13.6231 13.1904 13.5275 13.3589 13.3589C13.5275 13.1904 13.6231 12.9624 13.6252 12.724C13.6272 12.4856 13.5356 12.256 13.37 12.0845L11.2855 10L13.37 7.91545Z"
+                        fill="#9F9F9F"
+                    />
+                </svg>
+            </button>
+        </div>
+    ))
+)}
+
                                     </div>
                                     <div className=" w-full mb-6 ">
                                         <div className="flex justify-between mb-6">
@@ -284,7 +361,8 @@ function Header(){
                                         <hr/>
                                         <div className="flex gap-2  flex-wrap mt-5">
                                             {
-                                            isItems.length===0 ?<Link  href="/shop"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>:<Link href="/cart"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>}
+                                                isItems.length===0 ?<Link  href="/shop"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>:<Link href="/cart"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>
+                                            }
                                             <Link href="/checkout"><button onClick={closeOnTop}  className="px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl rounded-2xl">Checkout</button></Link>
                                         </div>
                                     </div>
@@ -321,13 +399,13 @@ function Header(){
                                        : 
                                         isWishItems.length===0 ? <div className="text-xl font-bold text-center">You dont have any product in cart.Please continue shopping</div>:
                                         wishItems.map((items)=>{
-                                                return <div key={items.id} className="flex justify-between items-center text-base mt-3">
+                                                return <div key={items._id} className="flex justify-between items-center text-base mt-3">
                                                             <img src={items.img} className="h-16 w-16 lg:h-24 lg:w-24 rounded-lg"></img>
                                                             <div className="flex flex-col items-end gap-2">
                                                             <h3 className="font-bold text-xl">{items.name}</h3> 
                                                             <p className="text-[#B88E2F] tracking-widest">${items.price}</p>
                                                             </div>
-                                                            <button onClick={()=>deleteWishItem(items.id)}>
+                                                            <button onClick={()=>deleteWishItem(items._id)}>
                                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path fillRule="evenodd" clipRule="evenodd" d="M10 0C4.47727 0 0 4.47727 0 10C0 15.5227 4.47727 20 10 20C15.5227 20 20 15.5227 20 10C20 4.47727 15.5227 0 10 0ZM13.37 7.91545C13.5356 7.744 13.6272 7.51436 13.6252 7.276C13.6231 7.03764 13.5275 6.80963 13.3589 6.64107C13.1904 6.47252 12.9624 6.37691 12.724 6.37484C12.4856 6.37277 12.256 6.4644 12.0845 6.63L10 8.71455L7.91545 6.63C7.83159 6.54317 7.73128 6.47392 7.62037 6.42627C7.50946 6.37863 7.39016 6.35355 7.26946 6.3525C7.14875 6.35145 7.02904 6.37445 6.91731 6.42016C6.80559 6.46587 6.70409 6.53338 6.61873 6.61873C6.53338 6.70409 6.46587 6.80559 6.42016 6.91731C6.37445 7.02904 6.35145 7.14875 6.3525 7.26946C6.35355 7.39016 6.37863 7.50946 6.42627 7.62037C6.47392 7.73128 6.54317 7.83159 6.63 7.91545L8.71455 10L6.63 12.0845C6.54317 12.1684 6.47392 12.2687 6.42627 12.3796C6.37863 12.4905 6.35355 12.6098 6.3525 12.7305C6.35145 12.8513 6.37445 12.971 6.42016 13.0827C6.46587 13.1944 6.53338 13.2959 6.61873 13.3813C6.70409 13.4666 6.80559 13.5341 6.91731 13.5798C7.02904 13.6255 7.14875 13.6486 7.26946 13.6475C7.39016 13.6465 7.50946 13.6214 7.62037 13.5737C7.73128 13.5261 7.83159 13.4568 7.91545 13.37L10 11.2855L12.0845 13.37C12.256 13.5356 12.4856 13.6272 12.724 13.6252C12.9624 13.6231 13.1904 13.5275 13.3589 13.3589C13.5275 13.1904 13.6231 12.9624 13.6252 12.724C13.6272 12.4856 13.5356 12.256 13.37 12.0845L11.2855 10L13.37 7.91545Z" fill="#9F9F9F"/>
                                                             </svg>

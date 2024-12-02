@@ -116,24 +116,57 @@ function FeaturedProducts(){
     //         setIsLoading(false);
     //     }
     //   }
-    async function getCartData() {
-        try {
-            const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
-            const data=response.data
-            console.log(data);
-            const arr=[]
-            for(let key in data){
-                arr.push({ id:key ,...data[key]});
-            }
-            console.log(arr)
-            dispatch(dataAction.setCartArr(arr));
+    // async function getCartData() {
+    //     try {
+    //         const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`)
+    //         const data=response.data
+    //         console.log(data);
+    //         const arr=[]
+    //         for(let key in data){
+    //             arr.push({ id:key ,...data[key]});
+    //         }
+    //         console.log(arr)
+    //         dispatch(dataAction.setCartArr(arr));
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    //   }
+      async function getCartsData(){
+        try{
+            const response=await fetch(`http://localhost:8000/cart/${isEmail}`, {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json',
+                },
+            });
+            const res=await response.json()
+            console.log(res.items);
+            dispatch(dataAction.setCartArr(res.items));
         }
         catch (error) {
             console.log(error)
         }
-      }
-    async function sendToFb(img,name,desc,price){
+    }
+    async function getWishsData() {
+        try{
+            const response=await axios.get(`http://localhost:8000/wishlist/${isEmail}`);
+            console.log(response,"wish response")
+            
+            dispatch(dataAction.setWishArr(response.data.items))
+            if(response.data.message==="WishList not found"){
+                console.log("inside 404")
+                return
+            }
+            setIsWishItems(response.data.items)
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+      async function sendToMongoDB(img,name,desc,price){
         const newCartItem={
+            email:isEmail,
             img:img,
             name:name,
             desc:desc,
@@ -141,35 +174,66 @@ function FeaturedProducts(){
             quantity:1,
         }
         try{
-            getCartData();
-            console.log(cartItems,"cart items before calling")
-            const similar=cartItems.find((item)=>item.name===name);
-            console.log(similar,"similar")
-            if(similar){
-                const response=await axios.patch(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart/${similar.id}.json`,{quantity:similar.quantity+1});
-                console.log(response);
-                toast.success("Quantity of the product is increased")
-            }else{
-            const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
-            toast.success("Product added to cart")
-        }
-            getCartData()    
+            getCartsData();
+            const response= await axios.post(`http://localhost:8000/cart/new`,newCartItem);
+            if(response.status===201){
+                toast.success("Quantity of the item has been increased")
+            }else if(response.status===200){
+                toast.success("Product added to cart")
+            }
+        
+            getCartsData()    
         }
         catch(error)
         {
             console.error("err:",error)
         }
     } 
+    // async function sendToFb(img,name,desc,price){
+    //     const newCartItem={
+    //         img:img,
+    //         name:name,
+    //         desc:desc,
+    //         price:price,
+    //         quantity:1,
+    //     }
+    //     try{
+    //         getCartData();
+    //         console.log(cartItems,"cart items before calling")
+    //         const similar=cartItems.find((item)=>item.name===name);
+    //         console.log(similar,"similar")
+    //         if(similar){
+    //             const response=await axios.patch(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart/${similar.id}.json`,{quantity:similar.quantity+1});
+    //             console.log(response);
+    //             toast.success("Quantity of the product is increased")
+    //         }else{
+    //         const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com/nextprojecom/${isEmail}/cart.json`,newCartItem);
+    //         toast.success("Product added to cart")
+    //     }
+    //         getCartData()    
+    //     }
+    //     catch(error)
+    //     {
+    //         console.error("err:",error)
+    //     }
+    // } 
     async function sendToFbWish(img,name,desc,price){
         const newWishItem={
-            img,
-            name,
-            desc,
-            price
+            email:isEmail,
+            img:img,
+            name:name,
+            desc:desc,
+            price:price,
         }
         try{
-            const response= await axios.post(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/wishlist.json`,newWishItem);
-            toast.success("Product added to wishlist")
+            getWishsData();
+            const response= await axios.post("http://localhost:8000/wishlist/new",newWishItem);
+            if(response.status===201){
+                toast.success("Product already exists in wishlist")
+            }else if(response.status===200){
+                toast.success("Product added to wishlist")
+            }
+            getWishsData();
         }
         catch(error)
         {
@@ -209,7 +273,7 @@ function FeaturedProducts(){
                                         <button onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            isEmail ? sendToFb(items.img,items.name,items.desc,items.price):toast.error("Log In to access cart")
+                                            isEmail ? sendToMongoDB(items.img,items.name,items.desc,items.price):toast.error("Log In to access cart")
                                         }} className="bg-white text-[#B88E2F]  text-sm px-2 py-2  font-bold lg:text-l lg:px-10 lg:py-2 tracking-wide">Add to cart</button>
                                         <div className="flex flex-col lg:flex-row gap-2 w-full lg:mt-4  items-center text-white font-bold text-base">
 
