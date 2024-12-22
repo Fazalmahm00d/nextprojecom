@@ -9,11 +9,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { dataAction } from "@/app/ReduxStore/dataCart";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { sendToMongoDB } from "@/app/lib/api";
 
 function FeaturedProducts(){
     const dispatch=useDispatch();
     const router =useRouter();
-    const[isLoading,setIsLoading]=useState();
+    // const[isLoading,setIsLoading]=useState();
     const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const isEmail=useSelector((state)=>state.authReducer.isEmail)
     const products=[
@@ -132,22 +134,28 @@ function FeaturedProducts(){
     //         console.log(error)
     //     }
     //   }
-      async function getCartsData(){
-        try{
-            const response=await fetch(`http://localhost:8000/cart/${isEmail}`, {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json',
-                },
-            });
-            const res=await response.json()
-            console.log(res.items);
-            dispatch(dataAction.setCartArr(res.items));
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
+    //   async function getCartsData(){
+    //     try{
+    //         const response=await fetch(`http://localhost:8000/cart/${isEmail}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'content-type': 'application/json',
+    //             },
+    //         });
+    //         const res=await response.json()
+    //         console.log(res.items);
+    //         dispatch(dataAction.setCartArr(res.items));
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+    const {data,isLoading,isError,error}=useQuery({
+        queryKey:["cartdata"],
+        queryFn:()=>getCartByIdData(isEmail),
+        enabled: !!isEmail,
+        onSuccess:(data)=>{ dispatch(dataAction.setCartArr(data.items))}
+    })
     async function getWishsData() {
         try{
             const response=await axios.get(`http://localhost:8000/wishlist/${isEmail}`);
@@ -164,31 +172,39 @@ function FeaturedProducts(){
             console.log(error)
         }
     }
-      async function sendToMongoDB(img,name,desc,price){
-        const newCartItem={
-            email:isEmail,
-            img:img,
-            name:name,
-            desc:desc,
-            price:price,
-            quantity:1,
-        }
-        try{
-            getCartsData();
-            const response= await axios.post(`http://localhost:8000/cart/new`,newCartItem);
-            if(response.status===201){
-                toast.success("Quantity of the item has been increased")
-            }else if(response.status===200){
-                toast.success("Product added to cart")
-            }
+    //   async function sendToMongoDB(img,name,desc,price){
+    //     const newCartItem={
+    //         email:isEmail,
+    //         img:img,
+    //         name:name,
+    //         desc:desc,
+    //         price:price,
+    //         quantity:1,
+    //     }
+    //     try{
+    //         getCartsData();
+    //         const response= await axios.post(`http://localhost:8000/cart/new`,newCartItem);
+    //         if(response.status===201){
+    //             toast.success("Quantity of the item has been increased")
+    //         }else if(response.status===200){
+    //             toast.success("Product added to cart")
+    //         }
         
-            getCartsData()    
-        }
-        catch(error)
-        {
-            console.error("err:",error)
-        }
-    } 
+    //         getCartsData()    
+    //     }
+    //     catch(error)
+    //     {
+    //         console.error("err:",error)
+    //     }
+    // } 
+        const queryClient=useQueryClient();
+        const postMutation=useMutation({
+            mutationFn:sendToMongoDB,
+            onSuccess:()=>{
+                console.log("Mutation succeeded");
+                queryClient.invalidateQueries({queryKey:["cartdata"], refetchInactive: true})
+            }
+        })
     // async function sendToFb(img,name,desc,price){
     //     const newCartItem={
     //         img:img,
@@ -217,6 +233,20 @@ function FeaturedProducts(){
     //         console.error("err:",error)
     //     }
     // } 
+    function addtoCarthandler(img,name,desc,price){
+        const obj={
+            email:isEmail,
+            img,
+            name,
+            desc,
+            price,
+            quantity:1
+        }
+        console.log("add to cart handler in ")
+        if(!postMutation.isPending){
+            postMutation.mutate(obj)
+        }
+    }
     async function sendToFbWish(img,name,desc,price){
         const newWishItem={
             email:isEmail,
@@ -224,6 +254,7 @@ function FeaturedProducts(){
             name:name,
             desc:desc,
             price:price,
+            quantity:1
         }
         try{
             getWishsData();
@@ -273,8 +304,9 @@ function FeaturedProducts(){
                                         <button onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            isEmail ? sendToMongoDB(items.img,items.name,items.desc,items.price):toast.error("Log In to access cart")
-                                        }} className="bg-white text-[#B88E2F]  text-sm px-2 py-2  font-bold lg:text-l lg:px-10 lg:py-2 tracking-wide">Add to cart</button>
+                                            isEmail
+                                             ? addtoCarthandler(items.img,items.name,items.desc,items.price):toast.error("Log In to access cart")
+                                        }} className="bg-white text-[#B88E2F]  text-sm px-2 py-2  font-bold lg:text-l lg:px-10 lg:py-2 tracking-wide">{postMutation.isPending ? "sending":"Add to Cart"}</button>
                                         <div className="flex flex-col lg:flex-row gap-2 w-full lg:mt-4  items-center text-white font-bold text-base">
 
                                             <SvgComponent name="Share" svg={<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

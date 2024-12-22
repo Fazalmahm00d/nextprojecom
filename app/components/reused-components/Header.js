@@ -1,7 +1,9 @@
 "use client"
 
+import { getCartByIdData } from "@/app/lib/api";
 import { authAction } from "@/app/ReduxStore/Authenticate";
 import { dataAction } from "@/app/ReduxStore/dataCart";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,7 +26,7 @@ function Header(){
     const[cartDisplay,setCartDisplay]=useState(false);
     const[wishDisplay,setWishDisplay]=useState(false);
     const[burgerDisplay,setBurgerDisplay]=useState(false);
-    const[isLoading,setIsLoading]=useState(true);
+    // const[isLoading,setIsLoading]=useState(true);
     const[isItems,setIsItems]=useState([]);
     const[isVisible,setIsVisible]=useState(false)
     const[isWishItems,setIsWishItems]=useState([]);
@@ -54,7 +56,7 @@ function Header(){
     const showCart=()=>{
         if(isEmail){
             setCartDisplay(true);
-            getCartsData();
+            // getCartsData();
         }else{
             toast.warning("Log In to access Cart")
             router.push('/login');
@@ -104,40 +106,46 @@ function Header(){
     //         setIsLoading(false)
     //     }
     //   }
-      async function getCartsData(){
-        try{
-            console.log(isEmail,"email");
-            const response=await fetch(`http://localhost:8000/cart/${isEmail}`, {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json',
-                },
-            });
-            const res=await response.json()
+    //   async function getCartsData(){
+    //     try{
+    //         console.log(isEmail,"email");
+    //         const response=await fetch(`http://localhost:8000/cart/${isEmail}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'content-type': 'application/json',
+    //             },
+    //         });
+    //         const res=await response.json()
             
-            // console.log(arr,"items arr") 
-            console.log(res,"response")
-            console.log(res.items,"from header file")           
-            dispatch(dataAction.setCartArr(res.items));
-            console.log(cartItems,"cart items headers set");
-            if(res.message==="Cart not found"){
-                console.log("inside 404")
-                return
-            }
-            setIsItems(res.items)
+    //         // console.log(arr,"items arr") 
+    //         console.log(res,"response")
+    //         console.log(res.items,"from header file")           
+    //         dispatch(dataAction.setCartArr(res.items));
+    //         console.log(cartItems,"cart items headers set");
+    //         if(res.message==="Cart not found"){
+    //             console.log("inside 404")
+    //             return
+    //         }
+    //         setIsItems(res.items)
 
-            const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            setTotalExpenses(total);
-            console.log("use effect ",total)
+    //         const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    //         setTotalExpenses(total);
+    //         console.log("use effect ",total)
             
-        }
-        catch (error) {
-            console.log(error)
-        }
-        finally{
-            setIsLoading(false)
-        }
-    }
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    //     finally{
+    //         setIsLoading(false)
+    //     }
+    // }
+    const {data,isLoading,isError,error}=useQuery({
+        queryKey:["cartdata"],
+        queryFn:()=>getCartByIdData(isEmail),
+        enabled: !!isEmail,
+          
+    })
     async function getWishsData() {
         try{
             const response=await axios.get(`http://localhost:8000/wishlist/${isEmail}`);
@@ -203,7 +211,7 @@ function Header(){
         const response=await axios.delete(`http://localhost:8000/cart/delete/${isEmail}/items/${id}`);
         console.log(response);
         toast.success("Item removed from cart");
-        getCartsData();
+    
     }
     
     async function deleteWishItem(id){
@@ -242,7 +250,7 @@ function Header(){
     },[])
     useEffect(() => {
         if(isEmail){
-        getCartsData();
+        getCartByIdData(isEmail)
         getWishsData();
         console.log(cartItems,"use effect cart item")
        
@@ -310,12 +318,12 @@ function Header(){
             </div>
         </div>
     ))
-) : isItems.length === 0 ? (
+) : data.items.length === 0 ? (
     <div className="text-xl font-bold text-center">
         You don’t have any products in the cart. Please continue shopping.
     </div>
 ) : (
-    cartItems.map((items) => (
+    data.items.map((items) => (
         <div
             key={items._id}
             className="flex justify-between items-center text-base mt-3"

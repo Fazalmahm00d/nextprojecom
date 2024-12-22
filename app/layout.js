@@ -28,12 +28,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        
         <ReduxProvider>
         <ToastContainer position="top-right" autoClose={1500}/>
         <Header/>
         {children}
         <Footer/>
         </ReduxProvider>
+        
       </body>
     </html>
   );

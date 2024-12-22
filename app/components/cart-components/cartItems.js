@@ -1,6 +1,8 @@
 "use client"
 
+import { getCartByIdData } from "@/app/lib/api";
 import { dataAction } from "@/app/ReduxStore/dataCart";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -10,7 +12,7 @@ function CartItems(){
     const dispatch=useDispatch();
     const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
-    const[isLoading,setIsLoading]=useState(true);
+    // const[isLoading,setIsLoading]=useState(true);
     const [totalExpenses, setTotalExpenses] = useState(0);
     // console.log(cartItems,"cart items");
     // async function getCartData() {
@@ -61,13 +63,20 @@ function CartItems(){
     //         // setIsLoading(false)
     //     }
     // }
+    const {data,isLoading,isError,error}=useQuery({
+        queryKey:["cartdata"],
+        queryFn:()=>getCartByIdData(isEmail),
+        enabled: !!isEmail,
+    })
     
-    useEffect(() => {
-        setIsLoading(false)
-        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        setTotalExpenses(total);
-    }, [cartItems]);
+    // useEffect(() => {
+    //     // setIsLoading(false)
+    //     const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    //     setTotalExpenses(total);
+    // }, [cartItems]);
+    console.log("from items cart data",data)
     return(
+
         <div className="p-6 lg:px-20 flex flex-col lg:flex-row ">
             <div className="w-full lg:w-2/3">
                 <div className="bg-[#F9F1E7]  grid grid-cols-4 items-center gap-6 lg:mr-6  h-[10vh] lg:text-l font-bold">
@@ -78,7 +87,7 @@ function CartItems(){
                 </div>
                 <div className="h-fit pb-10 lg:h-[60vh]">
                     {   
-                     isLoading?   [1,2,3].map((item)=>{
+                     isLoading ?   [1,2,3].map((item)=>{
                             return <div key={item} className="grid grid-cols-4 items-center  text-sm lg:text-base mt-3">
                                         <div className="flex gap-4 items-center">
                                             <div  className="h-8 w-8 lg:h-16 lg:w-16 rounded-lg bg-gray-200"></div>
@@ -91,7 +100,7 @@ function CartItems(){
                             })
                     
                     :
-                     cartItems.map((items)=>{
+                     data?.items.map((items)=>{
                             return <div key={items._id} className="grid grid-cols-4 gap-10 items-center text-sm   lg:text-base mt-3">
                                         <div className="flex gap-2 lg:gap-4 items-center">
                                         <img src={items.img} className="h-8 w-8 lg:h-16 lg:w-16 rounded-lg"></img>
