@@ -34,3 +34,54 @@ export  async function sendToMongoDB(newCartItem){
             console.error("err:",error)
         }
     } 
+
+export  async function getWishByIdData(isEmail) {
+        try{
+            const response=await axios.get(`https://projectecombackend.onrender.com/wishlist/${isEmail}`);
+            console.log(response,"wish response")
+            return response.data
+            // dispatch(dataAction.setWishArr(response.data.items))
+            // if(response.data.message==="WishList not found"){
+            //     console.log("inside 404")
+            //     return
+            // }
+            // setIsWishItems(response.data.items)
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    export async function sendToWish(newWishItem){
+        
+        try{
+            
+            const response= await axios.post("https://projectecombackend.onrender.com/wishlist/new",newWishItem);
+            // if(response.status===201){
+            //     toast.success("Product already exists in wishlist")
+            // }else if(response.status===200){
+            //     toast.success("Product added to wishlist")
+            // }
+            return response.data
+        }
+        catch(error)
+        {
+            console.error("err:",error)
+        }
+    } 
+
+    export async function deleteItem(obj){
+
+        const response=await axios.delete(`https://projectecombackend.onrender.com/cart/delete/${obj.isEmail}/items/${obj.id}`);
+        console.log(response);
+        return response
+        // toast.success("Item removed from cart");
+        // getCartByIdData(isEmail)
+    }
+   export  async function deleteWishItem(obj){
+        const response=await axios.delete(`https://projectecombackend.onrender.com/wishlist/delete/${obj.isEmail}/items/${obj.id}`);
+        console.log(response);
+        // toast.success("Item removed from wishlist");
+        // getWishsData();
+
+    }
