@@ -1,5 +1,6 @@
 "use client"
 
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,41 +8,48 @@ import { useDispatch, useSelector } from "react-redux";
 
 function CheckOutForm(){
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
-    const [isLoading,setIsLoading]=useState(true);
-    const cartItems=useSelector((state)=>state.dataReducer.cartItems);
+    // const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const [totalExpenses, setTotalExpenses] = useState(0);
 
-    async function getCartData() {
-        try {
-            const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
-            const data=response.data
+    // async function getCartData() {
+    //     try {
+    //         const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
+    //         const data=response.data
            
-            const arr=[]
-            for(let key in data){
-                arr.push({ id:key ,...data[key]});
-            }
+    //         const arr=[]
+    //         for(let key in data){
+    //             arr.push({ id:key ,...data[key]});
+    //         }
             
-            // const totalExpenses= await arr.reduce(
-            //     (sum,ele) => Number(sum)+Number(ele.price)
-            //     ,0);
-            //     setExpenses(totalExpenses)
-        }
-        catch (error) {
-            console.log(error)
-        }
-        finally{
-            setIsLoading(false)
-        }
-      }
+    //         // const totalExpenses= await arr.reduce(
+    //         //     (sum,ele) => Number(sum)+Number(ele.price)
+    //         //     ,0);
+    //         //     setExpenses(totalExpenses)
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    //     finally{
+    //         setIsLoading(false)
+    //     }
+    //   }
+
+     const {data:cartdata,isLoading,isError,error}=useQuery({
+            queryKey:["cartdataheader"],
+            queryFn:()=>getCartByIdData(isEmail),
+            enabled: !!isEmail,
+              
+        })
       
     
     useEffect(() => {
-        getCartData();
-        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        if(cartdata){
+        const total = cartdata?.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
         setTotalExpenses(total);
-    }, [cartItems]);
+        }
+    }, [cartdata]);
     return(
-        <form className="flex flex-col w-full lg:flex-row" action="">
+        <form className="flex flex-col w-full lg:flex-row">
         <div className="px-6 lg:px-20">
             <h3 className="font-semibold text-4xl mb-10">Billing details</h3>
             <div className="flex flex-col gap-6">
