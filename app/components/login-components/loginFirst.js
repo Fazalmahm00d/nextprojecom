@@ -1,12 +1,14 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { authAction } from '@/app/ReduxStore/Authenticate';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { authFirebase } from '@/app/lib/api';
 
 
 
@@ -22,37 +24,32 @@ function LoginFirst(){
     const[isType,setIsType]=useState("password")
     // const signUpURL="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM";
     // const logInURL="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM"
-    const signUpURL="http://localhost:8000/register";
-    const logInURL="http://localhost:8000/login"
-    async function authFirebase(data){
-        setIsSendingReq(true);
-        try{
-        const URL=isLogin ? logInURL : signUpURL
-        const res=await axios.post(URL,data);
-        console.log(res)
-        if(res.data.message==="email already exists"){
-            toast.error(res.data.message)
-        }else if(res.data.message==="Email or password is incorrect"){
-            toast.error(res.data.message)
-        }
-        dispatch(authAction.changeTokenValue(res.data.token))
-        const newEmail = data.email.replace(/[@.]/g, "");
-        dispatch(authAction.changeEmailValue(newEmail))
-        if(isRemember){
-        localStorage.setItem('token',res.data.token)
-        localStorage.setItem('email',newEmail);
-        }
-        toast.success("Logged In Successfully")
-        router.push('/')
-        }
-        catch(error){
-            console.log(error)
-            toast.error(error.response.data.message);
-        }
-        finally{
-            setIsSendingReq(false);
-        }
-    }
+    const signUpURL="https://projectecombackend.onrender.com/register";
+    const logInURL="https://projectecombackend.onrender.com/login"
+    const URL=isLogin ? logInURL : signUpURL
+    const postAuthMutation=useMutation({
+        mutationFn:authFirebase,
+        onSuccess:(data)=>{
+                        // if(data.data.message==="email already exists"){
+                        //     toast.error(data.data.message)
+                        // }else if(data.data.message==="Email or password is incorrect"){
+                        //     toast.error(data.data.message)
+                        // }
+                        dispatch(authAction.changeTokenValue(data.data.token))
+                        const newEmail = data.email.replace(/[@.]/g, "");
+                        dispatch(authAction.changeEmailValue(newEmail))
+                        // if(isRemember){
+                        // localStorage.setItem('token',data.data.token)
+                        // localStorage.setItem('email',newEmail);
+                        // }
+                        // toast.success("Logged In Successfully")
+                        // console.log("before route ")
+                        // router.push('/')
+                        console.log("after data onsuccees ",data)
+                        toast.success("Logged In Successfully")
+                    }
+        
+    })
     const checkEmail=(email)=>{
         const emailpatt = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailpatt.test(email)
@@ -80,9 +77,11 @@ function LoginFirst(){
             setIsValidPsswd(false);
             console.log("password set to false",IsValidPsswd)
         }
-        const data={
-            email,
+        const obj={
+            URL,
+            data:{email,
             password
+            }
             // returnSecureToken:true
         }
         // console.log(isValidMail,"email valid or not");
@@ -90,7 +89,10 @@ function LoginFirst(){
         if(pr && pr2){
             setIsValidMail(true);
             setIsValidPsswd(true);
-            authFirebase(data);
+            if(!postAuthMutation.isPending){
+                postAuthMutation.mutate(obj)
+            }
+
         }
     }
     const forgotHandler=()=>{
@@ -110,6 +112,10 @@ function LoginFirst(){
         e.preventDefault();
         setIsType("password")
     }
+    // useEffect(()=>{
+    //     if(data){
+    //         
+    // },[res])
     return(
         <div className="flex w-full h-[100vh] p-10 bg-[#F9F1E7]">
             <div className='hidden sm:block relative w-[50%] h-full rounded-2xl overflow-hidden'>

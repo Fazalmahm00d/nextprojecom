@@ -85,3 +85,17 @@ export  async function getWishByIdData(isEmail) {
         // getWishsData();
 
     }
+
+ export async function authFirebase(obj){
+        // setIsSendingReq(true);
+        console.log("inside auth firebase func")
+        try{
+        const res=await axios.post(obj.URL,obj.data);
+        console.log(res)
+        return res
+        }
+        catch(err){
+            console.log(err)
+        }
+        
+}

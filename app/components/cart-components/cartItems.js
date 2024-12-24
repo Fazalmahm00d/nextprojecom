@@ -69,11 +69,13 @@ function CartItems(){
         enabled: !!isEmail,
     })
     
-    // useEffect(() => {
-    //     // setIsLoading(false)
-    //     const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    //     setTotalExpenses(total);
-    // }, [cartItems]);
+    useEffect(() => {
+        // setIsLoading(false)
+        if(data){
+        const total = data?.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        setTotalExpenses(total);
+        }
+    }, [data]);
     console.log("from items cart data",data)
     return(
 
@@ -85,7 +87,7 @@ function CartItems(){
                     <div>Quantity</div>
                     <div>Subtotal</div>
                 </div>
-                <div className="h-fit pb-10 lg:h-[60vh]">
+                <div className="h-fit pb-10 lg:h-[60vh] overflow-auto">
                     {   
                      isLoading ?   [1,2,3].map((item)=>{
                             return <div key={item} className="grid grid-cols-4 items-center  text-sm lg:text-base mt-3">

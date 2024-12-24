@@ -97,57 +97,6 @@ function Header(){
         enabled: !!isEmail,
         
     })
-    // async function getWishsData() {
-    //     try{
-    //         const response=await axios.get(`http://localhost:8000/wishlist/${isEmail}`);
-    //         console.log(response,"wish response")
-            
-    //         dispatch(dataAction.setWishArr(response.data.items))
-    //         if(response.data.message==="WishList not found"){
-    //             console.log("inside 404")
-    //             return
-    //         }
-    //         setIsWishItems(response.data.items)
-    //     }
-    //     catch(error){
-    //         console.log(error)
-    //     }
-    // }
-      
-    //   async function getWishData() {
-    //     try {
-    //         const response2 = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/wishlist.json`)
-    //         const data2=response2.data
-            
-    //         const arr2=[]
-    //         for(let key in data2){
-    //             arr2.push({ id:key ,...data2[key]});
-    //         }
-            
-    //         dispatch(dataAction.setWishArr(arr2));
-    //         setIsWishItems(arr2);
-    //     }
-    //     catch (error) {
-    //         console.log(error)
-    //     }
-    //     finally{
-    //         setIsLoading(false);
-    //     }
-    //   }
-    
-    // async function updateTotal(){
-    //     const totalExpenses = await cartItems.reduce(
-    //         (sum, item) => sum + item.price * item.quantity,
-    //         0
-    //     );
-    //     setExpenses(totalExpenses)
-    // }
-    
-    // function delayedUpdateTotal() {
-    //     setTimeout(async () => {
-    //         await updateTotal();
-    //     }, 2000); // 2000 milliseconds = 2 seconds
-    // }
     
     const closeOnTop=()=>{
             closeCart();
@@ -199,6 +148,15 @@ function Header(){
         }
         
     }, [isEmail]);//later
+    useEffect(()=>{
+        if(data){
+            const totalExpenses = data?.items.reduce(
+                (sum, item) => sum + item.price * item.quantity,
+                0
+            );
+            setTotalExpenses(totalExpenses)
+        }
+    },[data])
     return(
         <div className="relative w-full bg-white">
             {
