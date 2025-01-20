@@ -1,24 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { dataAction } from "@/app/ReduxStore/dataCart";
-import SvgComponent from "../home-components/Svgcomponent";
-import { toast } from "react-toastify";
-import { sendToMongoDB, sendToWish } from "@/app/lib/api";
-import { useMutation } from "@tanstack/react-query";
 import FeaturedCompo from "../home-components/FeaturedCompo";
 
 function ProductGrid(){
     const dispatch=useDispatch();
-    const[isLoading,setIsLoading]=useState(true);
-    // const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6;
-    const isEmail=useSelector((state)=>state.authReducer.isEmail);
+    const itemsPerPage = 8;
     const filteredData=useSelector((state)=>state.dataReducer.filteredData);
     const products=[
         {
@@ -149,11 +139,75 @@ function ProductGrid(){
             price:250000,
             category:"Sofas"
         },
+        {
+            id:17,
+            img:"/assets/Images (3).png",
+            name:"Syltherine 3",
+            desc:"Stylish cafe table",
+            price:25000,
+            category:"Tables"
+        },
+        {
+            id:18,
+            img:"/assets/Images.png",
+            name:"Leviosa 3",
+            desc:"Stylish cafe chair",
+            price:35000,
+            category:"Chairs"
+        },
+        {   
+            id:19,
+            img:"/assets/image 3.png",
+            name:"Loloto 3",
+            desc:"Luxury Sofa Set",
+            price:25000,
+            category:"Sofas"
+        },
+        {
+            id:20,
+            img:"/assets/image 4.png",
+            name:"Respira 3",
+            desc:"Outdoor bar table and stool",
+            price:70000,
+            category:"Tables"
+        },
+        {
+            id:21,
+            img:"/assets/Images (1).png",
+            name:"Grifo 3",
+            desc:"Night lamp",
+            price:15000,
+            category:"Lamps"
+        },
+        {
+            id:22,
+            img:"/assets/image 6 (1).png",
+            name:"Muggo 3",
+            desc:"Small Mug",
+            price:1500,
+            category:"Tables"
+        },
+        {
+            id:23,
+            img:"/assets/Images (2).png",
+            name:"Pingky 3",
+            desc:"Cute sofa set",
+            price:70000,
+            category:"Sofas"
+        },
+        {
+            id:24,
+            img:"/assets/image 8 (1).png",
+            name:"Binuyo 3",
+            desc:"Minimalist brown sofa",
+            price:250000,
+            category:"Sofas"
+        }
     ]
     
-    
+    console.log(products.length,"length")
     const totalPages = Math.ceil(products.length / itemsPerPage);
-
+    console.log(totalPages,"total pages")
     // Calculate first and last item indexes
     const firstItemIndex = (currentPage - 1) * itemsPerPage;
     const lastItemIndex = firstItemIndex + itemsPerPage;
@@ -200,7 +254,7 @@ function ProductGrid(){
                 }
                 return buttons;
             })()}
-</div>
+            </div>
         </div>
     )
 }

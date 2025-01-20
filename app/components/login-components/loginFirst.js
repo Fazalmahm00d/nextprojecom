@@ -1,13 +1,11 @@
 "use client"
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import axios from 'axios';
+import {  useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authAction } from '@/app/ReduxStore/Authenticate';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { authFirebase } from '@/app/lib/api';
 
 
@@ -22,8 +20,6 @@ function LoginFirst(){
     const[IsValidPsswd,setIsValidPsswd]=useState(true);
     const[isEmail,setIsEmail]=useState("")
     const[isType,setIsType]=useState("password")
-    // const signUpURL="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM";
-    // const logInURL="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM"
     const signUpURL="https://projectecombackend.onrender.com/register";
     const logInURL="https://projectecombackend.onrender.com/login"
     const URL=isLogin ? logInURL : signUpURL
@@ -83,10 +79,7 @@ function LoginFirst(){
             data:{email,
             password
             }
-            // returnSecureToken:true
         }
-        // console.log(isValidMail,"email valid or not");
-        // console.log(IsValidPsswd,"passwd valid or not")
         if(pr && pr2){
             setIsValidMail(true);
             setIsValidPsswd(true);
@@ -113,10 +106,7 @@ function LoginFirst(){
         e.preventDefault();
         setIsType("password")
     }
-    // useEffect(()=>{
-    //     if(data){
-    //         
-    // },[res])
+    
     return(
         <div className="flex w-full h-[100vh] p-10 bg-[#F9F1E7]">
             <div className='hidden sm:block relative w-[50%] h-full rounded-2xl overflow-hidden'>

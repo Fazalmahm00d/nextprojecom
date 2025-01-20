@@ -1,12 +1,10 @@
 "use client"
 
 import { getCartByIdData } from "@/app/lib/api";
-import { dataAction } from "@/app/ReduxStore/dataCart";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 function CartItems(){
     const isEmail=useSelector((state)=>state.authReducer.isEmail);

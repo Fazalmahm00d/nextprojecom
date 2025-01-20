@@ -1,39 +1,13 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 function CheckOutForm(){
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
-    // const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const [totalExpenses, setTotalExpenses] = useState(0);
-
-    // async function getCartData() {
-    //     try {
-    //         const response = await axios.get(`https://nextecom-db-default-rtdb.firebaseio.com//nextprojecom/${isEmail}/cart.json`)
-    //         const data=response.data
-           
-    //         const arr=[]
-    //         for(let key in data){
-    //             arr.push({ id:key ,...data[key]});
-    //         }
-            
-    //         // const totalExpenses= await arr.reduce(
-    //         //     (sum,ele) => Number(sum)+Number(ele.price)
-    //         //     ,0);
-    //         //     setExpenses(totalExpenses)
-    //     }
-    //     catch (error) {
-    //         console.log(error)
-    //     }
-    //     finally{
-    //         setIsLoading(false)
-    //     }
-    //   }
-
      const {data:cartdata,isLoading,isError,error}=useQuery({
             queryKey:["cartdataheader"],
             queryFn:()=>getCartByIdData(isEmail),

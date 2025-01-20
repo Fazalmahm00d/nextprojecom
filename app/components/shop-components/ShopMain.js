@@ -9,7 +9,6 @@ import BannerLoading from "@/app/fallbackloading/BannerLoading";
 
 
 function ShopMain(){
-    // console.log(queryObj)
     const ImgSection = dynamic(
         () => import("../reused-components/ImgSection"),
         {

@@ -1,22 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import SvgComponent from "../home-components/Svgcomponent";
+import { useState } from "react";
 import Button from "./Button";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { dataAction } from "@/app/ReduxStore/dataCart";
 import FeaturedCompo from "../home-components/FeaturedCompo";
 
 
 function RelatedProducts(){
-    const isEmail=useSelector((state)=>state.authReducer.isEmail);
-    const dispatch=useDispatch();
-    const [isLoading,setIsLoading]=useState(false);
-    const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const products=[
         
         {

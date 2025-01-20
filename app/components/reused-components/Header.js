@@ -20,8 +20,6 @@ function Header(){
     const dispatch=useDispatch();
     const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const wishItems=useSelector((state)=>state.dataReducer.wishItems)
-    const isEmail=useSelector((state)=>state.authReducer.isEmail);
-    // const shopProducts=useSelector((state)=>state.dataReducer.shopProducts)
     const [totalExpenses, setTotalExpenses] = useState(0);
     
     const[cartDisplay,setCartDisplay]=useState(false);
