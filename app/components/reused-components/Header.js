@@ -1,19 +1,16 @@
 "use client"
 
-import { deleteItem, getCartByIdData, getWishByIdData } from "@/app/lib/api";
+import {getCartByIdData, getWishByIdData } from "@/app/lib/api";
 import { authAction } from "@/app/ReduxStore/Authenticate";
-import { dataAction } from "@/app/ReduxStore/dataCart";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import Image from "next/image";
+import {  useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { queryClient } from "../redux-components/reduxProvider";
 import CartItems from "./CartCompo";
 import WishCompo from "./WishCompo";
+import { dataAction } from "@/app/ReduxStore/dataCart";
 
 
 
@@ -30,20 +27,9 @@ function Header(){
     const[cartDisplay,setCartDisplay]=useState(false);
     const[wishDisplay,setWishDisplay]=useState(false);
     const[burgerDisplay,setBurgerDisplay]=useState(false);
-    // const[isLoading,setIsLoading]=useState(true);
     const[isItems,setIsItems]=useState([]);
     const[isVisible,setIsVisible]=useState(false)
-    const[isWishItems,setIsWishItems]=useState([]);
-    // const [isSearch,setIsSearch]=useState(false);
-    // const [query,setQuery]=useState('');
-    // const[debouncedQuery,setDebouncedQuery]=useState('');
-    // const showSearch=()=>{
-    //     setIsSearch(true);
-    //     router.push('/shop')
-    // }
-    // const closeSearch=()=>{
-    //     setIsSearch(false);
-    // }
+
     const showBurger=()=>{
         setBurgerDisplay(true);
         // setIsVisible(true);
@@ -112,24 +98,6 @@ function Header(){
     
     
     
-    // useEffect(()=>{
-    // const id=setInterval(()=>{
-    //     setDebouncedQuery(query);
-    // },500);
-    
-    // return ()=>{
-    //     clearTimeout(id);
-    // }
-    // },[query])
-
-    // useEffect(()=>{
-    //     const filtered=shopProducts.filter((item)=>
-    //     item.name.toLowerCase().includes(debouncedQuery.toLowerCase())
-    //     ||
-    //     item.category.toLowerCase().includes(debouncedQuery.toLowerCase()))
-    //     dispatch(dataAction.setFilteredData(filtered))
-    // },[debouncedQuery])
-
     useEffect(()=>{
         if(localStorage.getItem('email')){
             dispatch(authAction.changeEmailValue(localStorage.getItem('email')));
@@ -149,14 +117,23 @@ function Header(){
         
     }, [isEmail]);//later
     useEffect(()=>{
+
         if(data){
-            const totalExpenses = data?.items.reduce(
+            const totalExpenses = data?.items?.reduce(
                 (sum, item) => sum + item.price * item.quantity,
                 0
             );
-            setTotalExpenses(totalExpenses)
+            setTotalExpenses(totalExpenses);
+            
         }
-    },[data])
+    },[data]);
+    useEffect(()=>{
+        console.log(cartItems,"cart items in use effect")
+    },[cartItems])
+
+    useEffect(()=>{
+        dispatch(dataAction.setWishArr(wishlistdata))
+    },[wishlistdata])
     return(
         <div className="relative w-full bg-white">
             {
@@ -175,13 +152,7 @@ function Header(){
                 </svg></button>
                 </Link>
             }
-            {/* {
-                isSearch ? <div className="flex"><input  name="search" className="border-2 border-solid lg:py-2 lg:px-4 px-2" type="text" /><button onClick={closeSearch}><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M24.5002 24.4999L19.2665 19.2569M22.1668 12.2499C22.1668 14.88 21.122 17.4023 19.2623 19.2621C17.4026 21.1218 14.8802 22.1666 12.2502 22.1666C9.6201 22.1666 7.09776 21.1218 5.23802 19.2621C3.37828 17.4023 2.3335 14.88 2.3335 12.2499C2.3335 9.61985 3.37828 7.09751 5.23802 5.23778C7.09776 3.37804 9.6201 2.33325 12.2502 2.33325C14.8802 2.33325 17.4026 3.37804 19.2623 5.23778C21.122 7.09751 22.1668 9.61985 22.1668 12.2499V12.2499Z" stroke="black" strokeWidth="2" strokeLinecap="round"/>
-                </svg></button></div> : <button className="border-2 " onClick={showSearch}><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M24.5002 24.4999L19.2665 19.2569M22.1668 12.2499C22.1668 14.88 21.122 17.4023 19.2623 19.2621C17.4026 21.1218 14.8802 22.1666 12.2502 22.1666C9.6201 22.1666 7.09776 21.1218 5.23802 19.2621C3.37828 17.4023 2.3335 14.88 2.3335 12.2499C2.3335 9.61985 3.37828 7.09751 5.23802 5.23778C7.09776 3.37804 9.6201 2.33325 12.2502 2.33325C14.8802 2.33325 17.4026 3.37804 19.2623 5.23778C21.122 7.09751 22.1668 9.61985 22.1668 12.2499V12.2499Z" stroke="black" strokeWidth="2" strokeLinecap="round"/>
-                </svg></button>
-            } */}
+           
             <button onClick={showWish} ><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8.16683 3.5C4.94566 3.5 2.3335 6.08533 2.3335 9.275C2.3335 11.8498 3.35433 17.9608 13.4028 24.1383C13.5828 24.2479 13.7895 24.3058 14.0002 24.3058C14.2109 24.3058 14.4175 24.2479 14.5975 24.1383C24.646 17.9608 25.6668 11.8498 25.6668 9.275C25.6668 6.08533 23.0547 3.5 19.8335 3.5C16.6123 3.5 14.0002 7 14.0002 7C14.0002 7 11.388 3.5 8.16683 3.5Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg></button>
@@ -218,12 +189,12 @@ function Header(){
                                                 </div>
                                             </div>
                                         ))
-                                    ) : data.items.length === 0 ? (
+                                    ) : data?.items?.length === 0 ? (
                                         <div className="text-xl font-bold text-center">
                                             You don’t have any products in the cart. Please continue shopping.
                                         </div>
                                     ) : (
-                                        data.items.map((items) => (
+                                        data?.items?.map((items) => (
                                             <CartItems items={items} />
                                         ))
                             )}
@@ -237,7 +208,7 @@ function Header(){
                                         <hr/>
                                         <div className="flex gap-2  flex-wrap mt-5">
                                             {
-                                                isItems.length===0 ?<Link  href="/shop"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>:<Link href="/cart"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>
+                                                cartItems?.items?.length===0 ?<Link  href="/shop"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>:<Link href="/cart"><button onClick={closeOnTop} className=" px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl  rounded-2xl">Cart</button></Link>
                                             }
                                             <Link href="/checkout"><button onClick={closeOnTop}  className="px-4 sm:px-6 border-2 border-solid border-black text-sm sm:text-xl rounded-2xl">Checkout</button></Link>
                                         </div>
@@ -273,19 +244,15 @@ function Header(){
                                                 })
                                     
                                        : 
-                                        wishlistdata.items.length===0 ? <div className="text-xl font-bold text-center">You dont have any product in cart.Please continue shopping</div>:
+                                        wishlistdata?.items?.length===0 ? <div className="text-xl font-bold text-center">You dont have any product in cart.Please continue shopping</div>:
                                         
-                                        wishlistdata.items.map((item)=>{
+                                        wishlistdata?.items?.map((item)=>{
                                                 return <WishCompo item={item}/>
                                             })
                                         
                                     }
                                     </div>
                                     <div className=" w-full mb-6 ">
-                                        {/* <div className="flex justify-between mb-6">
-                                            <p className="text-2xl">Subtotal</p>
-                                            <p className="text-2xl text-[#B88E2F]">Rs.{expenses}</p>
-                                        </div> */}
                                         <hr/>
                                         <div className="flex gap-2  flex-wrap mt-5">
                                             {

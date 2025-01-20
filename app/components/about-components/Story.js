@@ -4,7 +4,8 @@ import Button from "../reused-components/Button";
 
 function Story(){
     return(
-        <div className="px-6 py-10 sm:px-20 sm:py-6 lg:px-40 lg:py-10  text-xl text-[#B88E2F] ">
+        <div className="w-full flex justify-center">
+        <div className="container flex flex-col items-center  justify-center px-6 py-10 sm:px-20 sm:py-6 lg:px-40 lg:py-10  text-xl text-[#B88E2F] ">
             <h1 className="text-black text-2xl font-bold">
                 About the Brand
             </h1>
@@ -28,6 +29,7 @@ function Story(){
             <Link href="/shop" className="w-full flex justify-center"><div className="flex mt-6 sm:mt-10 w-1/2  lg:w-1/4 justify-center">
             <button className="text-sm lg:text-l w-full py-2 lg:text-xl bg-[#B88E2F] text-white  lg:py-4 border-[1px] border-[#B88E2F] rounded-xl px-2 lg:px-4 hover:bg-transparent hover:text-[#B88E2F]" >Explore our Products</button>
             </div></Link>
+        </div>
         </div>
     )
 }

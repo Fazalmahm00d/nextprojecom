@@ -101,7 +101,7 @@ function CheckOutForm(){
                 </div>
                 <div className="flex flex-col gap-4">
                     <label className="font-medium" for="email">Email address</label>
-                    <input className="border focus:outline-none rounded-lg p-4 border-[#9F9F9F]" placeholder={isEmail} value={isEmail} id="email" type="text" />
+                    <input className="border focus:outline-none rounded-lg p-4 border-[#9F9F9F]" placeholder={isEmail} value={isEmail || ""} id="email" type="text" />
                 </div>
                 <div className="flex flex-col gap-4 mt-6">
                     <input placeholder="Additional information" className="border focus:outline-none rounded-lg p-4 border-[#9F9F9F]" id="additional" type="text" />

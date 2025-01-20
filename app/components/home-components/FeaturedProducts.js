@@ -96,7 +96,7 @@ function FeaturedProducts(){
     //     }
     //     try{
     //         getWishsData();
-    //         const response= await axios.post("http://localhost:8000/wishlist/new",newWishItem);
+    //         const response= await axios.post("https://projectecombackend.onrender.com/wishlist/new",newWishItem);
     //         if(response.status===201){
     //             toast.success("Product already exists in wishlist")
     //         }else if(response.status===200){

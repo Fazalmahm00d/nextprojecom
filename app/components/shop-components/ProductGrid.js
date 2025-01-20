@@ -173,13 +173,6 @@ function ProductGrid(){
         <div className="py-10 px-20 flex flex-col items-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-3 lg:grid-cols-4 lg:gap-10 w-full lg:mt-6">
                 {  
-                    // isLoading ?
-                    // [1,2,3,4].map((item)=>{
-                    //     return <div key={item} className="h-[18rem] lg:h-[28rem]  bg-gray-200">
-
-                    //     </div>
-                    // }) 
-                    // :
                     filteredData.length > 0 ?
                     filteredData.map((items)=>{
                         const productId=items.id;

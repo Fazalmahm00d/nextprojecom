@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import SvgComponent from "./Svgcomponent";
 import { queryClient } from "../redux-components/reduxProvider";
+import { toast } from "react-toastify";
 
 function FeaturedCompo(props){
 
@@ -11,9 +12,10 @@ function FeaturedCompo(props){
 
     const postCartMutation=useMutation({
         mutationFn:sendToMongoDB,
-        onSuccess:  () => {
+        onSuccess:() => {
             console.log("Mutation succeeded");
             queryClient.invalidateQueries({ queryKey: ["cartdataheader"] }); // Wait for invalidation
+            toast.success('Item has been added to cart successfully')
           }
 })
 const postWishMutation=useMutation({
@@ -21,7 +23,8 @@ const postWishMutation=useMutation({
     onSuccess:  () => {
         console.log("Mutation succeeded");
         queryClient.invalidateQueries({ queryKey: ["wishdataheader"] }); // Wait for invalidation
-      
+        toast.success('Item has been added to wishlist successfully')
+        
     }
 })
 

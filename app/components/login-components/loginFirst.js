@@ -20,7 +20,7 @@ function LoginFirst(){
     const [isSendingReq,setIsSendingReq]=useState(false);
     const[isValidMail,setIsValidMail]=useState(true);
     const[IsValidPsswd,setIsValidPsswd]=useState(true);
-
+    const[isEmail,setIsEmail]=useState("")
     const[isType,setIsType]=useState("password")
     // const signUpURL="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM";
     // const logInURL="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAnCRZfZTUHUPdYrWGjYPV7PSstRIKboSM"
@@ -36,15 +36,15 @@ function LoginFirst(){
                         //     toast.error(data.data.message)
                         // }
                         dispatch(authAction.changeTokenValue(data.data.token))
-                        const newEmail = data.email.replace(/[@.]/g, "");
+                        const newEmail = isEmail.replace(/[@.]/g, "");
                         dispatch(authAction.changeEmailValue(newEmail))
-                        // if(isRemember){
-                        // localStorage.setItem('token',data.data.token)
-                        // localStorage.setItem('email',newEmail);
-                        // }
-                        // toast.success("Logged In Successfully")
-                        // console.log("before route ")
-                        // router.push('/')
+                        if(isRemember){
+                        localStorage.setItem('token',data.data.token)
+                        localStorage.setItem('email',newEmail);
+                        }
+                        toast.success("Logged In Successfully")
+                        console.log("before route ")
+                        router.push('/')
                         console.log("after data onsuccees ",data)
                         toast.success("Logged In Successfully")
                     }
@@ -67,6 +67,7 @@ function LoginFirst(){
         if(pr){
             setIsValidMail(true);
             console.log("email set to true")
+            setIsEmail(email)
         }else{
             setIsValidMail(false);
             console.log("email set to false",isValidMail)
@@ -136,18 +137,27 @@ function LoginFirst(){
                     
                     <form onSubmit={handleSubmit}  className="flex flex-col gap-3 w-full ">
                         <label className='mt-4  text-[#B88E2F] font-bold' htmlFor="email">Email</label>
-                        {!isValidMail ? 
-                        <div className='relative'><input  className="focus:outline-none text-md px-2 py-2 lg:px-8 lg:py-3 rounded-3xl border-2 border-red-700 placeholder:text-red-700 " id="email" name="email" type="text" placeholder="Enter your Email Address"/><p className='text-red-700'>Please enter a valid email address</p></div> : <input className="focus:outline-none text-md px-8 py-3 rounded-3xl " id="email" name="email" type="text" placeholder="Enter your Email Address"/>}
-                        <label className='mt-4 text-[#B88E2F] font-bold' htmlFor="password">Password</label>
-                        <div className='flex justify-between w-full px-4 py-2 lg:px-8 lg:py-3 bg-white rounded-3xl'>
                         {
-                        !IsValidPsswd?<div><input className="focus:outline-none text-md w-full px-2 py-2 lg:px-8 lg:py-3   border-2 border-red-700 placeholder:text-red-700" id="password" name="password" type="password" placeholder="Enter your Password"/><p className='text-red-700'>Password  Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p></div>
-                        :<input className="text-md focus:outline-none h-full w-full px-4 py-2 lg:px-8 lg:py-3 " id="password" name="password" type={isType} placeholder="Enter your Password"/>
+                        !isValidMail ? 
+                        <div className='relative'>
+        
+                            <input  className="focus:outline-none text-md w-full px-8 py-3 rounded-md h-12rounded-3xl border-2 border-red-700 placeholder:text-red-700 " id="email" name="email" type="text" placeholder="Enter your Email Address"/>
+                            <p className='text-red-700'>Please enter a valid email address</p>
+                        </div> 
+                        : 
+                        <input className="focus:outline-none text-md px-8 py-3 rounded-md h-12 " id="email" name="email" type="text" placeholder="Enter your Email Address"/>
                         }
-                        {isType==="password" ?<button onClick={changeType} className='relative top-0 right-0'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
-                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
-                        </svg></button>:<button className='relative top-0 right-0' onClick={switchType}>
+                        <label className='mt-4 text-[#B88E2F] font-bold' htmlFor="password">Password</label>
+                        <div className={`${!IsValidPsswd ? "border-red-700 border-2":"" } flex h-12 justify-between w-full px-8 py-2  lg:py-3   bg-white rounded-md overflow-hidden `}>
+                        <input className="text-md focus:outline-none h-full w-full " id="password" name="password" type={isType} placeholder="Enter your Password"/>
+                        {isType==="password" ?
+                        <button onClick={changeType} className='relative top-0 right-4'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                            </svg></button>
+                        :
+                        <button className='relative top-0 right-4' onClick={switchType}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                             <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/>
                             <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/>
@@ -156,6 +166,11 @@ function LoginFirst(){
                         </button>
                         }
                         </div>
+                        {
+                        !IsValidPsswd?
+                            <p className='text-red-700'>Password  Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p>
+                         :""
+                        }
                         <div className="flex justify-between items-center">
                         <div className='flex items-center'>
                         <input  className='cursor-pointer' type="checkbox" checked={isRemember} onChange={(e) => setIsRemember(e.target.checked)} name="remember"/>
