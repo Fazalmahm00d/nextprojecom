@@ -176,7 +176,7 @@ function ProductGrid(){
                     filteredData.length > 0 ?
                     filteredData.map((items)=>{
                         const productId=items.id;
-                        return <FeaturedCompo productId={productId} items={items} />  
+                        return <FeaturedCompo key={items.id} productId={productId} items={items} />  
                     }):<p>No matching product has been found</p>
                 }
             </div>

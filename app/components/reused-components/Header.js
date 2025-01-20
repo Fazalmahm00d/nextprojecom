@@ -195,7 +195,7 @@ function Header(){
                                         </div>
                                     ) : (
                                         data?.items?.map((items) => (
-                                            <CartItems items={items} />
+                                            <CartItems key={items.id} items={items} />
                                         ))
                             )}
 
@@ -247,7 +247,7 @@ function Header(){
                                         wishlistdata?.items?.length===0 ? <div className="text-xl font-bold text-center">You dont have any product in cart.Please continue shopping</div>:
                                         
                                         wishlistdata?.items?.map((item)=>{
-                                                return <WishCompo item={item}/>
+                                                return <WishCompo key={item.id} item={item}/>
                                             })
                                         
                                     }

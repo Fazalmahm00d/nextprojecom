@@ -61,7 +61,7 @@ function RelatedProducts(){
             {
                     relatedProducts.map((items)=>{
                         const productId=items.id;
-                        return <FeaturedCompo productId={productId} items={items} />
+                        return <FeaturedCompo key={items.id} productId={productId} items={items} />
                     })
             }
             </div>
