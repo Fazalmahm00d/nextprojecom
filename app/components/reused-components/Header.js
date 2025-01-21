@@ -19,7 +19,7 @@ function Header(){
     const router=useRouter();
     const dispatch=useDispatch();
     const cartItems=useSelector((state)=>state.dataReducer.cartItems);
-    const wishItems=useSelector((state)=>state.dataReducer.wishItems)
+    const isEmail=useSelector((state)=>state.authReducer.isEmail);
     const [totalExpenses, setTotalExpenses] = useState(0);
     
     const[cartDisplay,setCartDisplay]=useState(false);
@@ -145,7 +145,7 @@ function Header(){
                     </div>
                     <div className="flex justify-center items-center gap-3 mt-20 ">
             {
-                isEmail ? <button onClick={logOutHandler} className="border-2 border-solid border-black lg:py-2 lg:px-4 px-2 text-sm rounded-xl">Log Out</button>:<Link href="/login"><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
+                isEmail ? <button onClick={logOutHandler} className="border-2 border-solid border-black lg:py-2 lg:px-4 px-2 text-sm rounded-xl">Log Out</button>:<Link href="/login"><button onClick={closeBurger}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
                 <path d="M21.3335 10.0001V4.16675H23.6668V11.1667H21.3335M21.3335 15.8334H23.6668V13.5001H21.3335M9.66683 11.1667C12.7818 11.1667 19.0002 12.7301 19.0002 15.8334V19.3334H0.333496V15.8334C0.333496 12.7301 6.55183 11.1667 9.66683 11.1667ZM9.66683 0.666748C10.9045 0.666748 12.0915 1.15841 12.9667 2.03358C13.8418 2.90875 14.3335 4.09574 14.3335 5.33341C14.3335 6.57109 13.8418 7.75808 12.9667 8.63325C12.0915 9.50842 10.9045 10.0001 9.66683 10.0001C8.42915 10.0001 7.24217 9.50842 6.367 8.63325C5.49183 7.75808 5.00016 6.57109 5.00016 5.33341C5.00016 4.09574 5.49183 2.90875 6.367 2.03358C7.24217 1.15841 8.42915 0.666748 9.66683 0.666748ZM9.66683 13.3834C6.20183 13.3834 2.55016 15.0867 2.55016 15.8334V17.1167H16.7835V15.8334C16.7835 15.0867 13.1318 13.3834 9.66683 13.3834ZM9.66683 2.88341C9.01705 2.88341 8.39388 3.14154 7.93442 3.601C7.47495 4.06047 7.21683 4.68363 7.21683 5.33341C7.21683 5.98319 7.47495 6.60636 7.93442 7.06583C8.39388 7.52529 9.01705 7.78341 9.66683 7.78341C10.3166 7.78341 10.9398 7.52529 11.3992 7.06583C11.8587 6.60636 12.1168 5.98319 12.1168 5.33341C12.1168 4.68363 11.8587 4.06047 11.3992 3.601C10.9398 3.14154 10.3166 2.88341 9.66683 2.88341Z" fill="black"/>
                 </svg></button>
                 </Link>

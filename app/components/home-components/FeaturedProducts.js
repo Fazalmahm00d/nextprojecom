@@ -70,8 +70,8 @@ function FeaturedProducts(){
     }
     const [featuredproducts,setFeaturedProducts]=useState(products)
     return(
-        <div className="lg:py-10 lg:px-20 py-5 px-10 flex flex-col items-center">
-            <h1 className="lg:text-3xl font-bold text-xl">Our Products</h1>
+        <div className="lg:px-20 py-10 px-5 flex flex-col items-center">
+            <div className="w-full mb-4 lg:text-3xl font-bold text-xl text-left sm:text-center">Our Products</div>
             <div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-3 gap-20 sm:gap-10 w-full lg:mt-6 sm:mt-3">
                 {
                     featuredproducts.map((items)=>{

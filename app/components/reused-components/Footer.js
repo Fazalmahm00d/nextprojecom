@@ -3,7 +3,7 @@ import Link from "next/link";
 function Footer(){
 
     return(
-        <div className="relative bg-white text-sm px-4 py-4 sm:w-5/6 lg:w-full lg:px-20 lg:py-6 sm:px-5 sm:py-3  lg:text-base ">
+        <div className="relative bg-white text-sm px-5  py-4 sm:w-5/6 lg:w-full lg:px-10 lg:py-6  lg:text-base ">
         <div className="grid grid-cols-2  gap-2 sm:flex  sm:flex-nowrap lg:p-10 sm:p-5 justify-between lg:text-l sm:text-sm  ">
             <div className="sm:w-2/6">
                 <h2 className="lg:text-2xl font-bold sm:text-xl">Funiro.</h2>
@@ -17,7 +17,7 @@ function Footer(){
                 <ul className=" lg:mt-10 sm:mt-6  font-bold flex flex-col lg:gap-10 sm:gap-5">
                     <li><Link href="/">Home</Link></li>
                     <li><Link href="/shop">Shop</Link></li>
-                    <li><Link href="/about">About</Link>About</li>
+                    <li><Link href="/about">About</Link></li>
                     <li><Link href="/contact">Contact</Link></li>
                 </ul>
             </div>
@@ -39,7 +39,10 @@ function Footer(){
             </div>
             <div className="">
             <hr/>
-            <div className="ml-2 mt-2 sm:ml-4 sm:mt-8 lg:text-xl font-medium  text-sm">2023 furino. All rights reserved</div>
+            <div className="ml-2 mt-2 sm:ml-4 sm:mt-8 lg:text-xl font-medium text-sm">
+                {new Date().getFullYear()} funiro. All rights reserved
+                </div>
+
             </div>
         </div>
     )

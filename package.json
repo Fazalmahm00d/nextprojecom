@@ -14,7 +14,9 @@
     "@reduxjs/toolkit": "^2.3.0",
     "@tanstack/react-query": "^5.62.8",
     "axios": "^1.7.7",
+    "firebase": "^11.2.0",
     "next": "15.0.3",
+    "next-auth": "^4.24.11",
     "next-project": "file:",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -41,9 +43,9 @@
     "tailwindcss": "^3.4.1"
   },
   "jest": {
-  "transform": {
-    "^.+\\.jsx?$": "babel-jest"
-  },
-  "testEnvironment": "jsdom"
-}
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "testEnvironment": "jsdom"
+  }
 }

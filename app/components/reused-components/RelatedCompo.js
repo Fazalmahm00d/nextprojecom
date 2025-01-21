@@ -1,12 +1,12 @@
-import { sendToMongoDB, sendToWish } from "@/app/lib/api";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import SvgComponent from "./Svgcomponent";
 import { queryClient } from "../redux-components/reduxProvider";
 import { toast } from "react-toastify";
+import SvgComponent from "../home-components/Svgcomponent";
+import { sendToMongoDB, sendToWish } from "@/app/lib/api";
 
-function FeaturedCompo(props){
+function RelatedCompo(props){
 
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
 
@@ -57,7 +57,7 @@ function addToWishHandler(img,name,desc,price){
     }
 }
     return(
-        <Link key={props.items.id} href={`products/${props.productId}`}><div key={props.items.id} className="group relative cursor-pointer lg:h-[28rem] sm:h-[18rem]">
+        <Link key={props.items.id} href={`/products/${props.productId}`}><div key={props.items.id} className="group relative cursor-pointer lg:h-[28rem] sm:h-[18rem]">
                                     <div className="h-[60%] lg:h-[70%]">
                                         <img className="w-full h-full" src={props.items.img}></img>
                                     </div> 
@@ -96,4 +96,4 @@ function addToWishHandler(img,name,desc,price){
     )
 }
 
-export default FeaturedCompo
+export default RelatedCompo

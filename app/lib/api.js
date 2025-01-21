@@ -20,6 +20,7 @@ export async function getCartByIdData(isEmail){
     }
 export  async function sendToMongoDB(newCartItem){
         try{
+            console.log("func calling")
             const response= await axios.post(`https://projectecombackend.onrender.com/cart/new`,newCartItem);
             console.log(response.data,"send to mongodb func")
             return response.data
@@ -76,3 +77,24 @@ export  async function getWishByIdData(isEmail) {
         }
         
 }
+
+export async function loginGoogle(obj) {
+    try{
+      const userResponse = await axios.post("https://projectecombackend.onrender.com/users/google", {
+        email: obj.email,
+        username: obj.username,
+    });
+    if (userResponse.status === 200 || userResponse.status === 201) {
+      // Set UI-related cookies
+    //   Cookies.set('isLoggedIn', 'true', {
+    //     secure: true,
+    //     expires: 1/24, // 1 hour
+    //     path: '/'
+    //   });
+    }
+    return userResponse
+    }catch(error){
+      console.error("Error:", error.response ? error.response.data : error.message);
+        alert("Authentication failed. Please try again.");
+    }
+  }
