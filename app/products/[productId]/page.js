@@ -11,6 +11,9 @@ import ReactImageMagnify from "react-image-magnify";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "@/app/components/redux-components/reduxProvider";
+import { sendToMongoDB } from "@/app/lib/api";
 
 function Dynamic({productId}){
     const result=useParams();
@@ -230,53 +233,36 @@ function Dynamic({productId}){
         console.log(isImage);
     }
     const [gridProducts,setGridProducts]=useState(products);
-    async function getCartsData(){
-        try{
-            const response=await fetch(`http://localhost:8000/cart/${isEmail}`, {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json',
-                },
-            });
-            const res=await response.json()
-            console.log(res.items,"from page product id file");
-            dispatch(dataAction.setCartArr(res.items));
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
-      async function sendToMongoDB(img,name,desc,price,quantity){
+    
+    const postMutate=useMutation({
+            mutationFn:sendToMongoDB,
+            onSuccess:(res) => {
+                console.log("Mutation succeeded",res);
+                queryClient.invalidateQueries({ queryKey: ["cartdataheader"] }); // Wait for invalidation
+                if(res.status==201){
+                toast.success("Quantity of the item has been increased")
+
+                }else if (res.status==200){
+                toast.success('Item has been added to cart successfully')
+
+                }
+              }
+    })
+    function postHandler(img,name,desc,price,quantity){
         const newCartItem={
             email:isEmail,
-            img:img,
-            name:name,
-            desc:desc,
-            price:price,
-            quantity:quantity,
+            img,
+            name,
+            desc,
+            price,
+            quantity
         }
-        try{
-            getCartsData();
-            console.log(cartItems,"cart items before calling")
-            const response= await axios.post(`https://projectecombackend.onrender.com/cart/new`,newCartItem);
-            if(response.status===201){
-                toast.success("Quantity of the item has been increased")
-            }else if(response.status===200){
-                toast.success("Product added to cart")
-            }
-            getCartsData()    
-        }
-        catch(error)
-        {
-            console.error("err:",error)
-        }
-    } 
-    
+        postMutate.mutate(newCartItem)
+    }
     const filtereddata=gridProducts.find((item)=>(item.id===result.productId));
     console.log(filtereddata);
     useEffect(()=>{
         changeImageHandler(filtereddata.img);
-        getCartsData();
     },[])
 
     return(
@@ -404,7 +390,7 @@ function Dynamic({productId}){
                         <button onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            isEmail ? sendToMongoDB(filtereddata.img,filtereddata.name,filtereddata.desc,filtereddata.price,isCount):toast.error("Log In to access cart")
+                                            isEmail ? postHandler(filtereddata.img,filtereddata.name,filtereddata.desc,filtereddata.price,isCount):toast.error("Log In to access cart")
                                         }} className="h-full w-full sm:w-1/3 border-2 text-base sm:text-xl border-solid border-black rounded-xl px-2 break-keep ">
                             Add To Cart
                         </button>

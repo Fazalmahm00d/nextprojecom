@@ -22,8 +22,8 @@ export  async function sendToMongoDB(newCartItem){
         try{
             console.log("func calling")
             const response= await axios.post(`https://projectecombackend.onrender.com/cart/new`,newCartItem);
-            console.log(response.data,"send to mongodb func")
-            return response.data
+            console.log(response,"send to mongodb func")
+            return response
         }
         catch(error)
         {
@@ -98,3 +98,4 @@ export async function loginGoogle(obj) {
         alert("Authentication failed. Please try again.");
     }
   }
+
