@@ -39,7 +39,7 @@ function Footer(){
             </div>
             <div className="">
             <hr/>
-            <div className="px-5 py-4  lg:text-xl font-medium text-sm">
+            <div className="py-2 lg:text-xl font-medium text-sm">
                 {new Date().getFullYear()} funiro. All rights reserved
                 </div>
 

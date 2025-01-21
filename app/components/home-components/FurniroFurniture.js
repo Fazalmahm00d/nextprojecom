@@ -21,8 +21,8 @@ function FurniroFurniture(){
     return(
         <div className="bg-gray-50 flex justify-center items-center ">
         <div className=" w-full lg:py-20 py-10 ">
-        <h1 className="text-center lg:text-xl text-sm font-light ">Share your setup with</h1>
-        <h2 className="text-center lg:text-4xl text-xl font-bold">#FuniroFurniture</h2>
+        <h1 className="w-full text-left sm:text-center lg:text-xl text-sm font-light ">Share your setup with</h1>
+        <h2 className="w-full text-left sm:text-center lg:text-4xl text-xl font-bold">#FuniroFurniture</h2>
         
         <div className="hidden sm:grid sm:grid-cols-11 sm:grid-rows-8 lg:gap-4 sm:gap-2 lg:h-[90vh] sm:[60vh]">
                     <SubFurniroFurniture 

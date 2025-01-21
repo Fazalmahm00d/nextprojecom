@@ -258,7 +258,7 @@ function Dynamic({productId}){
         try{
             getCartsData();
             console.log(cartItems,"cart items before calling")
-            const response= await axios.post(`http://localhost:8000/cart/new`,newCartItem);
+            const response= await axios.post(`https://projectecombackend.onrender.com/cart/new`,newCartItem);
             if(response.status===201){
                 toast.success("Quantity of the item has been increased")
             }else if(response.status===200){
