@@ -1,34 +1,18 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import Billing from "../components/checkout-components/Billing";
-import Banner from "../components/reused-components/Banner";
-import ImgSectionLoading from "../fallbackloading/ImgSectionLoading";
+import CheckOutMain from "./CheckOutMain";
 
 
+export const metadata={
+    title:"Checkout Page",
+    description:"Checkout page"
+}
 
-function CheckOut(){
-    const ImgSection = dynamic(
-        () => import("../components/reused-components/ImgSection"),
-        {
-          loading: () => <ImgSectionLoading/>,
-          ssr: false,
-        }
-      );
+
+const CheckOut=()=>{
     return(
-        <div>
-
-            <ImgSection name="CheckOut"/>
-            <Billing/>
-            <Banner/>
-            
+        <div> 
+           <CheckOutMain/>
         </div>
     )
 }
 
 export default CheckOut;
-
-
-
-
-

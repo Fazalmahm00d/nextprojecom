@@ -264,7 +264,7 @@ function Header(){
             <div  className="flex py-4 px-2 lg:gap-4 lg:px-20 lg:py-6 sm:py-4 sm:px-10 sm:gap-6 justify-between items-center w-full">
             <Link href="/">
             <div className="flex gap-2 items-center">
-                <img className="sm:h-6 sm:w-8 lg:w-full lg:h-full" src="/assets/Meubel House_Logos-05.png"></img>
+                <img className="sm:h-6 sm:w-8 lg:w-full lg:h-full" src="/favicon.ico"></img>
                 <h1 className="font-bold lg:text-4xl sm:text-xl">Furniro</h1>
             </div>
             </Link>

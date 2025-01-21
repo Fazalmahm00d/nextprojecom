@@ -5,6 +5,7 @@ import Footer from "./components/reused-components/Footer";
 import ReduxProvider from "./components/redux-components/reduxProvider";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Head from "next/head";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,9 +26,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <Head>
+        
+        <link rel="icon" href="/assets/Meubel House_Logos-05.png" />
+        </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        
         
         <ReduxProvider>
         <ToastContainer position="top-right" autoClose={1500}/>

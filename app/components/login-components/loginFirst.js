@@ -17,7 +17,6 @@ function LoginFirst(){
     const router=useRouter();
     const[isLogin,setIsLogin]=useState(false);
     const[isRemember,setIsRemember]=useState(true);
-    const [isSendingReq,setIsSendingReq]=useState(false);
     const[isValidMail,setIsValidMail]=useState(true);
     const[IsValidPsswd,setIsValidPsswd]=useState(true);
     const[isEmail,setIsEmail]=useState("")
@@ -191,7 +190,7 @@ function LoginFirst(){
                     </div>
                     <div className='flex justify-end'>
                         {
-                            !isSendingReq ? <button type="submit" className="mt-4 lg:mt-8 py-2 rounded-2xl bg-[#B88E2F] w-[50%] text-white font-bold text-l">{isLogin ? "Log In":"Register"}</button>
+                            !postAuthMutation.isPending ? <button type="submit" className="mt-4 lg:mt-8 py-2 rounded-2xl bg-[#B88E2F] w-[50%] text-white font-bold text-l">{isLogin ? "Log In":"Register"}</button>
                             :
                             <button type="submit" className="mt-4 lg:mt-8 rounded-2xl bg-[#B88E2F] w-[50%] text-white font-bold text-l cursor-not-allowed">Sending...</button> 
                         }

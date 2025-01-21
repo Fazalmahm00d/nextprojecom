@@ -1,23 +1,16 @@
-"use client"
-import dynamic from "next/dynamic";
-import CartItems from "../components/cart-components/cartItems";
-import Banner from "../components/reused-components/Banner";
-import ImgSectionLoading from "../fallbackloading/ImgSectionLoading";
+import CartMain from "./CartMain";
 
-function Cart(){
-    const ImgSection = dynamic(
-        () => import("../components/reused-components/ImgSection"),
-        {
-          loading: () => <ImgSectionLoading/>,
-          ssr: false,
-        })
+export const metadata={
+    title:"Your Cart",
+    description:"cart page"
+}
+
+const About=()=>{
     return(
         <div>
-            <ImgSection name="Cart"/>
-            <CartItems/>
-            <Banner/>
+            <CartMain/>
         </div>
     )
 }
 
-export default Cart;
+export default About;
