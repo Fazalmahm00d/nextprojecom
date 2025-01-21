@@ -226,10 +226,13 @@ function ProductGrid(){
     useEffect(()=>{
         dispatch(dataAction.setFilteredData(paginatedProducts))
     },[currentPage])
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [ currentPage])
         
        
     return(
-        <div className="py-10 px-5 lg:px-20  flex flex-col items-center">
+        <div id="page" className="py-10 px-5 lg:px-20  flex flex-col items-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-3 lg:grid-cols-4 lg:gap-10 w-full lg:mt-6">
                 {  
                     filteredData.length > 0 ?

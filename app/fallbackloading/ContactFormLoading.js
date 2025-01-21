@@ -1,32 +1,39 @@
-function ContactFormLoading(){
-    return(
-        <div className="py-20">
-            <div className="flex flex-col items-center ">
-                <h1 className=" bg-gray-200 h-8 w-32"></h1>
-                <div className=" text-center bg-gray-200 text-xl w-1/2 text-[#9F9F9F] w-128 h-24 mt-10"></div>
+function ContactFormLoading() {
+    return (
+        <div className="py-20 px-5 sm:px-16 lg:px-40">
+            {/* Title Section */}
+            <div className="flex flex-col items-center gap-6">
+                <div className="bg-gray-200 h-10 w-40 rounded-md"></div>
+                <div className="bg-gray-200 h-6 w-3/4 sm:w-1/2 lg:w-1/3 rounded-md"></div>
+                <div className="bg-gray-200 h-6 w-3/4 sm:w-1/2 lg:w-1/3 rounded-md"></div>
             </div>
-            <div className="flex px-40 py-10 mt-10">
-                <div className="w-1/2 flex flex-col gap-6">
-                    <div className="bg-gray-200 h-20 w-40"></div>
-                    <div className="bg-gray-200 h-20 w-40"></div>
-                    <div className="bg-gray-200 h-20 w-40"></div>
+
+            {/* Content Section */}
+            <div className="mt-12 flex flex-col-reverse sm:flex-row gap-10 sm:gap-16">
+                {/* Contact Details Placeholder */}
+                <div className="flex flex-col gap-6 w-full sm:w-1/2">
+                    <div className="bg-gray-200 h-6 w-1/2 rounded-md"></div>
+                    <div className="bg-gray-200 h-6 w-2/3 rounded-md"></div>
+                    <div className="bg-gray-200 h-6 w-3/4 rounded-md"></div>
                 </div>
-                <div className="w-1/2">
-                    <form className="flex flex-col gap-8 text-[#9F9F9F]">
-                        <label className=" bg-gray-200 w-32 h-8"></label>
-                        <input   className="focus:outline-none w-full p-4 bg-gray-200  h-8 rounded-xl "/>
-                        <label className="bg-gray-200 w-32 h-8"></label>
-                        <input  className="focus:outline-none w-full p-4 bg-gray-200  h-8 rounded-xl "/>
-                        <label className="bg-gray-200 w-32 h-8"></label>
-                        <input  className="focus:outline-none w-full bg-gray-200 w-32 h-8 p-4 rounded-xl "/>
-                        <label className="bg-gray-200 w-32 h-8"></label>
-                        <textarea  className="focus:outline-none w-full h-[8rem] bg-gray-200  p-4 rounded-xl "/>
-                        <div className="w-full"><button className="w-1/2 bg-[#B88E2F] text-white px-16 py-4" type="submit">Submit</button></div>
-                    </form>
+
+                {/* Form Placeholder */}
+                <div className="w-full sm:w-1/2 flex flex-col gap-8">
+                    {/* Input Fields */}
+                    {[1, 2, 3, 4].map((_, index) => (
+                        <div key={index} className="flex flex-col gap-2">
+                            <div className="bg-gray-200 h-6 w-1/3 rounded-md"></div>
+                            <div className="bg-gray-200 h-10 w-full rounded-md"></div>
+                        </div>
+                    ))}
+                    {/* Button */}
+                    <div className="flex justify-end">
+                        <div className="bg-gray-300 h-12 w-1/2 rounded-lg"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default ContactFormLoading;

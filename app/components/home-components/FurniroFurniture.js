@@ -20,9 +20,9 @@ function FurniroFurniture(){
 
     return(
         <div className="bg-gray-50 flex justify-center items-center ">
-        <div className=" w-full lg:py-20 py-10 ">
+        <div className=" w-full px-5 sm:px-10 lg:py-20 py-10 ">
         <h1 className="w-full text-left sm:text-center lg:text-xl text-sm font-light ">Share your setup with</h1>
-        <h2 className="w-full text-left sm:text-center lg:text-4xl text-xl font-bold">#FuniroFurniture</h2>
+        <h2 className="w-full text-left sm:text-center lg:text-4xl text-xl font-bold mb-2">#FuniroFurniture</h2>
         
         <div className="hidden sm:grid sm:grid-cols-11 sm:grid-rows-8 lg:gap-4 sm:gap-2 lg:h-[90vh] sm:[60vh]">
                     <SubFurniroFurniture 
@@ -94,18 +94,8 @@ function FurniroFurniture(){
 
                 </div>
 
-                <div className="sm:hidden lg:mt-6 mt-3 px-10">
+                <div className="sm:hidden lg:mt-6 mt-3 px-5 sm:px-10">
                         <ul className="flex items-center  ">
-                            {/* <li>
-                                <div className="border-2 border-[#B88E2F] rounded-full  lg:p-1 sm:p-0">
-                                    <div className=" rounded-full">
-                                    <div className="bg-[#B88E2F] border-1 lg:m-2 m-1 rounded-full border-[#B88E2F] lg:p-3 p-1"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li><div className="bg-[#D8D8D8] lg:m-3 m-1 rounded-full  lg:p-3 p-1"></div></li>
-                            <li><div className="bg-[#D8D8D8] lg:m-3 m-1 rounded-full  lg:p-3 p-1"></div></li>
-                            <li><div className="bg-[#D8D8D8] lg:m-3 m-1 rounded-full  lg:p-3 p-1"></div></li> */}
                             {
                                 images.map((image, index) => (
                                 <li key={image.id}>

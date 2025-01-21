@@ -316,8 +316,10 @@ function Dynamic({productId}){
                                             smallImage:{
                                                 alt:"filtereddataname",
                                                 isFluidWidth:true,
+                                                width: 200,  // Add this
+                                                height: 400, 
                                                 src:isImage,
-                                                className:"h-[10rem] lg:h-[14rem] object-cover w-full  rounded-xl",
+                                                className:"h-[160px] object-center lg:h-[14rem] sm:object-cover   rounded-xl",
                                             }
                                         ,
                                         largeImage: {
@@ -387,12 +389,12 @@ function Dynamic({productId}){
                             <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                             </svg></button>
                         </div>
-                        <button onClick={(e)=>{
+                        <button disabled={postMutate.isPending} onClick={(e)=>{
                                             e.preventDefault();
                                             e.stopPropagation();
                                             isEmail ? postHandler(filtereddata.img,filtereddata.name,filtereddata.desc,filtereddata.price,isCount):toast.error("Log In to access cart")
-                                        }} className="h-full w-full sm:w-1/3 border-2 text-base sm:text-xl border-solid border-black rounded-xl px-2 break-keep ">
-                            Add To Cart
+                                        }} className="h-full w-full sm:w-1/3 border-2 text-base flex justify-center items-center sm:text-xl border-solid border-black rounded-xl px-2 break-keep ">
+                            {postMutate.isPending?<div className="border-t-transparent border-2 border-black h-8 w-8 animate-spin rounded-full"></div> :"Add To Cart"}
                         </button>
                         
                     </div>
