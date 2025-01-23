@@ -3,8 +3,8 @@ import Link from "next/link";
 function Footer(){
 
     return(
-        <div className="relative bg-white text-sm px-5  py-4 sm:w-5/6 lg:w-full lg:px-10 lg:py-6  lg:text-base ">
-        <div className="grid grid-cols-2  gap-2 sm:flex  sm:flex-nowrap lg:p-10 sm:p-5 justify-between lg:text-l sm:text-sm  ">
+        <div className="relative bg-white text-sm px-5  sm:w-5/6 lg:w-full lg:px-10   lg:text-base ">
+        <div className="grid py-5 grid-cols-2 lg:py-10  gap-2 sm:flex  sm:flex-nowrap lg:p-10 sm:p-5 justify-between lg:text-l sm:text-sm  ">
             <div className="sm:w-2/6">
                 <h2 className="lg:text-2xl font-bold sm:text-xl">Funiro.</h2>
                 <p className="lg:text-base sm:text-sm text-[#9F9F9F] lg:mt-10 sm:mt-5 w-[70%]">
@@ -39,7 +39,7 @@ function Footer(){
             </div>
             <div className="">
             <hr/>
-            <div className="py-2 lg:text-xl font-medium text-sm">
+            <div className="sm:py-2 lg:text-xl font-medium text-sm">
                 {new Date().getFullYear()} funiro. All rights reserved
                 </div>
 

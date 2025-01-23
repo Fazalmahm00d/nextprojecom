@@ -229,7 +229,7 @@ function Header(){
                                     </div>
                                     <div className="h-[60vh]">
                                     { 
-                                    wishlistloading ? 
+                                    wishlistloading ? (
                                         [1,2,3].map((item)=>{
                                                 return <div key={item} className="flex justify-between text-base mt-3">
                                                             
@@ -241,14 +241,15 @@ function Header(){
                                                         </div>
                                                 })
                                     
-                                       : 
-                                        wishlistdata?.items?.length===0 ? <div className="text-xl font-bold text-center">You dont have any product in cart.Please continue shopping</div>:
-                                        
-                                        wishlistdata?.items?.map((item)=>{
+                                            ) : wishlistdata?.items?.length===0 ? (
+                                            <div className="text-xl font-bold text-center">You dont have any product in cart.Please continue shopping</div>
+                                            
+                                            ) : ( 
+                                                wishlistdata?.items?.map((item)=>{
                                                 return <WishCompo key={item.id} item={item}/>
                                             })
                                         
-                                    }
+                                    )}
                                     </div>
                                     <div className=" w-full mb-6 ">
                                         <hr/>

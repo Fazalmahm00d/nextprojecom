@@ -1,4 +1,3 @@
-import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./components/reused-components/Header";
 import Footer from "./components/reused-components/Footer";
@@ -6,17 +5,22 @@ import ReduxProvider from "./components/redux-components/reduxProvider";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Head from "next/head";
+import { Poppins, Montserrat } from 'next/font/google';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+// Load fonts with desired weights and subsets
+const poppins = Poppins({
+  weight: ['400', '600', '700'], // Choose the weights you need
+  subsets: ['latin'], // Add subsets
+  variable: '--font-poppins', // Optional: Use CSS variable for font
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const montserrat = Montserrat({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  variable: '--font-montserrat',
 });
+
+
 
 export const metadata = {
   title: "Furniro",
@@ -31,7 +35,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/assets/Meubel House_Logos-05.png" />
         </Head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${poppins.variable} ${montserrat.variable} font-poppins`}
       >
         
         

@@ -1,9 +1,6 @@
 "use client"
 
-
 import RelatedProducts from "@/app/components/reused-components/RelatedProducts";
-import { dataAction } from "@/app/ReduxStore/dataCart";
-import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,12 +11,12 @@ import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "@/app/components/redux-components/reduxProvider";
 import { sendToMongoDB } from "@/app/lib/api";
+import { useMediaQuery } from "react-responsive";
 
 function DynamicCompo({productId}){
     const result=useParams();
-    const dispatch=useDispatch();
+    const isMobile = useMediaQuery({ maxWidth: 640 });
     const isEmail=useSelector((state)=>state.authReducer.isEmail);
-    const cartItems=useSelector((state)=>state.dataReducer.cartItems);
     const[isImage,setIsImage]=useState();
     const [isCount,setIsCount]=useState(1);
     console.log(result)
@@ -309,31 +306,32 @@ function DynamicCompo({productId}){
                                             changeImageHandler(filtereddata.img4)
                                         }} src={filtereddata.img4} width={80} height={80}/>
                 </div>
-                <div className="w-3/4 ">
-                    {/* <img className="h-[28rem] w-full rounded-xl" src={isImage}></img> */}
-                    <ReactImageMagnify 
-                                        {...{
-                                            smallImage:{
-                                                alt:"filtereddataname",
-                                                isFluidWidth:true,
-                                                width: 200,  // Add this
-                                                height: 400, 
-                                                src:isImage,
-                                                className:"h-[160px] object-center lg:h-[14rem] sm:object-cover   rounded-xl",
-                                            }
-                                        ,
-                                        largeImage: {
-                                            src:isImage,
-                                            width:800,
-                                            height:1200,
-                                        },  
-                                            // style:"rounded-xl overflow-hidden",
-                                            hoverDelayInMs:2,
-                                            isActivatedOnTouch:true,
-                                            enlargedImageContainerClassName:"sm:absolute lg:relative bottom-100 left-0 lg:top-0 lg:right-0 rounded-xl ",
-
-                        }}/>
-                </div>
+                <div className="w-3/4">
+      {isMobile ? (
+        <img className="h-[20rem] w-full rounded-xl" src={isImage} alt="Filtered Data" />
+      ) : (
+        <ReactImageMagnify
+          {...{
+            smallImage: {
+              alt: "Filtered Data",
+              isFluidWidth: true,
+              width: 200,
+              height: 400,
+              src: isImage,
+              className: "h-[160px] object-center lg:h-[14rem] sm:object-cover rounded-xl",
+            },
+            largeImage: {
+              src: isImage,
+              width: 800,
+              height: 1200,
+            },
+            hoverDelayInMs: 2,
+            isActivatedOnTouch: true,
+            enlargedImageContainerClassName: "sm:absolute lg:relative bottom-100 left-0 lg:top-0 lg:right-0 rounded-xl",
+          }}
+        />
+      )}
+    </div>
                 </div>
                 <div className="lg:w-1/2 mt-10 lg:mt-0 px-5 lg:px-20 py-2 flex flex-col gap-2 items-start justify-start ">
                     <h1 className="text-3xl lg:text-5xl">{filtereddata.name}</h1>
@@ -393,8 +391,8 @@ function DynamicCompo({productId}){
                                             e.preventDefault();
                                             e.stopPropagation();
                                             isEmail ? postHandler(filtereddata.img,filtereddata.name,filtereddata.desc,filtereddata.price,isCount):toast.error("Log In to access cart")
-                                        }} className="h-full w-full sm:w-1/3 border-2 text-base flex justify-center items-center sm:text-xl border-solid border-black rounded-xl px-2 break-keep ">
-                            {postMutate.isPending?<div className="border-t-transparent border-2 border-black h-8 w-8 animate-spin rounded-full"></div> :"Add To Cart"}
+                                        }} className="h-full w-full sm:w-1/3 border-2 text-base text-black hover:bg-gray-800 hover:text-white flex justify-center items-center sm:text-xl border-solid border-black rounded-xl px-2 break-keep ">
+                            {postMutate.isPending?<div className="border-t-transparent border-4  h-8 w-8 animate-spin rounded-full"></div> :"Add To Cart"}
                         </button>
                         
                     </div>

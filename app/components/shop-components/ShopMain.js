@@ -26,7 +26,6 @@ function ShopMain(){
         <div>
             <ImgSection name="Shop"/>
             <Filter/>
-            {/* <Pagination/> */}
             <ProductGrid/>
             <Banner/>
         </div>

@@ -132,13 +132,13 @@ function LoginFirst(){
         <div className="flex w-full h-screen py-10 px-5 lg:px-10 bg-[#F9F1E7]">
             <div className='hidden sm:block  relative sm:w-[50%] h-full rounded-2xl overflow-hidden'>
                 {isLogin ? <img className=' w-full h-full ' src="/assets/pik1.png" alt="" />:<img className=' w-full h-full ' src="/assets/pik2.png" alt="" />}
-                <div className='absolute left-0 bottom-0 z-50  p-10   text-white text-5xl font-bold'>
+                <div className='absolute left-0 bottom-0 z-50  sm:p-10   text-white text-5xl font-bold'>
                     <div className=''>Lorem ipsum is easy</div>
                     <div className='font-medium mt-4 text-2xl'>Lorem ipsum is easy</div>
                 </div>
             </div>
             <div  className='w-full sm:w-[50%] flex justify-center items-center text-sm lg:text-base'>
-                <div className='flex flex-col justify-center items-center w-[60%]'>
+                <div className='flex flex-col justify-center items-center sm:w-[60%]'>
                     <h1 className='text-md font-bold text-[#B88E2F]'>Welcome to Furniro</h1>
                     <p className='mt-4 lg:mt-8 text-[#B88E2F] font-light'>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                     <div className='mt-4 lg:mt-8 bg-[#B88E2F] bg-opacity-[0.5] p-2 rounded-3xl flex justify-center '>
@@ -195,9 +195,14 @@ function LoginFirst(){
                             <button type="submit" className="mt-4 lg:mt-8 rounded-2xl bg-[#B88E2F] w-[50%] text-white font-bold text-l cursor-not-allowed">Sending...</button> 
                         }
                     </div>
+                    <div className="flex items-center  my-4">
+    <hr className="border-t border-gray-300 flex-grow" />
+    <span className="mx-2 text-gray-500 text-sm">OR</span>
+    <hr className="border-t border-gray-300 flex-grow" />
+    </div>
                     <button 
       onClick={handleGoogleLogin}
-      className="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg shadow hover:bg-gray-50 flex items-center gap-2"
+      className="px-4 py-2 w-full sm:w-fit bg-white text-gray-700 border border-gray-300 rounded-lg shadow hover:bg-gray-50 flex items-center gap-2"
     >
       <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
         <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">

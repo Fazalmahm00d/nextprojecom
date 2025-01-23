@@ -102,8 +102,8 @@ function ContactForm(){
                         </svg>} name="Working Time" p1="Monday-Friday: 9:00 - 22:00" p2="Saturday-Sunday: 9:00 - 21:00"/>
                 </div>
                 <div className="w-full px-5 sm:px-10 sm:w-1/2">
-                <form onSubmit={handleSubmit} className="flex flex-col text-sm lg:text-l gap-4 lg:gap-8 text-[#9F9F9F]">
-            <div className="flex flex-col gap-2 lg:gap-8">
+                <form onSubmit={handleSubmit} className="flex flex-col text-sm lg:text-lg gap-4 lg:gap-8 placeholder:text-[#9F9F9F]">
+            <div className="flex flex-col gap-2 lg:gap-4">
                 <label className="font-bold text-black">Your name</label>
                 <input
                     name="name"
@@ -117,7 +117,7 @@ function ContactForm(){
                 {errors.name && <p className="text-red-500 text-sm -mt-6">{errors.name}</p>}
             </div>
 
-            <div className="flex flex-col gap-2 lg:gap-8">
+            <div className="flex flex-col gap-2 lg:gap-4">
                 <label className="font-bold text-black">Email address</label>
                 <input
                     name="email"
@@ -132,7 +132,7 @@ function ContactForm(){
                 {errors.email && <p className="text-red-500 text-sm -mt-6">{errors.email}</p>}
             </div>
 
-            <div className="flex flex-col gap-2 lg:gap-8">
+            <div className="flex flex-col gap-2 lg:gap-4">
                 <label className="font-bold text-black">Subject</label>
                 <input
                     name="subject"
@@ -143,7 +143,7 @@ function ContactForm(){
                 />
             </div>
 
-            <div className="flex flex-col gap-2 lg:gap-8">
+            <div className="flex flex-col gap-2 lg:gap-4">
                 <label className="font-bold text-black">Message</label>
                 <textarea
                     name="message"

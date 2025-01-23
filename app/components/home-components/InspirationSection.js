@@ -2,10 +2,11 @@
 import Image from "next/image"
 import Button from "../reused-components/Button"
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function InspirationSection(){
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+    const navigate=useRouter();
     // Helper to get the next image index, looping back to the start if at the end
     const getNextImageIndex = (currentIndex) => (currentIndex + 1) % images.length;
 
@@ -21,24 +22,23 @@ function InspirationSection(){
         { id: 4, src: "/assets/Rectangle 25.png", alt: "Image 4",desc: "04 ---- Bath Room",desc2:"Inner " },
     ];
     return(
-        <div className="flex flex-col gap-10 sm:gap-0 sm:flex-row justify-center items-center bg-[#FCF8F3] lg:p-10 p-6">
-            <div className="sm:w-[40%] flex flex-col items-start justify-center lg:p-10 sm:p-6">
+        <div className="flex flex-col gap-10 sm:gap-0 sm:flex-row justify-between items-center bg-[#FCF8F3] lg:p-10 p-6">
+            <div className=" flex flex-col items-start justify-between lg:p-10 sm:p-6">
                 <div className="lg:text-5xl text-2xl font-bold ">50+ Beautiful rooms 
                 inspiration</div>
                 <p className="text-[#616161] lg:text-xl text-sm lg:pr-10 sm:pr-5">Our designer already made a lot of beautiful prototype of rooms that inspire you</p>
                 <div className="lg:mt-6 mt-3">
-                    <Button text="Buy Now" className="bg-[#B88E2F]
+                    <Button onClick={()=>{navigate.push('/shop')}} text="Buy Now" className="bg-[#B88E2F]
                      hover:bg-transparent hover:text-[#B88E2F] capitalize text-white"/> 
                 </div>
             </div>
             <div className="sm:w-[60%] flex flex-col sm:flex-row lg:gap-8 sm:gap-6">
                 <div className="relative">
-                    {/* <img src="/assets/Rectangle 24.png"></img> */}
                     
                 <img
                     src={images[currentImageIndex].src}
                     alt={images[currentImageIndex].alt}
-                    className="relative h-[40rem] w-[26rem] object-cover rounded-md shadow"
+                    className="relative h-96 lg:h-[40rem] w-[26rem] lg:w-[32rem] object-cover rounded-md shadow"
                 />
         
                     <div className="absolute z-10  lg:bottom-10 lg:left-10 bottom-5 left-5 flex items-end ">
@@ -53,30 +53,19 @@ function InspirationSection(){
                         </div>
                     </div>
                 </div>
-                <div  >
-                    {/* <img className="hidden sm:block" src="/assets/Rectangle 25.png"></img> */}
+                <div >
                     <img
                         src={images[getNextImageIndex(currentImageIndex)].src}
                         alt={images[getNextImageIndex(currentImageIndex)].alt}
-                        className="hidden sm:block w-[22rem] h-[30rem]"
+                        className="hidden sm:block w-[22rem] lg:w-[28rem] h-[30rem]"
                     />
                     <div className="lg:mt-6 mt-3">
                         <ul className="flex items-center gap-2 lg:gap-3">
-                            {/* <li>
-                                <div className="border-2 border-[#B88E2F] rounded-full  lg:p-1 sm:p-0">
-                                    <div className=" rounded-full">
-                                    <div className="bg-[#B88E2F] border-1 lg:m-2 m-1 rounded-full border-[#B88E2F] lg:p-3 p-1"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li><div className="bg-[#D8D8D8] lg:m-3 m-1 rounded-full  lg:p-3 p-1"></div></li>
-                            <li><div className="bg-[#D8D8D8] lg:m-3 m-1 rounded-full  lg:p-3 p-1"></div></li>
-                            <li><div className="bg-[#D8D8D8] lg:m-3 m-1 rounded-full  lg:p-3 p-1"></div></li> */}
                             {images.map((image, index) => (
                                 <li key={image.id}>
                                     <div
                                         onClick={() => handleImageChange(index)}
-                                        className={`cursor-pointer px-4 py-2 rounded focus:outline-none ${
+                                        className={`cursor-pointer px-2  py-2 rounded focus:outline-none ${
                                             index === currentImageIndex
                                                 ? 
                                                 "bg-[#B88E2F] border-[1px]  m-1 rounded-full border-[#B88E2F] lg:p-2 p-1"

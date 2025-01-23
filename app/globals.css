@@ -11,18 +11,20 @@
   --foreground: #171717;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+:root {
+  --font-poppins: 'Poppins', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+}
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Poppins;
+  font-family: var(--font-poppins);
 }
+
+/* Example of Montserrat usage */
+.heading {
+  font-family: var(--font-montserrat);
+}
+
 
 @keyframes fadeSlideIn {
   0% {

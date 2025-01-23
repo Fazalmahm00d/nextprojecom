@@ -1,14 +1,13 @@
 "use client"
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
-import FeaturedCompo from "../home-components/FeaturedCompo";
 import { useRouter } from "next/navigation";
 import RelatedCompo from "./RelatedCompo";
 
 
 function RelatedProducts(){
-    const navigate=useRouter()
+    const navigate=useRouter();
         const routeToShop=()=>{
             navigate.push('/shop')
         }
