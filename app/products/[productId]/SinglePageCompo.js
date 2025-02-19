@@ -263,9 +263,9 @@ function DynamicCompo({productId}){
     },[])
 
     return(
-        <div>
-            
-            <div className="bg-[#F9F1E7] h-[10vh] sm:h-[14vh]  flex items-center lg:gap-6 gap-3 lg:px-20 px-10 lg:text-xl text-sm">
+        <div className="">
+            <div className="bg-[#F9F1E7]">
+            <div className="container lg:mx-auto max-w-7xl  h-[10vh] sm:h-[14vh]  flex items-center lg:gap-6 gap-3 lg:px-0 px-10 lg:text-xl text-sm">
                 <div className="flex gap-8 items-center">
                     <Link href="/"><p className="text-[#9F9F9F]">Home</p></Link>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -282,7 +282,8 @@ function DynamicCompo({productId}){
                     {filtereddata.name}
                 </div>
             </div>
-            <div className="flex flex-col lg:flex-row items-start justify-center lg:px-20 sm:px-10 py-10">
+            </div>
+            <div className="container lg:mx-auto max-w-7xl flex flex-col lg:flex-row items-start justify-center lg:px-0 sm:px-10 py-10">
                 <div className="w-full lg:w-1/2 flex px-3 gap-2 lg:gap-16 ">
                 <div className=" flex flex-col gap-5 w-1/4">
                     <img onClick={(e)=>{

@@ -3,7 +3,7 @@ import Link from "next/link";
 function Footer(){
 
     return(
-        <div className="relative bg-white text-sm px-5  sm:w-5/6 lg:w-full lg:px-10   lg:text-base ">
+        <div className="relative bg-white container max-w-7xl lg:mx-auto text-sm px-5  sm:w-5/6 lg:w-full lg:px-0   lg:text-base ">
         <div className="grid py-5 grid-cols-2 lg:py-10  gap-2 sm:flex  sm:flex-nowrap lg:p-10 sm:p-5 justify-between lg:text-l sm:text-sm  ">
             <div className="sm:w-2/6">
                 <h2 className="lg:text-2xl font-bold sm:text-xl">Funiro.</h2>

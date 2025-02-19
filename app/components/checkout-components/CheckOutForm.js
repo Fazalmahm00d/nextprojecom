@@ -23,7 +23,7 @@ function CheckOutForm(){
         }
     }, [cartdata]);
     return(
-        <form className="flex flex-col w-full lg:flex-row">
+        <form className="container lg:mx-auto max-w-7xl flex flex-col w-full lg:flex-row">
         <div className="px-6 lg:px-20">
             <h3 className="font-semibold text-4xl mb-10">Billing details</h3>
             <div className="flex flex-col gap-6">

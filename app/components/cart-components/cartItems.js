@@ -24,7 +24,7 @@ function CartItems(){
     console.log("from items cart data",data)
     return(
 
-        <div className="p-6 lg:px-20 flex flex-col lg:flex-row gap-6">
+        <div className="container lg:mx-auto max-w-7xl p-6 lg:px-0 flex flex-col lg:flex-row gap-6">
   {/* Cart Items Section */}
   <div className="w-full lg:w-2/3">
     {/* Table Header for Large Screens */}

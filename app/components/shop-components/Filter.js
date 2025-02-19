@@ -242,11 +242,12 @@ function Filter(){
             }
         },[debouncedQuery])
     return(
-        <div className="bg-[#F9F1E7] flex flex-col gap-5 sm:gap-0 sm:flex-row justify-end items-center px-10 py-4 lg:px-20 lg:py-8 text-sm lg:text-base">
+        <div className="bg-[#F9F1E7]">
+        <div className=" container lg:mx-auto max-w-7xl flex flex-col gap-5 sm:gap-0 sm:flex-row justify-end items-center px-10 py-4 lg:px-20 lg:py-8 text-sm lg:text-base">
                  <div className="flex h-8 gap-3"><input onChange={(e)=>handler(e)} placeholder="Search..." className="focus:outline-none border-2 border-solid border-black rounded-md px-2" type="text" /><button ><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
                 <path d="M24.5002 24.4999L19.2665 19.2569M22.1668 12.2499C22.1668 14.88 21.122 17.4023 19.2623 19.2621C17.4026 21.1218 14.8802 22.1666 12.2502 22.1666C9.6201 22.1666 7.09776 21.1218 5.23802 19.2621C3.37828 17.4023 2.3335 14.88 2.3335 12.2499C2.3335 9.61985 3.37828 7.09751 5.23802 5.23778C7.09776 3.37804 9.6201 2.33325 12.2502 2.33325C14.8802 2.33325 17.4026 3.37804 19.2623 5.23778C21.122 7.09751 22.1668 9.61985 22.1668 12.2499V12.2499Z" stroke="black" strokeWidth="2" strokeLinecap="round"/>
                 </svg></button></div> 
-          
+                </div>
         </div>
     )
 }

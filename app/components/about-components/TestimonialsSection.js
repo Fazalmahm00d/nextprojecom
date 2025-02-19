@@ -14,7 +14,7 @@ function TestimonialsSection(){
     
       ]
     return(
-        <div className='flex flex-col w-full justify-center px-5 py-10 sm:px-10 sm:py-6 lg:px-30 lg:py-10 items-center'>
+        <div className='container max-w-7xl lg:mx-auto flex flex-col w-full justify-center px-5 py-10 sm:px-10 sm:py-6 lg:px-0 lg:py-10 items-center'>
         <h1 className="text-center text-xl lg:text-3xl font-bold">Our Customers</h1>
         <div className='grid grid-cols-1 mt-5 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-10 lg:mt-10'>
         {

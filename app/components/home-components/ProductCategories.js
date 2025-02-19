@@ -7,7 +7,7 @@ function ProductCategories(){
         navigate.push('/shop')
     }
     return(
-        <div className="flex flex-col items-center py-8 px-5 sm:gap-3 sm:py-8 sm:px-20 lg:gap-6 lg:py-16 lg:px-40">
+        <div className="container max-w-7xl mx-auto flex flex-col items-center py-8 px-5 sm:gap-3 sm:py-8 sm:px-20 lg:gap-6 lg:py-0 lg:px-0">
             <div className="text-center">
                 <h1 className="lg:text-3xl text-xl font-bold text-left sm:text-center">Browse The Range</h1>
                 <h3 className="lg:text-xl text-sm mt-2 text-left sm:text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>

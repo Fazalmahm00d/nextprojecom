@@ -133,7 +133,7 @@ function Header(){
         dispatch(dataAction.setWishArr(wishlistdata))
     },[wishlistdata])
     return(
-        <div className="relative w-full bg-white">
+        <div className="relative w-full bg-white ">
             {
                 burgerDisplay?
                 <div className={`absolute top-16  h-screen w-screen bg-white no-doc-scroll z-30 animate-fade-slide-in`}>
@@ -262,7 +262,7 @@ function Header(){
                                 </div>
                             </div> : ""
             }
-            <div  className="flex py-4 px-2 lg:gap-4 lg:px-20 lg:py-6 sm:py-4 sm:px-10 sm:gap-6 justify-between items-center w-full">
+            <div  className="container max-w-7xl lg:mx-auto flex py-4 px-2 lg:gap-4 lg:px-0 lg:py-6 sm:py-4 sm:px-10 sm:gap-6 justify-between items-center w-full">
             <Link href="/">
             <div className="flex gap-2 items-center">
                 <img className="sm:h-6 sm:w-8 lg:w-full lg:h-full" src="/favicon.ico"></img>

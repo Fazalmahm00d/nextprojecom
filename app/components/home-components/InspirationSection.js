@@ -22,7 +22,8 @@ function InspirationSection(){
         { id: 4, src: "/assets/Rectangle 25.png", alt: "Image 4",desc: "04 ---- Bath Room",desc2:"Inner " },
     ];
     return(
-        <div className="flex flex-col gap-10 sm:gap-0 sm:flex-row justify-between items-center bg-[#FCF8F3] lg:p-10 p-6">
+        <div className="bg-[#FCF8F3]">
+        <div className="flex flex-col container max-w-7xl mx-auto gap-10 sm:gap-0 sm:flex-row justify-between items-center  lg:p-10 p-6">
             <div className=" flex flex-col items-start justify-between lg:p-10 sm:p-6">
                 <div className="lg:text-5xl text-2xl font-bold ">50+ Beautiful rooms 
                 inspiration</div>
@@ -38,7 +39,7 @@ function InspirationSection(){
                 <img
                     src={images[currentImageIndex].src}
                     alt={images[currentImageIndex].alt}
-                    className="relative h-96 lg:h-[40rem] w-[26rem] lg:w-[32rem] object-cover rounded-md shadow"
+                    className="relative h-96  lg:h-[40rem] lg:min-w-[28rem] lg:w-[32rem] object-cover rounded-md shadow"
                 />
         
                     <div className="absolute z-10  lg:bottom-10 lg:left-10 bottom-5 left-5 flex items-end ">
@@ -81,6 +82,7 @@ function InspirationSection(){
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

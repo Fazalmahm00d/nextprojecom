@@ -232,7 +232,7 @@ function ProductGrid(){
         
        
     return(
-        <div id="page" className="py-10 px-5 lg:px-20  flex flex-col items-center">
+        <div id="page" className="container lg:mx-auto max-w-7xl py-10 px-5 lg:px-0  flex flex-col items-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-3 lg:grid-cols-4 lg:gap-10 w-full lg:mt-6">
                 {  
                     filteredData.length > 0 ?

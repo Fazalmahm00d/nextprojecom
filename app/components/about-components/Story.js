@@ -5,7 +5,7 @@ import Button from "../reused-components/Button";
 function Story(){
     return(
         <div className="w-full flex justify-center">
-        <div className="container flex flex-col items-center  justify-center px-6 py-10 sm:px-20 sm:py-6 lg:px-40 lg:py-10  text-xl text-[#B88E2F] ">
+        <div className="container max-w-7xl lg:mx-auto flex flex-col items-center  justify-center px-6 py-10 sm:px-20 sm:py-6 lg:px-0 lg:py-10  text-xl text-[#B88E2F] ">
             <h1 className="text-black text-2xl font-bold">
                 About the Brand
             </h1>
