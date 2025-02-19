@@ -20,7 +20,6 @@ export async function getCartByIdData(isEmail){
     }
 export  async function sendToMongoDB(newCartItem){
         try{
-            console.log("func calling")
             const response= await axios.post(`https://projectecombackend.onrender.com/cart/new`,newCartItem);
             console.log(response,"send to mongodb func")
             return response
